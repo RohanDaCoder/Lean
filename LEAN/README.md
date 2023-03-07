@@ -1,0 +1,2 @@
+# Lean
+**A Discord Bot.**
