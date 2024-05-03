@@ -3,4 +3,3 @@ replit.nix
 node_modules
 .config
 package-lock.json
-start.sh
