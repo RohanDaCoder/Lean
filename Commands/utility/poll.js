@@ -1,14 +1,24 @@
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+
 module.exports = {
-  data: {
-    name: 'poll',
-    description: 'Create a poll.',
-  },
+  data: new SlashCommandBuilder()
+    .setName("poll")
+    .setDescription("Create a poll.")
+    .addStringOption((option) =>
+      option
+      .setName("question")
+      .setDescription("The Question You Want To Ask")
+      .setRequired(true))
+    .addChannelOption(option =>
+      option
+      .setName('channel')
+      .setDescription('The channel to create the poll'))
+      .setRequired(true),
 
   run: async ({ client, interaction }) => {
-    const { EmbedBuilder } = require('discord.js');
 
-    const sentence = interaction.options.getString("question");
-
+    const question = interaction.options.getString("question");
+    const channel = interaction.options.getChannel("channel");
     interaction.reply({
       content: `:x: Successfully created poll.`,
       ephemeral: true
@@ -16,7 +26,7 @@ module.exports = {
 
     const pollEmbed = new EmbedBuilder()
       .setTitle('**Poll**')
-      .setDescription(`**${interaction.user.username}** Asks: **${sentence}**`)
+      .setDescription(`**${interaction.user.username}** Asks: **${question}**`)
       .setColor('BLURPLE');
 
     interaction.channel.send({ embeds: [pollEmbed] })

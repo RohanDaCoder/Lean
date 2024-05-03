@@ -1,3 +1,4 @@
+const axios = require("axios");
 module.exports = {
   data: {
     name: 'meme',
@@ -5,7 +6,7 @@ module.exports = {
   },
 
   run: async ({ interaction, client }) => {
-    const axios = require("axios");
+    interaction.deferReply();
     let res = await axios.get(`http://api.popcat.xyz/meme`);
     const memeEmbed = new client.discord.EmbedBuilder()
       .setTitle(res.data.title)
@@ -13,6 +14,6 @@ module.exports = {
       .setImage(res.data.image)
       .setURL(res.data.url)
       .setColor("RANDOM");
-    await interaction.reply({ embeds: [memeEmbed] });
+    await interaction.editReply({ embeds: [memeEmbed] });
   },
 };

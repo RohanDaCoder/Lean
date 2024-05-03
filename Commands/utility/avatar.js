@@ -10,7 +10,7 @@ module.exports = {
       .setTitle(`${user.user.tag}`)
       .setColor('BLURPLE')
       .setImage(user.user.displayAvatarURL({ dynamic: true }));
-
+   
     await interaction.reply({ embeds: [embed] });
   },
 };
