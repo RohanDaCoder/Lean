@@ -9,6 +9,13 @@ const client = new Client({
     ],
 });
 
-new CommandKit(config.CommandKit);
+new CommandKit({
+  client,
+  commandsPath: path.join(__dirname, 'Commands'),
+  eventsPath: path.join(__dirname, 'Events'),
+  devGuildIds: ['964473061913030696'],
+  devUserIds: ['922419431508938773'],
+  bulkRegister: true
+});
 
 client.login(process.env.TOKEN);
