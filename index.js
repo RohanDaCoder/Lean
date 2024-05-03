@@ -1,6 +1,8 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { CommandKit } = require('commandkit');
-const config = require("./config.js")
+const config = require("./config.js");
+const path = require("path");
+
 const client = new Client({
   intents: [
         GatewayIntentBits.Guilds,
