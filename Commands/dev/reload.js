@@ -5,7 +5,6 @@ module.exports = {
     .setName("reload")
     .setDescription("Reload The Bot"),
   async run({ interaction, client, handler }) {
-    import { default: prettyMS} from "pretty-ms";
     await interaction.reply("Reloading...");
     const beforeReload = interaction.createdAt;
     await handler.reloadCommands();
@@ -13,7 +12,7 @@ module.exports = {
     await handler.reloadEvents();
 
     const afterReload = new Date();
-    await interaction.followUp(`Reloaded Events. \nDone! Took ${prettyMS(afterReload - beforeReload)}`);
+    await interaction.followUp(`Reloaded Events. \nDone! Took ${afterReload - beforeReload}`);
   },
   options: {
     devOnly: true
