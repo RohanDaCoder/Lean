@@ -1,0 +1,6 @@
+replit.nix
+.replit
+node_modules
+.config
+package-lock.json
+start.sh
