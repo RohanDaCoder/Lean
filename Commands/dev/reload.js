@@ -1,11 +1,11 @@
 const { SlashCommandBuilder } = require("discord.js");
-import prettyMS from "pretty-ms";
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("reload")
     .setDescription("Reload The Bot"),
   async run({ interaction, client, handler }) {
+    import { default: prettyMS} from "pretty-ms";
     await interaction.reply("Reloading...");
     const beforeReload = interaction.createdAt;
     await handler.reloadCommands();
