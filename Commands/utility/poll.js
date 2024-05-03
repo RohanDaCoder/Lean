@@ -12,8 +12,8 @@ module.exports = {
     .addChannelOption(option =>
       option
       .setName('channel')
-      .setDescription('The channel to create the poll'))
-      .setRequired(true),
+      .setDescription('The channel to create the poll')
+      .setRequired(true)),
 
   run: async ({ client, interaction }) => {
 
