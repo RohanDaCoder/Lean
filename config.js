@@ -6,6 +6,6 @@ module.exports = {
     eventsPath: path.join(__dirname, 'Events'),
     devGuildIds: ['964473061913030696'],
     devUserIds: ['922419431508938773'],
-    bulkRegister: true,
+    bulkRegister: true
   }
 }
