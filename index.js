@@ -16,7 +16,7 @@ new CommandKit({
   commandsPath: path.join(__dirname, 'Commands'),
   eventsPath: path.join(__dirname, 'Events'),
   devGuildIds: ['964473061913030696'],
-  devUserIds: ['92241943150893877'], //Write 3 At last
+  devUserIds: ['922419431508938773'],
   bulkRegister: true
 });
 

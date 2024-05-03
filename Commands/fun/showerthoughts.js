@@ -6,7 +6,8 @@ module.exports = {
   },
 
   run: async ({ client, interaction, Discord }) => {
-    await interaction.deferReply()
+    try {
+      await interaction.deferReply()
     let res = await axios.get(`https://api.popcat.xyz/showerthoughts`);
 
     const swEmbed = new Discord.EmbedBuilder()
@@ -15,5 +16,10 @@ module.exports = {
       .addFields({ name: `Author`, value: res.data.author }, { name: "Upvotes", value: res.data.upvotes });
 
     await interaction.editReply({ embeds: [swEmbed] });
+    } catch (e) {
+      await interaction.channel.send({
+        content: `Error While Fetching A Shower Thought. \nError: ${e.message}`
+      });
+    }
   },
 };
