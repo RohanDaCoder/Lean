@@ -77,5 +77,4 @@ process.on('uncaughtException', (error) => {
 // Listen for multiple resolves
 process.on('multipleResolves', (type, promise, reason) => {
   console.log('Multiple Resolves:', type, reason);
-  sendErrorEmbed('Multiple Resolves', reason);
 });
