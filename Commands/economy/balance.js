@@ -25,7 +25,7 @@ module.exports = {
     }
 
     try {
-      const { username, walletFormatted, bankFormatted } = await GetBalance(targetUser.id);
+      const { username, walletFormatted, bankFormatted } = await GetBalance(targetUser.id, client);
 
       const balanceEmbed = new EmbedBuilder()
         .setColor('#0099ff')
