@@ -27,7 +27,7 @@ module.exports = {
     const pollEmbed = new EmbedBuilder()
       .setTitle('**Poll**')
       .setDescription(`**${interaction.user.username}** Asks: **${question}**`)
-      .setColor('RANDOM');
+      .setColor('Random');
 
     interaction.channel.send({ embeds: [pollEmbed] })
       .then(msg => {

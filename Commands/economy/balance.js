@@ -40,7 +40,7 @@ module.exports = {
         { name: "Wallet", value: wallet },
         { name: "Bank", value: bank }
       )
-      .setColor("RANDOM")
+      .setColor("Random")
       .addTimestamp();
 
     await interaction.editReply({ embeds: [balanceEmbed] });
