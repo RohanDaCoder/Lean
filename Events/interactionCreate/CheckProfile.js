@@ -1,8 +1,10 @@
 const DB = require("simple-json-db");
-
+const fs = require("fs");
 
 module.exports = (interaction, client) => {
-  const profile = new DB(`../../Database/${interaction.user.id}.json`);
+  let dbPath = `../../Database/${interaction.user.id}.json`
+  fs.appendFile(dbPath, '{}');
+  const profile = new DB(dbPath);
   if (profile.has("userID")) return;
   const defaultProfile = {
     name: interaction.user.username,
@@ -11,7 +13,7 @@ module.exports = (interaction, client) => {
     bank: 0,
     inventory: []
   };
-  
+
   profile.set("name", defaultProfile.name);
   profile.set("userID", defaultProfile.userID);
   profile.set("wallet", defaultProfile.wallet);
