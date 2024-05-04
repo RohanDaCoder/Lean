@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const GetBalance = require("../../Util/Economy.js");
+const {GetBalance} = require("../../Util/Economy.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -25,7 +25,7 @@ module.exports = {
     }
 
     try {
-      const { username, walletFormatted, bankFormatted } = await GetBalance(targetUser.id, client);
+      const { walletFormatted, bankFormatted } = await GetBalance(targetUser.id);
 
       const balanceEmbed = new EmbedBuilder()
         .setColor('#0099ff')
