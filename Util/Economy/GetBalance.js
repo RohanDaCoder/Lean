@@ -1,3 +1,4 @@
+//GetBalance.js
 //Importing Modules
 const JSONdb = require('simple-json-db');
 const GetProfile = require("./GetProfile.js")

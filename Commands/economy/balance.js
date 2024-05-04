@@ -5,28 +5,38 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("balance")
     .setDescription("Check Someone's Balance")
-    .addMentionableOption((option) => option
-      .setName("user_id")
+    .addMentionableOption(option =>
+      option.setName("user_id")
       .setDescription("The User's ID You Want To Check Balance Of")
       .setRequired(false)),
   run: async ({ interaction, client }) => {
 
-    const target = interaction.options.getString("user_id")?.value;
+    const target = interaction.options.getString("user_id");
     let targetUser;
     if (target) {
-      targetUser = client.users.fetch(target)
+      try {
+        targetUser = await client.users.fetch(target);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        return interaction.reply("Failed to fetch user.");
+      }
     } else {
       targetUser = interaction.user;
-    };
+    }
 
-    const { walletFormated, bankFormated } = await GetBalance(targetUser.id);
+    try {
+      const { username, walletFormatted, bankFormatted } = await GetBalance(targetUser.id);
 
+      const balanceEmbed = new EmbedBuilder()
+        .setColor('#0099ff')
+        .setTitle(`${username}'s Balance`)
+        .addFields({ name: 'Wallet', value: walletFormatted, inline: true }, { name: 'Bank', value: bankFormatted, inline: true }, )
+        .setTimestamp();
 
-    const balanceEmbed = new EmbedBuilder()
-      .setColor('#0099ff')
-      .setTitle(`${targetUser.username}'s Balance`)
-      .addFields({ name: 'Wallet', value: walletFormated, inline: true }, { name: 'Bank', value: bankFormated, inline: true }, )
-      .setTimestamp();
-    await interaction.reply({ embeds: [balanceEmbed] })
+      await interaction.reply({ embeds: [balanceEmbed] });
+    } catch (error) {
+      console.error("Error getting balance:", error);
+      await interaction.followUp("Failed to retrieve balance. \nError: " + error.message);
+    }
   }
 };
