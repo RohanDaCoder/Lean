@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const db = require('simple-json-db');
-const { emojis } = require("../../config")
+const { emojis } = require("../../config");
+const path = require('path');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -16,31 +17,29 @@ module.exports = {
       .setRequired(false)),
   run: async ({ client, interaction }) => {
     await interaction.deferReply();
-    //Getting The ID
+    // Getting The ID
     let id;
     const mention = interaction.options.getMentionable("user");
     const userId = interaction.options.getString("user_id");
     if (!mention && !userId) id = interaction.user.id;
-    if (mention) id = mention.user.id;
+    if (mention) id = mention.id;
     if (!mention && userId) id = userId;
-    const user = await client.users.fetch(id);
 
+    // Getting Balance
+    const dbPath = path.join(__dirname, `../../Database/${id}.json`);
+    const profile = new db(dbPath);
+    const walletRaw = profile.get("wallet") || 0;
+    const bankRaw = profile.get("bank") || 0;
+    const wallet = `${walletRaw.toLocaleString()}${emojis.money}`;
+    const bank = `${bankRaw.toLocaleString()}${emojis.money}`;
 
-    //Getting Balance.
-    const profile = new db(`../../Database/${id}.json`);
-    const wallet = `${profile.get("wallet").toLocaleString()}${emojis.money}`;
-    const bank = `${profile.get("bank").toLocaleString()}${emojis.money}`;
-
-    //Creating Embed And Send
+    // Creating Embed And Send
     const balanceEmbed = new EmbedBuilder()
-      .setName(`${user.username}'s Balance`)
-      .addFields({
-        name: "Wallet",
-        value: wallet
-      }, {
-        name: "Bank",
-        value: bank,
-      })
+      .setName(`${interaction.user.username}'s Balance`)
+      .addFields(
+        { name: "Wallet", value: wallet },
+        { name: "Bank", value: bank }
+      )
       .setColor("RANDOM")
       .addTimestamp();
 
