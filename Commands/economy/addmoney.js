@@ -57,7 +57,7 @@ module.exports = {
     // Creating Embed And Send
     const actionType = type === "wallet" ? "added to wallet" : "added to bank";
     const balanceEmbed = new EmbedBuilder()
-      .setTitle(`Money Added to ${name}'s Account`)
+      .setTitle(`Money ${actionType} for ${name}`)
       .addFields({
         name: "New Wallet Balance",
         value: wallet
@@ -65,7 +65,7 @@ module.exports = {
         name: "New Bank Balance",
         value: bank
       })
-      .setColor("Random")
+      .setColor("RANDOM")
       .setTimestamp();
 
     await interaction.editReply({ embeds: [balanceEmbed] });
