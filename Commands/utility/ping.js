@@ -1,9 +1,31 @@
+const { EmbedBuilder } = require("discord.js");
+const ms = require("ms");
+
 module.exports = {
   data: {
     name: 'ping',
     description: 'Pong!',
   },
-  run: ({ interaction, client, handler }) => {
-    interaction.reply(`:ping_pong: Pong! ${client.ws.ping}ms`);
+  run: async ({ interaction, client, handler }) => {
+    await interaction.reply("Pinging...");
+    const before = interaction.createdAt;
+
+    const clientPing = ms(Math.round(client.ws.ping));
+    const after = new Date();
+    const apiPing = ms(afterReload - beforeReload);
+    const pingEmbed = new EmbedBuilder()
+      .setName(`Ping Of ${client.user.username}`)
+      .addFields({
+        name: "Client Ping",
+        value: clientPing
+      },
+      {
+        name: "API Ping",
+        value: apiPing
+      })
+      .setColor("RANDOM")
+      .addTimestamp()
+
+    await interaction.followUp({ embeds: [pingEmbed] });
   }
 };
