@@ -9,7 +9,7 @@ module.exports = {
       option.setName("user_id")
       .setDescription("The User's ID You Want To Check Balance Of")
       .setRequired(false)),
-  run: async ({ interaction, client }) => {
+  run: async ({ client, interaction }) => {
 
     const target = interaction.options.getString("user_id");
     let targetUser;
