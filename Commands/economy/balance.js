@@ -32,10 +32,11 @@ module.exports = {
     const bankRaw = profile.get("bank") || 0;
     const wallet = `${walletRaw.toLocaleString()}${emojis.money}`;
     const bank = `${bankRaw.toLocaleString()}${emojis.money}`;
+    const name = profile.get("username");
 
     // Creating Embed And Send
     const balanceEmbed = new EmbedBuilder()
-      .setTitle(`${interaction.user.username}'s Balance`)
+      .setTitle(`${name}'s Balance`)
       .addFields({ name: "Wallet", value: wallet }, { name: "Bank", value: bank })
       .setColor("Random")
       .setTimestamp();
