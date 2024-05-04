@@ -28,7 +28,7 @@ module.exports = {
     });
   },
   options: {
-    botPermissions: [ "Adminstrator", "ManageWebhooks" ],
+    botPermissions: [ "ManageMembers", "ManageWebhooks" ],
     botPermissions: [ "ManageMembers", "ManageWebhooks" ]
   }
 }

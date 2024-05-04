@@ -19,7 +19,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`${user.username}'s Avatar`)
       .setColor('Blurple')
-      .setImage(user.defaultAvatarURL({ dynamic: true }));
+      .setImage(user.user.defaultAvatarURL({ dynamic: true }));
 
     await interaction.reply({ embeds: [embed] });
   },
