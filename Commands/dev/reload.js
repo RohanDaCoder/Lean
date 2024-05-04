@@ -11,7 +11,6 @@ module.exports = {
     await handler.reloadCommands();
     await interaction.channel.send("Reloaded Commands.");
     await handler.reloadEvents();
-
     const afterReload = new Date();
     await interaction.channel.send(`Reloaded Events. \nDone! Took ${ms(afterReload - beforeReload)}`);
   },
