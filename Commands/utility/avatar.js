@@ -1,16 +1,24 @@
 module.exports = {
-  data: {
-    name: 'avatar',
-    description: 'Show the avatar of a user.',
-  },
+  data: new SlashCommandBuilder()
+    .setName('avatar')
+    .setDescription('Show the avatar of a user.')
+    .addUserOption(option =>
+      option.setName('user')
+      .setDescription('The user whose avatar you want to see.')
+      .setRequired(false)),
 
   run: async ({ client, interaction, Discord }) => {
-    const user = interaction.options.get('user');
+    let user = interaction.options.getUser('user');
+
+    if (!user) {
+      user = interaction.user;
+    }
+
     const embed = new Discord.EmbedBuilder()
-      .setTitle(`${user.user.tag}`)
+      .setTitle(`${user.username}'s Avatar`)
       .setColor('Blurple')
-      .setImage(user.user.displayAvatarURL({ dynamic: true }));
-   
+      .setImage(user.defaultAvatarURL({ dynamic: true }));
+
     await interaction.reply({ embeds: [embed] });
   },
 };
