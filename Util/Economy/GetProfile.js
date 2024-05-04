@@ -7,5 +7,5 @@ module.exports = async (userId) => {
   const userProfile = new JSONdb(`../../Database/${userId}.json`);
   const username = await userProfile.get("name");
   if(!username) return CreateProfile(userId);
-  return userProfile;
+  return { Profile };
 };

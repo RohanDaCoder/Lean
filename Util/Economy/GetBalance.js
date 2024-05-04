@@ -9,9 +9,9 @@ module.exports = async (userId) => {
   if (isNaN(userId)) throw new Error("Invalid User ID Provided While Fetching Balance.");
   
   //Get Values From Database
-  const profile = GetProfile(userId);
-  const wallet = profile.get("balance");
-  const bank = profile.get("bank");
+  const { Profile } = GetProfile(userId);
+  const wallet = Profile.get("balance");
+  const bank = Profile.get("bank");
   //Formatting
   const walletFormated = `${wallet.toLocaleString()}${emojis.money}`;
   const bankFormated = `${bank.toLocaleString()}${emojis.money}`;
