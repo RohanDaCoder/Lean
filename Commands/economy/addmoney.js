@@ -61,6 +61,6 @@ module.exports = {
     await interaction.editReply({ embeds: [balanceEmbed] });
   },
   options: {
-    devsOnly: true
+    devOnly: true
   }
 };
