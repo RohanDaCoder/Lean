@@ -4,7 +4,7 @@ const fs = require("fs");
 module.exports = (interaction, client) => {
   let dbPath = `../../Database/${interaction.user.id}.json`;
   fs.appendFile(dbPath, '{}', function(e) {
-    if(e) return interaction.reply(`Failed To Check Balance. \nError: ${e.message}`);
+    if(e) return interaction.channel.send(`Failed To Check Balance. \nError: ${e.message}`);
     const profile = new DB(dbPath);
     if (profile.has("userID")) return;
     const defaultProfile = {
