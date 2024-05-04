@@ -12,7 +12,7 @@ module.exports = {
 
     const clientPing = ms(Math.round(client.ws.ping));
     const after = new Date();
-    const apiPing = ms(afterReload - beforeReload);
+    const apiPing = ms(after - before);
     const pingEmbed = new EmbedBuilder()
       .setTitle(`Ping Of ${client.user.username}`)
       .addFields({

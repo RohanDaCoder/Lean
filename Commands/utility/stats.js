@@ -1,20 +1,15 @@
 const {
-  SlashCommandBuilder
+  SlashCommandBuilder, EmbedBuilder
 } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("stats")
     .setDescription("Display bot statistics"),
-
   run: async ({
     client,
     interaction
   }) => {
-    const {
-      EmbedBuilder
-    } = require("discord.js");
-
     // Fetching values from the client
     const ping = client.ws.ping;
     const uptime = client.uptime / 1000 / 60;
@@ -24,7 +19,7 @@ module.exports = {
     const guildsCount = client.guilds.cache.size;
     const usersCount = client.users.cache.size;
     const apiLatency = Date.now() - interaction.createdTimestamp;
-    const version = require("./package.json")
+    const version = require("../../package.json")
       .version;
     const discordJSVersion = require("discord.js")
       .version;

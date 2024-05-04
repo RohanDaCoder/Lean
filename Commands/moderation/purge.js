@@ -10,7 +10,7 @@ module.exports = {
   run: async ({ client, interaction }) => {
     await interaction.deferReply()
     try {
-      const amount = interaction.options.getNumber("amount");
+      const amount = parseInt(interaction.options.getNumber("amount"))
       if (isNaN(amount) || amount < 1 || amount > 1000) {
         return await interaction.editReply({
           content: 'Please provide a valid amount of messages to delete (between 1 and 1000).',

@@ -9,14 +9,14 @@ module.exports = {
       .setDescription('The user whose avatar you want to see.')
       .setRequired(false)),
 
-  run: async ({ client, interaction, Discord }) => {
+  run: async ({ client, interaction }) => {
     let user = interaction.options.getUser('user');
 
     if (!user) {
       user = interaction.user;
     }
 
-    const embed = new Discord.EmbedBuilder()
+    const embed = new EmbedBuilder()
       .setTitle(`${user.username}'s Avatar`)
       .setColor('Blurple')
       .setImage(user.defaultAvatarURL({ dynamic: true }));
