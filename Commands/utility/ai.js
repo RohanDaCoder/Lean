@@ -1,8 +1,13 @@
+const { SlashCommandBuilder } = require("discord.js")
+
 module.exports = {
-  data: {
-    name: 'ai',
-    description: 'Talk with an AI.',
-  },
+  data: new SlashCommandBuilder()
+    .setName("ai")
+    .setDescription("Talk With An Ai")
+    .addStringOption((o) =>
+      o.setName("message")
+      .setDescription("The Message You Want To Send")
+      .setRequired(true)),
 
   run: async ({ client, interaction }) => {
     const msg = interaction.options.getString('message');
