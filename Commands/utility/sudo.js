@@ -1,29 +1,34 @@
+const { SlashCommandBuilder } = require("discord.js");
+
 module.exports = {
-  data: {
-    name: "sudo",
-    description: "Send a message as another user.",
-  },
+  data: new SlashCommandBuilder()
+    .setName("sudo")
+    .setDescription("Send a message as another user.")
+    .addUserOption(option =>
+      option.setName("user")
+      .setDescription("The user whose name and avatar will be used to send the message.")
+      .setRequired(true))
+    .addStringOption(option =>
+      option.setName("message")
+      .setDescription("The message to send.")
+      .setRequired(true)),
 
   run: async ({ client, interaction }) => {
-    const { Permissions } = require('discord.js');
-
-    if (!interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_WEBHOOKS)) {
-      return interaction.reply({
-        content: `:x: I don't have permissions to create a webhook!`,
-        ephemeral: true
-      });
-    }
-
     await interaction.channel.sendTyping();
-    let user = interaction.options.getMentionable('user');
-    let msg = interaction.options.getString('message');
-    const webhook = await interaction.channel.createWebhook(user.displayName, {
-      avatar: user.user.displayAvatarURL({ dynamic: true }),
+    const user = interaction.options.getUser('user');
+    
+    const msg = interaction.options.getString('message');
+    const webhook = await interaction.channel.createWebhook(user.username, {
+      avatar: user.displayAvatarURL({ dynamic: true }),
       channel: interaction.channel.id
-    });
+    })
 
     await webhook.send(msg).then(async () => {
       await webhook.delete();
     });
   },
-};
+  options: {
+    botPermissions: [ "Adminstrator", "ManageWebhooks" ],
+    botPermissions: [ "ManageMembers", "ManageWebhooks" ]
+  }
+}
