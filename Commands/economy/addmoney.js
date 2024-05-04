@@ -16,16 +16,10 @@ module.exports = {
       .setDescription("The User's ID You Want To Add Money To")
       .setRequired(true))
     .addStringOption(option =>
-      option.setName("type")
-      .setDescription("Type of Money to Add (wallet or bank)")
-      .setRequired(true)
-      .addChoice("Wallet", "wallet")
-      .addChoice("Bank", "bank"))
-    .addMentionableOption(option =>
-      option.setName("user")
-      .setDescription("Mention The User You Want To Add Money To")
-      .setRequired(false)),
-  run: async ({ client, interaction }) => {
+      option.setName("transaction_type")
+      .setDescription("Type of Transaction (wallet or bank)")
+      .setRequired(true)),
+  async run({ client, interaction }) {
     await interaction.deferReply();
     // Getting The ID
     let id;
@@ -43,29 +37,25 @@ module.exports = {
 
     // Adding Money
     const amount = interaction.options.getInteger("amount");
-    const type = interaction.options.getString("type");
-    if (type === "wallet") {
+    const transactionType = interaction.options.getString("transaction_type");
+    let updatedBalance;
+    if (transactionType === "wallet") {
       profile.set("wallet", walletRaw + amount);
-    } else if (type === "bank") {
+      updatedBalance = walletRaw + amount;
+    } else if (transactionType === "bank") {
       profile.set("bank", bankRaw + amount);
+      updatedBalance = bankRaw + amount;
     }
 
     // Updated Balance
-    const wallet = `${walletRaw.toLocaleString()} ${emojis.money}`;
-    const bank = `${bankRaw.toLocaleString()} ${emojis.money}`;
+    const formattedBalance = `${updatedBalance.toLocaleString()} ${emojis.money}`;
 
     // Creating Embed And Send
-    const actionType = type === "wallet" ? "added to wallet" : "added to bank";
+    const actionType = transactionType === "wallet" ? "added to wallet" : "added to bank";
     const balanceEmbed = new EmbedBuilder()
       .setTitle(`Money ${actionType} for ${name}`)
-      .addFields({
-        name: "New Wallet Balance",
-        value: wallet
-      }, {
-        name: "New Bank Balance",
-        value: bank
-      })
-      .setColor("RANDOM")
+      .addField(`New ${transactionType.charAt(0).toUpperCase() + transactionType.slice(1)} Balance`, formattedBalance)
+      .setColor("Random")
       .setTimestamp();
 
     await interaction.editReply({ embeds: [balanceEmbed] });
