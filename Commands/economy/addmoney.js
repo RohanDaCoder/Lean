@@ -54,7 +54,10 @@ module.exports = {
     const actionType = transactionType === "wallet" ? "added to wallet" : "added to bank";
     const balanceEmbed = new EmbedBuilder()
       .setTitle(`Money ${actionType} for ${name}`)
-      .addField(`New ${transactionType.charAt(0).toUpperCase() + transactionType.slice(1)} Balance`, formattedBalance)
+      .addFields({
+        name: `New ${transactionType.charAt(0).toUpperCase() + transactionType.slice(1)} Balance`,
+        value: formattedBalance
+      })
       .setColor("Random")
       .setTimestamp();
 
