@@ -1,7 +1,7 @@
 const DB = require("simple-json-db");
 
 
-module.exports = ({ client, interaction }) => {
+module.exports = (interaction, client) => {
   const profile = new DB(`../../Database/${interaction.user.id}.json`);
   if (profile.has("userID")) return;
   const defaultProfile = {
