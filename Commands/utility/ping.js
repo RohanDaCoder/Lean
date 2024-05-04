@@ -14,7 +14,7 @@ module.exports = {
     const after = new Date();
     const apiPing = ms(afterReload - beforeReload);
     const pingEmbed = new EmbedBuilder()
-      .setName(`Ping Of ${client.user.username}`)
+      .setTitle(`Ping Of ${client.user.username}`)
       .addFields({
         name: "Client Ping",
         value: clientPing

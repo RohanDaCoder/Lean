@@ -35,7 +35,7 @@ module.exports = {
 
     // Creating Embed And Send
     const balanceEmbed = new EmbedBuilder()
-      .setName(`${interaction.user.username}'s Balance`)
+      .setTitle(`${interaction.user.username}'s Balance`)
       .addFields(
         { name: "Wallet", value: wallet },
         { name: "Bank", value: bank }
