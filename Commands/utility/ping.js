@@ -24,7 +24,7 @@ module.exports = {
         value: apiPing
       })
       .setColor("Random")
-      .addTimestamp()
+      .setTimestamp()
 
     await interaction.followUp({ embeds: [pingEmbed] });
   }

@@ -36,12 +36,9 @@ module.exports = {
     // Creating Embed And Send
     const balanceEmbed = new EmbedBuilder()
       .setTitle(`${interaction.user.username}'s Balance`)
-      .addFields(
-        { name: "Wallet", value: wallet },
-        { name: "Bank", value: bank }
-      )
+      .addFields({ name: "Wallet", value: wallet }, { name: "Bank", value: bank })
       .setColor("Random")
-      .addTimestamp();
+      .setTimestamp();
 
     await interaction.editReply({ embeds: [balanceEmbed] });
   }
