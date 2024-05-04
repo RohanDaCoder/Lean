@@ -17,7 +17,7 @@ module.exports = {
       .setRequired(false)),
   run: async ({ client, interaction }) => {
     await interaction.deferReply();
-    // Getting The ID
+
     let id;
     const userOption = interaction.options.getUser("user");
     const userId = interaction.options.getString("user_id");
@@ -51,6 +51,6 @@ module.exports = {
       .setColor("Random")
       .setTimestamp();
 
-    await interaction.editReply({ embeds: [balanceEmbed] })
+    await interaction.editReply({ embeds: [balanceEmbed] });
   }
 };
