@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+console.clear();
 const { Client, GatewayIntentBits } = require('discord.js');
 const { CommandKit } = require('commandkit');
 const config = require("./config.js");
