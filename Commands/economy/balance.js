@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const {GetBalance} = require("../../Util/Economy.js");
+const db = require('simple-json-db');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -25,12 +25,13 @@ module.exports = {
     }
 
     try {
-      const { walletFormatted, bankFormatted } = await GetBalance(targetUser.id);
-
+      const profile = new db(`../../Database/${targetUser.id}.json`);
+      const wallet = `${profile.get("balance").toLocaleString()}${client.config.emojis.money}`;
+      const bank = `${profile.get("bank").toLocaleString()}${client.config.emojis.money}`
       const balanceEmbed = new EmbedBuilder()
         .setColor('#0099ff')
         .setTitle(`${username}'s Balance`)
-        .addFields({ name: 'Wallet', value: walletFormatted, inline: true }, { name: 'Bank', value: bankFormatted, inline: true }, )
+        .addFields({ name: 'Wallet', value: wallet, inline: true }, { name: 'Bank', value: bank, inline: true }, )
         .setTimestamp();
 
       await interaction.reply({ embeds: [balanceEmbed] });
