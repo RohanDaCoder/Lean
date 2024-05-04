@@ -3,3 +3,4 @@ replit.nix
 node_modules
 .config
 package-lock.json
+Database/
