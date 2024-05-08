@@ -17,7 +17,7 @@ client.config = config;
 process.client = client;
 
 new CommandKit({
-  client,
+  client,				
   commandsPath: path.join(__dirname, 'Commands'),
   eventsPath: path.join(__dirname, 'Events'),
   devGuildIds: ['964473061913030696'],
