@@ -4,14 +4,11 @@
   "description": "A Discord Bot Made With NodeJS",
   "main": "index.js",
   "devDependencies": {
-    "axios": "^1.6.8",
     "commandkit": "^0.1.10",
-    "discord-gamecord": "^4.4.2",
-    "discord.js": "^14.15.2",
-    "path": "^0.12.7"
+    "discord.js": "^14.15.2"
   },
   "scripts": {
-    "build": "esbuild index.js --bundle --minify --platform=node --outfile=bot.js",
+    "build": "esbuild index.js --bundle --minify --platform=node --outfile=bundled.js",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -33,6 +30,9 @@
   },
   "homepage": "https://github.com/RohanDaCoder/Lean#readme",
   "dependencies": {
+    "axios": "^1.6.8",
+    "path": "^0.12.7",
+    "discord-gamecord": "^4.4.2",
     "simple-json-db": "^2.0.0"
   }
 }
