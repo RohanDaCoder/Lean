@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const ms = require("ms")
+const ms = require("ms");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,9 +12,11 @@ module.exports = {
     await interaction.channel.send("Reloaded Commands.");
     await handler.reloadEvents();
     const afterReload = new Date();
-    await interaction.channel.send(`Reloaded Events. \nDone! Took ${ms(afterReload - beforeReload)}`);
+    await interaction.channel.send(
+      `Reloaded Events. \nDone! Took ${ms(afterReload - beforeReload)}`,
+    );
   },
   options: {
-    devOnly: true
-  }
+    devOnly: true,
+  },
 };

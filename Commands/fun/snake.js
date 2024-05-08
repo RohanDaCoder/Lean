@@ -1,7 +1,7 @@
 module.exports = {
   data: {
-    name: 'snake',
-    description: 'Play a game of Snake.',
+    name: "snake",
+    description: "Play a game of Snake.",
   },
 
   run: async ({ client, interaction, Discord }) => {
@@ -10,20 +10,19 @@ module.exports = {
       message: interaction,
       slash_command: true,
       embed: {
-        title: 'Snake Game',
-        color: '#5865F2',
-        OverTitle: 'Game Over',
+        title: "Snake Game",
+        color: "#5865F2",
+        OverTitle: "Game Over",
       },
-      snake: { head: ':flushed:', body: '🟩', tail: '🟢' },
+      snake: { head: ":flushed:", body: "🟩", tail: "🟢" },
       emojis: {
-        board: '⬛',
-        food: '🍎',
-        up: '⬆️',
-        down: '⬇️',
-        right: '➡️',
-        left: '⬅️',
-      }
+        board: "⬛",
+        food: "🍎",
+        up: "⬆️",
+        down: "⬇️",
+        right: "➡️",
+        left: "⬅️",
+      },
     }).startGame();
-    
   },
 };

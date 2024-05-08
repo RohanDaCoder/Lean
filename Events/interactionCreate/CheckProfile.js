@@ -3,9 +3,15 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = (interaction, client) => {
-  let dbPath = path.join(__dirname, `../../Database/${interaction.user.id}.json`);
-  fs.writeFile(dbPath, '{}', 'utf8', function(e) {
-    if (e) return interaction.channel.send(`Failed To Check Balance. \nError: ${e.message}`);
+  let dbPath = path.join(
+    __dirname,
+    `../../Database/${interaction.user.id}.json`,
+  );
+  fs.writeFile(dbPath, "{}", "utf8", function (e) {
+    if (e)
+      return interaction.channel.send(
+        `Failed To Check Balance. \nError: ${e.message}`,
+      );
     const profile = new DB(dbPath);
     if (profile.has("userID")) return;
     const defaultProfile = {
@@ -13,7 +19,7 @@ module.exports = (interaction, client) => {
       userID: interaction.user.id,
       wallet: 0,
       bank: 0,
-      inventory: []
+      inventory: [],
     };
 
     profile.set("name", defaultProfile.name);

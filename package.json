@@ -6,13 +6,15 @@
   "devDependencies": {
     "commandkit": "^0.1.10",
     "discord.js": "^14.15.2",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "prettier": "3.2.5"
   },
   "scripts": {
     "build": "esbuild index.js --bundle --minify --platform=node --outfile=bundled.js",
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "buildStart": "npm run build && node bundled.js"
+    "buildStart": "npm run build && node bundled.js",
+    "pretty": "npx prettier . --write"
   },
   "repository": {
     "type": "git",

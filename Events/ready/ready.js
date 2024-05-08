@@ -1,3 +1,3 @@
 module.exports = (c, client, handler) => {
-  console.log(`${c.user.username} is ready!`);
+  console.log(`${c.user.tag} is ready!`);
 };

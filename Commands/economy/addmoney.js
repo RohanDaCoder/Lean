@@ -1,24 +1,30 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const db = require('simple-json-db');
+const db = require("simple-json-db");
 const { emojis } = require("../../config");
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("addmoney")
     .setDescription("Add Money to Someone's Account")
-    .addIntegerOption(option =>
-      option.setName("amount")
-      .setDescription("Amount of Money to Add")
-      .setRequired(true))
-    .addStringOption(option =>
-      option.setName("user_id")
-      .setDescription("The User's ID You Want To Add Money To")
-      .setRequired(true))
-    .addStringOption(option =>
-      option.setName("transaction_type")
-      .setDescription("Type of Transaction (wallet or bank)")
-      .setRequired(true)),
+    .addIntegerOption((option) =>
+      option
+        .setName("amount")
+        .setDescription("Amount of Money to Add")
+        .setRequired(true),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("user_id")
+        .setDescription("The User's ID You Want To Add Money To")
+        .setRequired(true),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("transaction_type")
+        .setDescription("Type of Transaction (wallet or bank)")
+        .setRequired(true),
+    ),
   async run({ client, interaction }) {
     await interaction.deferReply();
     // Getting The ID
@@ -51,12 +57,13 @@ module.exports = {
     const formattedBalance = `${updatedBalance.toLocaleString()} ${emojis.money}`;
 
     // Creating Embed And Send
-    const actionType = transactionType === "wallet" ? "added to wallet" : "added to bank";
+    const actionType =
+      transactionType === "wallet" ? "added to wallet" : "added to bank";
     const balanceEmbed = new EmbedBuilder()
       .setTitle(`Money ${actionType} for ${name}`)
       .addFields({
         name: `New ${transactionType.charAt(0).toUpperCase() + transactionType.slice(1)} Balance`,
-        value: formattedBalance
+        value: formattedBalance,
       })
       .setColor("Random")
       .setTimestamp();
@@ -64,6 +71,6 @@ module.exports = {
     await interaction.editReply({ embeds: [balanceEmbed] });
   },
   options: {
-    devOnly: true
-  }
+    devOnly: true,
+  },
 };
