@@ -22,7 +22,7 @@ jobs:
       - name: Commit changes
         run: |
           git config user.name "GitHub Actions"
-          git config user.email "actions@users.noreply.github.com"
+          git config user.email "rohanbmgo2010@gmail.com"
           git add .
           git commit -m "Format code with Prettier"
           git push
