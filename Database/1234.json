@@ -1,7 +1,0 @@
-{
-  "username": "Rohan",
-  "userID": 1234,
-  "balance": 1000,
-  "bank": 500,
-  "inventory": [ "Bag Of Doritos", "Pencil" ]
-}

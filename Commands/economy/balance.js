@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const db = require("simple-json-db");
-const { emojis } = require("../../config");
-const path = require("path");
+const EconomyManager = require("../../Util/EconomyManager");
+const { emojis } = require("../../config.js")
+const economyManager = new EconomyManager();
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -32,34 +32,24 @@ module.exports = {
     } else if (userId) {
       id = userId;
     }
+   const user = await client.users.cache.find(i => i.id === id);
+   if(!user) return interaction.reply(`:x: Could Not Find That User.`)
+    try {
+      const wallet = await economyManager.fetchMoney(id);
+      const balanceEmbed = new EmbedBuilder()
+        .setTitle(`Balance`)
+        .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({dynamic: true})})
+        .addFields({
+          name: "Wallet",
+          value: `${wallet.toLocaleString()} ${emojis.money}`,
+        })
+        .setColor("Random")
+        .setTimestamp();
 
-    // Getting Balance
-    const dbPath = path.join(__dirname, `../../Database/${id}.json`);
-    const profile = new db(dbPath);
-
-    if (!profile.has("username")) {
-      await interaction.editReply(
-        ":x: This user doesn't exist or hasn't used our bot.",
-      );
-      return;
+      await interaction.editReply({ embeds: [balanceEmbed] });
+    } catch (error) {
+      console.error("Error fetching balance:", error.message);
+      await interaction.editReply("An error occurred while fetching balance.");
     }
-
-    const walletRaw = profile.get("wallet") || 0;
-    const bankRaw = profile.get("bank") || 0;
-    const wallet = `${walletRaw.toLocaleString()} ${emojis.money}`;
-    const bank = `${bankRaw.toLocaleString()} ${emojis.money}`;
-    const name = profile.get("username");
-
-    // Creating Embed And Send
-    const balanceEmbed = new EmbedBuilder()
-      .setTitle(`${name}'s Balance`)
-      .addFields(
-        { name: "Wallet", value: wallet },
-        { name: "Bank", value: bank },
-      )
-      .setColor("Random")
-      .setTimestamp();
-
-    await interaction.editReply({ embeds: [balanceEmbed] });
   },
 };
