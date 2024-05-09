@@ -12,12 +12,16 @@ class EconomyManager {
   }
 
   async ModifyMoney(i) {
-    if(!i) throw new Error(`No Options Provided When Modifying Money.`);
-    if(!typeof i !== "object") throw new Error(`No Valid Option Provided When Modfiying Money.`);
-    let prefix = (i.type === "bank") ? "bank" : (i.type === "wallet") ? "wallet" : "unknown";
-    if(i.set) await db.set(`${prefix}_${i.userID}`, i.set);
-    if(i.add) await db.set(`${prefix}_${i.userID}`, i.add + this.fetchMoney(i.userID));
-    if(i.reduce) await db.set(`${prefix}_${i.userID}`, i.add - this.fetchMoney(i.userID));
+    if (!i) throw new Error(`No Options Provided When Modifying Money.`);
+    if (!typeof i !== "object")
+      throw new Error(`No Valid Option Provided When Modfiying Money.`);
+    let prefix =
+      i.type === "bank" ? "bank" : i.type === "wallet" ? "wallet" : "unknown";
+    if (i.set) await db.set(`${prefix}_${i.userID}`, i.set);
+    if (i.add)
+      await db.set(`${prefix}_${i.userID}`, i.add + this.fetchMoney(i.userID));
+    if (i.reduce)
+      await db.set(`${prefix}_${i.userID}`, i.add - this.fetchMoney(i.userID));
     return true;
   }
 

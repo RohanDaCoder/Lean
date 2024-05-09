@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const EconomyManager = require("../../Util/EconomyManager");
-const { emojis } = require("../../config.js")
+const { emojis } = require("../../config.js");
 const economyManager = new EconomyManager();
 
 module.exports = {
@@ -32,13 +32,16 @@ module.exports = {
     } else if (userId) {
       id = userId;
     }
-   const user = await client.users.cache.find(i => i.id === id);
-   if(!user) return interaction.reply(`:x: Could Not Find That User.`)
+    const user = await client.users.cache.find((i) => i.id === id);
+    if (!user) return interaction.reply(`:x: Could Not Find That User.`);
     try {
       const wallet = await economyManager.fetchMoney(id);
       const balanceEmbed = new EmbedBuilder()
         .setTitle(`Balance`)
-        .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({dynamic: true})})
+        .setAuthor({
+          name: user.tag,
+          iconURL: user.displayAvatarURL({ dynamic: true }),
+        })
         .addFields({
           name: "Wallet",
           value: `${wallet.toLocaleString()} ${emojis.money}`,
