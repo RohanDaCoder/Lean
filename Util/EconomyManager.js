@@ -1,238 +1,161 @@
 const SimpleJsonDB = require("simple-json-db");
-const Util = require("./EconomyUtil");
+const fs = require("fs");
 
 class EconomyManager {
-  constructor(
-    options = {
-      prefix: "money",
-    },
-  ) {
-    this.prefix = options.prefix;
-    this.db = new SimpleJsonDB("../Database.json");
-  }
-
   async ModifyMoney(i) {
-    if(!i) throw new Error(`No Options Provided When Modifying Money.`);
-    if(!typeof i !== "object") throw new Error(`No Valid Option Provided When Modfiying Money.`);
-    let prefix = (i.type === "bank") ? "bank" : (i.type === "wallet") ? "wallet" : "unknown";
-    if(i.set) await db.set(`${prefix}_${i.userID}`, i.set);
-    if(i.add) await db.set(`${prefix}_${i.userID}`, i.add + this.fetchMoney(i.userID));
-    if(i.reduce) await db.set(`${prefix}_${i.userID}`, i.add - this.fetchMoney(i.userID));
+    if (!i) throw new Error(`No valid options provided when modifying money.`);
+    if (!i.userID) throw new Error(`Invalid user ID provided.`);
+    if (!i.type) i.type = "wallet";
+    let prefix = i.type === "bank" ? "bank" : "wallet";
+    let db = await this.getProfile(i.userID);
+
+    if (i.set) await db.set(`${prefix}_${i.userID}`, i.set);
+    if (i.add) {
+      let currentMoney = await this.fetchMoney({
+        userID: i.userID,
+        type: i.type,
+      });
+      await db.set(`${prefix}_${i.userID}`, currentMoney + i.add);
+    }
+    if (i.reduce) {
+      let currentMoney = await this.fetchMoney({
+        userID: i.userID,
+        type: i.type,
+      });
+      await db.set(`${prefix}_${i.userID}`, currentMoney - i.reduce);
+    }
     return true;
   }
 
-  async all(limit = 0) {
-    this.__checkManager();
-    const data = this.db.JSON();
-    if (limit < 1) return data || [];
-    return Object.values(data).slice(0, limit) || [];
+  async getProfile(userID) {
+    try {
+      if (!userID || typeof userID !== "number")
+        throw new Error(`Invalid UserID Provided.`);
+      const dbPath = `../Database/${userID}.json`;
+
+      if (!fs.existsSync(dbPath)) {
+        fs.writeFileSync(dbPath, JSON.stringify({}));
+      }
+
+      const db = new SimpleJsonDB(dbPath);
+      return db;
+    } catch (error) {
+      console.error("Error getting profile:", error);
+    }
   }
 
-  async fetchMoney(userID) {
-    this.__checkManager();
-    const userData = this.db.get(userID);
-    if (!userData || isNaN(userData)) return 0;
-    return userData;
+  async fetchMoney(i) {
+    try {
+      if (!i || !i.userID || !i.type)
+        throw new Error(`Invalid options provided.`);
+      let db = await this.getProfile(i.userID);
+      let prefix = i.type === "bank" ? "bank" : "wallet";
+      const amount = await db.get(`${prefix}_${i.userID}`);
+      return amount;
+    } catch (error) {
+      console.error("Error fetching money:", error);
+      return 0;
+    }
   }
-
-  async reset() {
-    this.__checkManager();
-    this.db.deleteAll();
-    return true;
-  }
-
   async daily(userID, amount) {
-    this.__checkManager();
-    if (!userID || typeof userID !== "string")
-      throw new Error("User id was not provided!");
-    if (!amount) amount = Util.random(100, 250);
-    const key = `${userID}_daily`;
-    const cooldownRaw = await this._get(key);
-    const cooldown = Util.onCooldown(
-      Util.COOLDOWN.DAILY,
-      cooldownRaw ? cooldownRaw.data : 0,
-    );
-    if (cooldown)
-      return {
-        cooldown: true,
-        time: Util.getCooldown(
-          Util.COOLDOWN.DAILY,
-          cooldownRaw ? cooldownRaw.data : 0,
-        ),
-      };
-    const newAmount = await this.addMoney(userID, amount);
-    await this._set(key, Date.now());
+    if (!userID) throw new Error("User id was not provided!");
+    if (!amount) amount = this.random(100, 250);
+    const newAmount = await this.ModifyMoney({
+      userID,
+      add: amount,
+      type: "wallet",
+    });
     return {
-      cooldown: false,
-      time: null,
       amount,
       money: newAmount,
     };
   }
 
   async weekly(userID, amount) {
-    this.__checkManager();
-    if (!userID || typeof userID !== "string")
-      throw new Error("User id was not provided!");
-    if (!amount) amount = Util.random(200, 750);
-    const key = `${userID}_weekly`;
-    const cooldownRaw = await this._get(key);
-    const cooldown = Util.onCooldown(
-      Util.COOLDOWN.WEEKLY,
-      cooldownRaw ? cooldownRaw.data : 0,
-    );
-    if (cooldown)
-      return {
-        cooldown: true,
-        time: Util.getCooldown(
-          Util.COOLDOWN.WEEKLY,
-          cooldownRaw ? cooldownRaw.data : 0,
-        ),
-      };
-    const newAmount = await this.addMoney(userID, amount);
-    await this._set(key, Date.now());
+    if (!userID) throw new Error("User id was not provided!");
+    if (!amount) amount = this.random(200, 750);
+    const newAmount = await this.ModifyMoney({
+      userID,
+      add: amount,
+      type: "wallet",
+    });
     return {
-      cooldown: false,
-      time: null,
       amount,
       money: newAmount,
     };
   }
 
   async monthly(userID, amount) {
-    this.__checkManager();
-    if (!userID || typeof userID !== "string")
-      throw new Error("User id was not provided!");
-    if (!amount) amount = Util.random(1000, 5000);
-    const key = `${userID}_monthly`;
-    const cooldownRaw = await this._get(key);
-    const cooldown = Util.onCooldown(
-      Util.COOLDOWN.MONTHLY,
-      cooldownRaw ? cooldownRaw.data : 0,
-    );
-    if (cooldown)
-      return {
-        cooldown: true,
-        time: Util.getCooldown(
-          Util.COOLDOWN.MONTHLY,
-          cooldownRaw ? cooldownRaw.data : 0,
-        ),
-      };
-    const newAmount = await this.addMoney(userID, amount);
-    await this._set(key, Date.now());
+    if (!userID) throw new Error("User id was not provided!");
+    if (!amount) amount = this.random(1000, 5000);
+    const newAmount = await this.ModifyMoney({
+      userID,
+      add: amount,
+      type: "wallet",
+    });
     return {
-      cooldown: false,
-      time: null,
       amount,
       money: newAmount,
     };
   }
 
   async beg(userID, amount) {
-    this.__checkManager();
-    if (!userID || typeof userID !== "string")
-      throw new Error("User id was not provided!");
-    if (!amount) amount = Util.random(1, 70);
-    const key = `${userID}_beg`;
-    const cooldownRaw = await this._get(key);
-    const cooldown = Util.onCooldown(
-      Util.COOLDOWN.BEG,
-      cooldownRaw ? cooldownRaw.data : 0,
-    );
-    if (cooldown)
-      return {
-        cooldown: true,
-        time: Util.getCooldown(
-          Util.COOLDOWN.BEG,
-          cooldownRaw ? cooldownRaw.data : 0,
-        ),
-      };
-    const newAmount = await this.addMoney(userID, amount);
-    await this._set(key, Date.now());
+    if (!userID) throw new Error("User id was not provided!");
+    if (!amount) amount = this.random(1, 70);
+    const newAmount = await this.ModifyMoney({
+      userID,
+      add: amount,
+      type: "wallet",
+    });
     return {
-      cooldown: false,
-      time: null,
       amount,
       money: newAmount,
     };
   }
 
   async work(userID, amount) {
-    this.__checkManager();
-    if (!userID || typeof userID !== "string")
-      throw new Error("User id was not provided!");
-    if (!amount) amount = Util.random(500, 1000);
-    const key = `${userID}_work`;
-    const cooldownRaw = await this._get(key);
-    const cooldown = Util.onCooldown(
-      Util.COOLDOWN.WORK,
-      cooldownRaw ? cooldownRaw.data : 0,
-    );
-    if (cooldown)
-      return {
-        cooldown: true,
-        time: Util.getCooldown(
-          Util.COOLDOWN.WORK,
-          cooldownRaw ? cooldownRaw.data : 0,
-        ),
-      };
-    const newAmount = await this.addMoney(userID, amount);
-    await this._set(key, Date.now());
+    if (!userID) throw new Error("User id was not provided!");
+    if (!amount) amount = this.random(500, 1000);
+    const newAmount = await this.ModifyMoney({
+      userID,
+      add: amount,
+      type: "wallet",
+    });
     return {
-      cooldown: false,
-      time: null,
       amount,
       money: newAmount,
     };
   }
 
   async leaderboard(limit = 10) {
-    this.__checkManager();
-    let data = await this.all();
-    data = data.sort((a, b) => b.value - a.value).slice(0, limit);
-    return data.map((entry) => ({
-      userID: entry.key,
-      money: entry.value,
-    }));
-  }
-
-  async _get(key) {
-    this.__checkManager();
-    if (typeof key !== "string") throw new Error("key must be a string!");
-    const data = this.db.get(key);
-    if (!data) return null;
-    return data;
-  }
-
-  async fetchMoney(userID) {
-    this.__checkManager();
-    if (!userID || typeof userID !== "string")
-      throw new Error("Invalid User ID!");
-    const userData = this.db.get(userID);
-    if (!userData || isNaN(userData)) {
-      if (this.noNegative) await this.db.set(userID, 0);
-      return 0;
+    let allData = [];
+    const files = fs.readdirSync("../Database/");
+    for (const file of files) {
+      let userID = file.split(".")[0];
+      let money = await this.fetchMoney({
+        userID,
+        type: "wallet",
+      });
+      allData.push({
+        userID,
+        money,
+      });
     }
-    if (this.noNegative && userData < 0) await this.db.set(userID, 0);
-    return userData;
-  }
-
-  async _set(key, data) {
-    this.__checkManager();
-    if (typeof key !== "string") throw new Error("key must be a string!");
-    if (typeof data === "undefined") data = 0;
-    await this.db.set(key, data);
-    return true;
+    allData = allData.sort((a, b) => b.money - a.money).slice(0, limit);
+    return allData;
   }
 
   async reset() {
-    this.__checkManager();
-    this.db.deleteAll();
+    const files = fs.readdirSync("../Database/");
+    for (const file of files) {
+      fs.unlinkSync(`../Database/${file}`);
+    }
     return true;
   }
 
-  __checkManager() {
-    if (!this.db) throw new Error("Manager is not ready yet!");
+  random(a, b) {
+    const number = Math.floor(Math.random() * (b - a + 1)) + a;
+    return number;
   }
 }
 

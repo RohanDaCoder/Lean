@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const ms = require("ms")
+const ms = require("ms");
 module.exports = (c, client, handler) => {
   setInterval(() => {
     client.channels
@@ -9,7 +9,7 @@ module.exports = (c, client, handler) => {
           .fetch("1237775445685174382")
           .then((msg) => {
             const ping = client.ws.ping;
-            const uptime = client.uptime
+            const uptime = client.uptime;
             const memoryUsage = (
               process.memoryUsage().heapUsed /
               1024 /
@@ -78,8 +78,12 @@ module.exports = (c, client, handler) => {
               embeds: [embed],
             });
           })
-          .catch((e) => { console.log(e.message) }); // Ignore errors
+          .catch((e) => {
+            console.log(e.message);
+          }); // Ignore errors
       })
-      .catch((error) => { console.log(error.message)}); // Ignore errors
+      .catch((error) => {
+        console.log(error.message);
+      }); // Ignore errors
   }, 10000); // Refresh every 30 seconds
 };

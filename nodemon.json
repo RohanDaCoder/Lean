@@ -2,5 +2,5 @@
   "events": {
     "start": "clear"
   },
-  "ignore": ["./config.js", "Database/"]
+  "ignore": ["./config.js", "./Database/"]
 }

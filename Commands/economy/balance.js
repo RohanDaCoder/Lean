@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const EconomyManager = require("../../Util/EconomyManager");
-const { emojis } = require("../../config.js")
+const { emojis } = require("../../config.js");
 const economyManager = new EconomyManager();
 
 module.exports = {
@@ -32,24 +32,46 @@ module.exports = {
     } else if (userId) {
       id = userId;
     }
-   const user = await client.users.cache.find(i => i.id === id);
-   if(!user) return interaction.reply(`:x: Could Not Find That User.`)
+    const user = await client.users.cache.find((i) => i.id === id);
+    if (!user) return interaction.reply(`:x: Could Not Find That User.`);
     try {
-      const wallet = await economyManager.fetchMoney(id);
+      const walletData = await economyManager.fetchMoney({
+        userID: id,
+        type: "wallet",
+      });
+      const bankData = await economyManager.fetchMoney({
+        userID: id,
+        type: "bank",
+      });
+
+      const walletAmount = walletData?.amount || 0;
+      const bankAmount = bankData?.amount || 0;
+
       const balanceEmbed = new EmbedBuilder()
         .setTitle(`Balance`)
-        .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({dynamic: true})})
-        .addFields({
-          name: "Wallet",
-          value: `${wallet.toLocaleString()} ${emojis.money}`,
+        .setAuthor({
+          name: user.tag,
+          iconURL: user.displayAvatarURL({ dynamic: true }),
         })
+        .addFields(
+          {
+            name: "Wallet",
+            value: `${walletAmount.toLocaleString()} ${emojis.money}`,
+          },
+          {
+            name: "Bank",
+            value: `${bankAmount.toLocaleString()} ${emojis.money}`,
+          },
+        )
         .setColor("Random")
         .setTimestamp();
 
       await interaction.editReply({ embeds: [balanceEmbed] });
     } catch (error) {
-      console.error("Error fetching balance:", error.message);
-      await interaction.editReply("An error occurred while fetching balance.");
+      console.error(error);
+      await interaction.editReply(
+        "An error occurred while fetching balance. \n" + error.message,
+      );
     }
   },
 };

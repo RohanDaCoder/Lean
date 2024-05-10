@@ -1,57 +1,94 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const db = require("simple-json-db");
-const { emojis } = require("../../config");
 const path = require("path");
+const EconomyManager = require("../../Util/EconomyManager");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("pay")
     .setDescription("Transfer Coins to Another User's Account")
-    .addStringOption((option) =>
-      option
-        .setName("user_id")
-        .setDescription("The User's ID You Want To Transfer Coins To")
-        .setRequired(true),
-    )
-    .addIntegerOption((option) =>
+    .addNumberOption((option) =>
       option
         .setName("amount")
         .setDescription("Amount of Coins to Transfer")
         .setRequired(true),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("user_id")
+        .setDescription("The User's ID You Want To Transfer Coins To")
+        .setRequired(false),
+    )
+    .addUserOption((option) =>
+      option
+        .setName("user_mention")
+        .setDescription("Mention the User You Want To Transfer Coins To")
+        .setRequired(false),
     ),
   run: async ({ client, interaction }) => {
     await interaction.deferReply();
 
     const senderId = interaction.user.id;
-    const receiverId = interaction.options.getString("user_id");
-    const amount = interaction.options.getInteger("amount");
+    let receiverId;
+    const amount = interaction.options.getNumber("amount");
+    const userMention = interaction.options.getUser("user_mention");
+    const userId = interaction.options.getString("user_id");
 
-    const senderDbPath = path.join(
-      __dirname,
-      `../../Database/${senderId}.json`,
-    );
-    const senderProfile = new db(senderDbPath);
-    const senderWallet = senderProfile.get("wallet") || 0;
-    if (senderWallet < amount) {
-      await interaction.editReply(
-        "You don't have enough coins in your wallet to make this transfer.",
-      );
-      return;
+    if (userMention) {
+      receiverId = userMention.id;
+    } else {
+      receiverId = userId;
     }
 
-    const receiverDbPath = path.join(
-      __dirname,
-      `../../Database/${receiverId}.json`,
-    );
-    const receiverProfile = new db(receiverDbPath);
-    const receiverUsername = receiverProfile.get("username") || "Unknown User";
-    const receiverWallet = receiverProfile.get("wallet") || 0;
+    try {
+      const economyManager = new EconomyManager();
 
-    senderProfile.set("wallet", senderWallet - amount);
-    receiverProfile.set("wallet", receiverWallet + amount);
+      const senderWallet = await economyManager.fetchMoney({
+        userID: senderId,
+        type: "wallet",
+      });
+      if (senderWallet < amount) {
+        const neededAmount = amount - senderWallet;
+        await interaction.editReply(
+          `You don't have enough coins in your wallet. You need ${neededAmount} more coins to make this transfer.`,
+        );
+        return;
+      }
 
-    await interaction.editReply(
-      `You have successfully transferred ${amount} coins to ${receiverUsername}.`,
-    );
+      const receiverUser = await client.users.fetch(receiverId);
+      const receiverTag = receiverUser.tag;
+
+      const senderResult = await economyManager.ModifyMoney({
+        userID: senderId,
+        reduce: amount,
+        type: "wallet",
+      });
+      if (!senderResult)
+        throw new Error("Failed to deduct coins from sender's wallet.");
+
+      const receiverResult = await economyManager.ModifyMoney({
+        userID: receiverId,
+        add: amount,
+        type: "wallet",
+      });
+      if (!receiverResult)
+        throw new Error("Failed to add coins to receiver's wallet.");
+
+      const senderTag = interaction.user.tag;
+
+      const embed = new EmbedBuilder()
+        .setTitle(`Paying ${receiverTag}`)
+        .setColor("Random")
+        .addFields(
+          { name: "Transfer From", value: senderTag },
+          { name: "Transfer to", value: receiverTag },
+        );
+
+      await interaction.editReply({ embeds: [embed] });
+    } catch (error) {
+      console.error("Error transferring coins:", error);
+      await interaction.editReply(
+        `An error occurred while transferring coins: ${error.message}`,
+      );
+    }
   },
 };
