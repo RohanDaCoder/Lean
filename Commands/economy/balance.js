@@ -52,6 +52,13 @@ module.exports = {
         .setAuthor({
           name: user.tag,
           iconURL: user.displayAvatarURL({ dynamic: true }),
+<<<<<<< HEAD
+=======
+        })
+        .addFields({
+          name: "Wallet",
+          value: `${wallet.toLocaleString()} ${emojis.money}`,
+>>>>>>> 3fa847aeea007e0ee0069f94916459f27af7945b
         })
         .addFields(
           {

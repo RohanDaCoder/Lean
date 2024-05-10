@@ -3,6 +3,7 @@ const fs = require("fs");
 
 class EconomyManager {
   async ModifyMoney(i) {
+<<<<<<< HEAD
     if (!i) throw new Error(`No valid options provided when modifying money.`);
     if (!i.userID) throw new Error(`Invalid user ID provided.`);
     if (!i.type) i.type = "wallet";
@@ -24,6 +25,18 @@ class EconomyManager {
       });
       await db.set(`${prefix}_${i.userID}`, currentMoney - i.reduce);
     }
+=======
+    if (!i) throw new Error(`No Options Provided When Modifying Money.`);
+    if (!typeof i !== "object")
+      throw new Error(`No Valid Option Provided When Modfiying Money.`);
+    let prefix =
+      i.type === "bank" ? "bank" : i.type === "wallet" ? "wallet" : "unknown";
+    if (i.set) await db.set(`${prefix}_${i.userID}`, i.set);
+    if (i.add)
+      await db.set(`${prefix}_${i.userID}`, i.add + this.fetchMoney(i.userID));
+    if (i.reduce)
+      await db.set(`${prefix}_${i.userID}`, i.add - this.fetchMoney(i.userID));
+>>>>>>> 3fa847aeea007e0ee0069f94916459f27af7945b
     return true;
   }
 
