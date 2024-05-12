@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const path = require("path");
 const EconomyManager = require("../../Util/EconomyManager");
 
 module.exports = {
@@ -25,62 +24,57 @@ module.exports = {
         .setRequired(false),
     ),
   run: async ({ client, interaction }) => {
-    await interaction.deferReply();
-
-    const senderId = interaction.user.id;
-    let receiverId;
-    const amount = interaction.options.getNumber("amount");
-    const userMention = interaction.options.getUser("user_mention");
-    const userId = interaction.options.getString("user_id");
-
-    if (userMention) {
-      receiverId = userMention.id;
-    } else {
-      receiverId = userId;
-    }
-
     try {
-      const economyManager = new EconomyManager();
+      await interaction.deferReply();
 
-      const senderWallet = await economyManager.fetchMoney({
+      const senderId = interaction.user.id;
+      const amount = interaction.options.getNumber("amount");
+      const receiverId =
+        interaction.options.getUser("user_mention")?.id ??
+        interaction.options.getString("user_id");
+
+      const eco = new EconomyManager();
+      const senderWallet = await eco.GetMoney({
         userID: senderId,
-        type: "wallet",
+        balance: "wallet",
       });
-      if (senderWallet < amount) {
-        const neededAmount = amount - senderWallet;
-        await interaction.editReply(
-          `You don't have enough coins in your wallet. You need ${neededAmount} more coins to make this transfer.`,
+
+      if (senderWallet.raw < amount) {
+        return await interaction.editReply(
+          `You don't have enough coins in your wallet. You need ${amount - senderWallet.raw} more coins to make this transfer.`,
         );
-        return;
       }
 
+      await eco.SetMoney({
+        userID: senderId,
+        balance: "wallet",
+        amount: senderWallet.raw - amount,
+      });
+
+      // Add the transferred amount to the receiver's balance
+      await eco.SetMoney({
+        userID: receiverId,
+        balance: "wallet",
+        amount:
+          (
+            await eco.GetMoney({
+              userID: receiverId,
+              balance: "wallet",
+            })
+          ).raw + amount,
+      });
+
+      const senderTag = interaction.user.tag;
       const receiverUser = await client.users.fetch(receiverId);
       const receiverTag = receiverUser.tag;
 
-      const senderResult = await economyManager.ModifyMoney({
-        userID: senderId,
-        reduce: amount,
-        type: "wallet",
-      });
-      if (!senderResult)
-        throw new Error("Failed to deduct coins from sender's wallet.");
-
-      const receiverResult = await economyManager.ModifyMoney({
-        userID: receiverId,
-        add: amount,
-        type: "wallet",
-      });
-      if (!receiverResult)
-        throw new Error("Failed to add coins to receiver's wallet.");
-
-      const senderTag = interaction.user.tag;
-
       const embed = new EmbedBuilder()
         .setTitle(`Paying ${receiverTag}`)
-        .setColor("Random")
+        .setColor("Blurple")
         .addFields(
           { name: "Transfer From", value: senderTag },
           { name: "Transfer to", value: receiverTag },
+          { name: "Money Amount", value: eco.formatMoney(amount) },
         );
 
       await interaction.editReply({ embeds: [embed] });

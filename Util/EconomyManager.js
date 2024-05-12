@@ -1,174 +1,57 @@
 const SimpleJsonDB = require("simple-json-db");
 const fs = require("fs");
+const path = require("path");
+const { emojis } = require("../config.js");
+const defaultProfile = (id) => ({
+  id,
+  wallet: 0,
+  bank: 0,
+  inventory: [],
+});
 
 class EconomyManager {
-  async ModifyMoney(i) {
-<<<<<<< HEAD
-    if (!i) throw new Error(`No valid options provided when modifying money.`);
-    if (!i.userID) throw new Error(`Invalid user ID provided.`);
-    if (!i.type) i.type = "wallet";
-    let prefix = i.type === "bank" ? "bank" : "wallet";
-    let db = await this.getProfile(i.userID);
-
-    if (i.set) await db.set(`${prefix}_${i.userID}`, i.set);
-    if (i.add) {
-      let currentMoney = await this.fetchMoney({
-        userID: i.userID,
-        type: i.type,
-      });
-      await db.set(`${prefix}_${i.userID}`, currentMoney + i.add);
-    }
-    if (i.reduce) {
-      let currentMoney = await this.fetchMoney({
-        userID: i.userID,
-        type: i.type,
-      });
-      await db.set(`${prefix}_${i.userID}`, currentMoney - i.reduce);
-    }
-=======
-    if (!i) throw new Error(`No Options Provided When Modifying Money.`);
-    if (!typeof i !== "object")
-      throw new Error(`No Valid Option Provided When Modfiying Money.`);
-    let prefix =
-      i.type === "bank" ? "bank" : i.type === "wallet" ? "wallet" : "unknown";
-    if (i.set) await db.set(`${prefix}_${i.userID}`, i.set);
-    if (i.add)
-      await db.set(`${prefix}_${i.userID}`, i.add + this.fetchMoney(i.userID));
-    if (i.reduce)
-      await db.set(`${prefix}_${i.userID}`, i.add - this.fetchMoney(i.userID));
->>>>>>> 3fa847aeea007e0ee0069f94916459f27af7945b
-    return true;
+  formatMoney(amount) {
+    if (amount >= 1e9) return `${(amount / 1e9).toFixed(1)}b ${emojis.money}`;
+    else if (amount >= 1e6)
+      return `${(amount / 1e6).toFixed(1)}m ${emojis.money}`;
+    else if (amount >= 1e3)
+      return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;
+    else return `${amount} ${emojis.money}`;
   }
 
-  async getProfile(userID) {
-    try {
-      if (!userID || typeof userID !== "number")
-        throw new Error(`Invalid UserID Provided.`);
-      const dbPath = `../Database/${userID}.json`;
-
-      if (!fs.existsSync(dbPath)) {
-        fs.writeFileSync(dbPath, JSON.stringify({}));
-      }
-
-      const db = new SimpleJsonDB(dbPath);
-      return db;
-    } catch (error) {
-      console.error("Error getting profile:", error);
-    }
+  async SetMoney(o) {
+    const { db } = await this.GetProfile(o.userID);
+    if (o.amount !== undefined && o.userID !== undefined && db)
+      await db.set(o.balance, Math.min(o.amount, 1e9));
+    return Math.min(o.amount, 1e9);
   }
 
-  async fetchMoney(i) {
-    try {
-      if (!i || !i.userID || !i.type)
-        throw new Error(`Invalid options provided.`);
-      let db = await this.getProfile(i.userID);
-      let prefix = i.type === "bank" ? "bank" : "wallet";
-      const amount = await db.get(`${prefix}_${i.userID}`);
-      return amount;
-    } catch (error) {
-      console.error("Error fetching money:", error);
-      return 0;
-    }
-  }
-  async daily(userID, amount) {
-    if (!userID) throw new Error("User id was not provided!");
-    if (!amount) amount = this.random(100, 250);
-    const newAmount = await this.ModifyMoney({
-      userID,
-      add: amount,
-      type: "wallet",
-    });
+  async GetProfile(userID) {
+    const dbPath = path.join(__dirname, `../Database/${userID}.json`);
+    if (!fs.existsSync(dbPath))
+      fs.writeFileSync(dbPath, JSON.stringify(defaultProfile(userID)));
+    const db = new SimpleJsonDB(dbPath);
+    const profile = db.JSON();
+    const missingProperties = Object.keys(defaultProfile(userID)).filter(
+      (property) => !profile.hasOwnProperty(property),
+    );
+    missingProperties.forEach((property) =>
+      db.set(property, defaultProfile(userID)[property]),
+    );
     return {
-      amount,
-      money: newAmount,
+      db,
     };
   }
 
-  async weekly(userID, amount) {
-    if (!userID) throw new Error("User id was not provided!");
-    if (!amount) amount = this.random(200, 750);
-    const newAmount = await this.ModifyMoney({
-      userID,
-      add: amount,
-      type: "wallet",
-    });
+  async GetMoney(i) {
+    const { db } = await this.GetProfile(i.userID);
+    const amount = await db.get(i.balance);
+    const formattedAmount =
+      amount !== undefined ? this.formatMoney(amount) : this.formatMoney(0);
     return {
-      amount,
-      money: newAmount,
+      raw: amount !== undefined ? amount : 0,
+      formatted: formattedAmount,
     };
-  }
-
-  async monthly(userID, amount) {
-    if (!userID) throw new Error("User id was not provided!");
-    if (!amount) amount = this.random(1000, 5000);
-    const newAmount = await this.ModifyMoney({
-      userID,
-      add: amount,
-      type: "wallet",
-    });
-    return {
-      amount,
-      money: newAmount,
-    };
-  }
-
-  async beg(userID, amount) {
-    if (!userID) throw new Error("User id was not provided!");
-    if (!amount) amount = this.random(1, 70);
-    const newAmount = await this.ModifyMoney({
-      userID,
-      add: amount,
-      type: "wallet",
-    });
-    return {
-      amount,
-      money: newAmount,
-    };
-  }
-
-  async work(userID, amount) {
-    if (!userID) throw new Error("User id was not provided!");
-    if (!amount) amount = this.random(500, 1000);
-    const newAmount = await this.ModifyMoney({
-      userID,
-      add: amount,
-      type: "wallet",
-    });
-    return {
-      amount,
-      money: newAmount,
-    };
-  }
-
-  async leaderboard(limit = 10) {
-    let allData = [];
-    const files = fs.readdirSync("../Database/");
-    for (const file of files) {
-      let userID = file.split(".")[0];
-      let money = await this.fetchMoney({
-        userID,
-        type: "wallet",
-      });
-      allData.push({
-        userID,
-        money,
-      });
-    }
-    allData = allData.sort((a, b) => b.money - a.money).slice(0, limit);
-    return allData;
-  }
-
-  async reset() {
-    const files = fs.readdirSync("../Database/");
-    for (const file of files) {
-      fs.unlinkSync(`../Database/${file}`);
-    }
-    return true;
-  }
-
-  random(a, b) {
-    const number = Math.floor(Math.random() * (b - a + 1)) + a;
-    return number;
   }
 }
 

@@ -1,45 +1,67 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('mute')
-    .setDescription('Temporarily mutes a user.')
-    .addUserOption(option => option.setName('user').setDescription('The user to mute').setRequired(true))
-    .addStringOption(option => option.setName('duration').setDescription('Duration of the mute (e.g., 10m, 1h, 1d)').setRequired(true))
-    .addStringOption(option => option.setName('reason').setDescription('Reason for muting the user').setRequired(false)),
+    .setName("mute")
+    .setDescription("Temporarily mutes a user.")
+    .addUserOption((option) =>
+      option
+        .setName("user")
+        .setDescription("The user to mute")
+        .setRequired(true),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("duration")
+        .setDescription("Duration of the mute (e.g., 10m, 1h, 1d)")
+        .setRequired(true),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("reason")
+        .setDescription("Reason for muting the user")
+        .setRequired(false),
+    ),
 
   run: async ({ interaction }) => {
-    const userToMute = interaction.options.getMember('user');
-    const duration = interaction.options.getString('duration');
-    const reason = interaction.options.getString('reason') || 'No reason provided';
+    const userToMute = interaction.options.getMember("user");
+    const duration = interaction.options.getString("duration");
+    const reason =
+      interaction.options.getString("reason") || "No reason provided";
     const milliseconds = ms(duration);
 
     if (!milliseconds) {
-      return interaction.reply({ content: 'Incorrect duration format.', ephemeral: true });
+      return interaction.reply({
+        content: "Incorrect duration format.",
+        ephemeral: true,
+      });
     }
 
     try {
       await userToMute.timeout(milliseconds, reason);
       const muteEmbed = new EmbedBuilder()
-        .setColor(0xFFA500)
-        .setTitle('User Muted')
+        .setColor(0xffa500)
+        .setTitle("User Muted")
         .addFields(
-          { name: 'Muted User', value: userToMute.user.tag },
-          { name: 'Muted By', value: interaction.user.tag },
-          { name: 'Duration', value: duration },
-          { name: 'Reason', value: reason }
+          { name: "Muted User", value: userToMute.user.tag },
+          { name: "Muted By", value: interaction.user.tag },
+          { name: "Duration", value: duration },
+          { name: "Reason", value: reason },
         )
         .setTimestamp();
       await interaction.reply({ embeds: [muteEmbed] });
     } catch (error) {
-      await interaction.reply({ content: 'Could not mute the user.', ephemeral: true });
+      await interaction.reply({
+        content: "Could not mute the user.",
+        ephemeral: true,
+      });
     }
   },
 
   options: {
-    userPermissions: ['MODERATE_MEMBERS'],
-    botPermissions: ['MODERATE_MEMBERS']
-  }
+    userPermissions: ["MODERATE_MEMBERS"],
+    botPermissions: ["MODERATE_MEMBERS"],
+  },
 };
 
 function ms(duration) {

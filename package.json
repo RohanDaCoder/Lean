@@ -6,15 +6,15 @@
   "devDependencies": {
     "commandkit": "^0.1.10",
     "discord.js": "^14.15.2",
+    "files-folder": "^1.2.4",
+    "glob": "^10.3.14",
     "nodemon": "^3.1.0",
-    "prettier": "3.2.5"
+    "prettier": "^3.2.5"
   },
   "scripts": {
-    "build": "esbuild index.js --bundle --minify --platform=node --outfile=bundled.js",
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "buildStart": "npm run build && node bundled.js",
-    "pretty": "npx prettier . --write"
+    "pretty": "prettier . --write"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,8 @@
     "axios": "^1.6.8",
     "discord-gamecord": "^4.4.2",
     "path": "^0.12.7",
+    "pretty-ms": "^9.0.0",
+    "replicate": "^0.29.4",
     "simple-json-db": "^2.0.0"
   }
 }

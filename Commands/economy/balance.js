@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const EconomyManager = require("../../Util/EconomyManager");
-const { emojis } = require("../../config.js");
-const economyManager = new EconomyManager();
+
+const eco = new EconomyManager();
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -20,54 +20,38 @@ module.exports = {
         .setRequired(false),
     ),
   run: async ({ client, interaction }) => {
-    await interaction.deferReply();
-
-    let id;
-    const userOption = interaction.options.getUser("user");
-    const userId = interaction.options.getString("user_id");
-    if (!userOption && !userId) {
-      id = interaction.user.id;
-    } else if (userOption) {
-      id = userOption.id;
-    } else if (userId) {
-      id = userId;
-    }
-    const user = await client.users.cache.find((i) => i.id === id);
-    if (!user) return interaction.reply(`:x: Could Not Find That User.`);
     try {
-      const walletData = await economyManager.fetchMoney({
-        userID: id,
-        type: "wallet",
-      });
-      const bankData = await economyManager.fetchMoney({
-        userID: id,
-        type: "bank",
-      });
+      await interaction.deferReply();
 
-      const walletAmount = walletData?.amount || 0;
-      const bankAmount = bankData?.amount || 0;
+      let userId =
+        interaction.options.getUser("user")?.id ||
+        interaction.options.getString("user_id") ||
+        interaction.user.id;
+
+      const user = await client.users.fetch(userId);
+      if (!user)
+        return await interaction.editReply(":x: Could not find that user.");
+
+      const walletInfo = await eco.GetMoney({
+        userID: userId,
+        balance: "wallet",
+      });
+      const bankInfo = await eco.GetMoney({ userID: userId, balance: "bank" });
 
       const balanceEmbed = new EmbedBuilder()
-        .setTitle(`Balance`)
+        .setTitle("Balance")
         .setAuthor({
           name: user.tag,
           iconURL: user.displayAvatarURL({ dynamic: true }),
-<<<<<<< HEAD
-=======
-        })
-        .addFields({
-          name: "Wallet",
-          value: `${wallet.toLocaleString()} ${emojis.money}`,
->>>>>>> 3fa847aeea007e0ee0069f94916459f27af7945b
         })
         .addFields(
           {
             name: "Wallet",
-            value: `${walletAmount.toLocaleString()} ${emojis.money}`,
+            value: walletInfo.formatted,
           },
           {
             name: "Bank",
-            value: `${bankAmount.toLocaleString()} ${emojis.money}`,
+            value: bankInfo.formatted,
           },
         )
         .setColor("Random")
@@ -75,10 +59,8 @@ module.exports = {
 
       await interaction.editReply({ embeds: [balanceEmbed] });
     } catch (error) {
-      console.error(error);
-      await interaction.editReply(
-        "An error occurred while fetching balance. \n" + error.message,
-      );
+      console.error("Error fetching balance:", error);
+      await interaction.editReply("An error occurred while fetching balance.");
     }
   },
 };

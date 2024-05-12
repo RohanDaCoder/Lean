@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const EconomyManager = require("../../Util/EconomyManager");
 
-const economyManager = new EconomyManager();
+const eco = new EconomyManager();
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -9,28 +9,43 @@ module.exports = {
     .setDescription("Claim Your Daily Coins"),
   run: async ({ client, interaction }) => {
     try {
-      await interaction.deferReply();
+      const profile = await eco.GetProfile({ userID: interaction.user.id });
+      const check = profile.get("dailyCheck");
+      const timeout = 86400000; // 24 hours
+      const timeLeft = Date.now() - check;
 
-      const userId = interaction.user.id;
+      if (check !== null && timeLeft < timeout) {
+        const remainingTime = timeout - timeLeft;
+        const prettyRemainingTime = require("pretty-ms")(remainingTime, {
+          verbose: true,
+        });
 
-      // Check if user has already claimed daily
-      const result = await economyManager.daily(userId, 500);
-      if (result.cooldown) {
-        await interaction.editReply({
-          content: `You have already claimed your daily coins. Please wait ${result.time.hours} hours and ${result.time.minutes} minutes before claiming again.`,
+        await interaction.reply({
+          content: `You have already claimed your daily prize. Please wait ${prettyRemainingTime} before claiming again.`,
+          ephemeral: true,
         });
         return;
+      } else {
+        const reward = 500;
+        const currentBalance = await eco.GetMoney({
+          userID: interaction.user.id,
+          balance: "wallet",
+        });
+        await interaction.reply({
+          content: `GG! You claimed ${reward} as your daily reward.`,
+        });
+        await eco.SetMoney({
+          userID: interaction.user.id,
+          balance: "wallet",
+          amount: currentBalance + reward,
+        });
+        profile.set("dailyCheck", Date.now());
       }
-
-      // Send confirmation message
-      await interaction.editReply({
-        content:
-          "You have successfully claimed your daily coins! 500 coins have been added to your wallet.",
-      });
     } catch (error) {
-      console.error("Error claiming daily coins:", error.message);
-      await interaction.editReply({
-        content: `An error occurred while claiming your daily coins: ${error.message}`,
+      console.error("Error claiming daily reward:", error);
+      await interaction.reply({
+        content: "An error occurred while claiming your daily reward.",
+        ephemeral: true,
       });
     }
   },
