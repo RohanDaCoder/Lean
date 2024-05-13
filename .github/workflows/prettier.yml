@@ -3,7 +3,7 @@ name: Prettier
 on:
   push:
     branches:
-      - main # Change this to your main branch name
+      - main
 
 jobs:
   format:
@@ -17,12 +17,16 @@ jobs:
         run: npm install
 
       - name: Run Prettier
-        run: npx prettier --write .
-
-      - name: Commit changes
         run: |
-          git config user.name "RohanDaCoder"
-          git config user.email "rohanbmgo2010@gmail.com"
-          git add .
-          git commit -m "Format code with Prettier"
-          git push
+          npx prettier --write "Commands/**/*.js" "Events/**/*.js" "Util/**/*.js" "Validation/**/*.js" "index.js" "package.json"
+
+      - name: Check for changes
+        run: |
+          git status --porcelain
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "RohanDaCoder"
+            git config user.email "rohanbmgo2010@gmail.com"
+            git add .
+            git commit -m "Format code with Prettier"
+            git push
+          fi
