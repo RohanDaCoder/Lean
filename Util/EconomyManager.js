@@ -2,11 +2,15 @@ const SimpleJsonDB = require("simple-json-db");
 const fs = require("fs");
 const path = require("path");
 const { emojis } = require("../config.js");
+
 const defaultProfile = (id) => ({
   id,
   wallet: 0,
   bank: 0,
   inventory: [],
+  daily: null,
+  weekly: null,
+  monthly: null,
 });
 
 class EconomyManager {
@@ -19,28 +23,26 @@ class EconomyManager {
     else return `${amount} ${emojis.money}`;
   }
 
-  async SetMoney(o) {
-    const { db } = await this.GetProfile(o.userID);
-    if (o.amount !== undefined && o.userID !== undefined && db)
-      await db.set(o.balance, Math.min(o.amount, 1e9));
-    return Math.min(o.amount, 1e9);
-  }
-
   async GetProfile(userID) {
     const dbPath = path.join(__dirname, `../Database/${userID}.json`);
-    if (!fs.existsSync(dbPath))
+    if (!fs.existsSync(dbPath)) {
       fs.writeFileSync(dbPath, JSON.stringify(defaultProfile(userID)));
+    }
     const db = new SimpleJsonDB(dbPath);
     const profile = db.JSON();
-    const missingProperties = Object.keys(defaultProfile(userID)).filter(
-      (property) => !profile.hasOwnProperty(property),
-    );
-    missingProperties.forEach((property) =>
-      db.set(property, defaultProfile(userID)[property]),
-    );
-    return {
-      db,
-    };
+    if (profile.id !== userID) {
+      db.set("id", userID);
+    }
+    return { db, profile };
+  }
+
+  async SetMoney(o) {
+    const { db } = await this.GetProfile(o.userID);
+    if (o.amount !== undefined && o.userID !== undefined && db) {
+      await db.set(o.balance, Math.min(o.amount, 1e9));
+      return Math.min(o.amount, 1e9);
+    }
+    return 0;
   }
 
   async GetMoney(i) {

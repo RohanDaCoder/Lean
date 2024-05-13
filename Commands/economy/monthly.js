@@ -5,39 +5,37 @@ const eco = new EconomyManager();
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("daily")
-    .setDescription("Claim Your Daily Coins"),
+    .setName("monthly")
+    .setDescription("Claim Your Monthly Coins"),
   options: {
-    cooldown: "1d" // 1 day cooldown
+    cooldown: "1M" // 1 month cooldown
   },
-  run: async ({ interaction, client }) => {
+  run: async ({ client, interaction }) => {
     try {
       const userID = interaction.user.id;
-      const { default: prettyMS } = await import("pretty-ms");
       const { db } = await eco.GetProfile(userID);
-      const lastClaimTime = db.get("daily");
-      if (lastClaimTime) {
+      const check = db.get("monthly");
+      if (check) {
         await interaction.reply({
-          content: "You have already claimed your daily prize.",
+          content: "You have already claimed your monthly prize.",
           ephemeral: true,
         });
         return;
       } else {
-        const reward = client.config.rewards.daily;
+        const reward = client.config.rewards.monthly;
         const currentBalance = await eco.GetMoney({
           userID,
           balance: "wallet",
         });
         await interaction.reply({
-          content: `Congratulations! You claimed ${eco.formatMoney(reward)} as your daily reward.`,
+          content: `Congratulations! You claimed ${eco.formatMoney(reward)} as your monthly reward.`,
         });
         db.set("wallet", currentBalance.raw + reward);
-        db.set("daily", Date.now());
       }
     } catch (error) {
-      console.error("Error claiming daily reward:", error);
+      console.error("Error claiming monthly reward:", error);
       await interaction.reply({
-        content: "An error occurred while claiming your daily reward.",
+        content: "An error occurred while claiming your monthly reward.",
         ephemeral: true,
       });
     }

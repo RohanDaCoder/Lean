@@ -94,4 +94,7 @@ module.exports = {
       console.error(error);
     }
   },
+  options: {
+  cooldown: "1m"
+  }
 };

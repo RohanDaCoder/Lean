@@ -25,4 +25,7 @@ module.exports = {
       },
     }).startGame();
   },
+  options: {
+  cooldown: "15s"
+  }
 };
