@@ -95,6 +95,6 @@ module.exports = {
     }
   },
   options: {
-  cooldown: "1m"
-  }
+    cooldown: "1m",
+  },
 };

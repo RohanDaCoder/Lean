@@ -8,7 +8,7 @@ module.exports = {
     .setName("daily")
     .setDescription("Claim Your Daily Coins"),
   options: {
-    cooldown: "1d" // 1 day cooldown
+    cooldown: "1d", // 1 day cooldown
   },
   run: async ({ interaction, client }) => {
     try {

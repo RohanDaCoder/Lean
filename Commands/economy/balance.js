@@ -18,7 +18,6 @@ module.exports = {
         .setName("user_id")
         .setDescription("The User's ID You Want to Check Balance Of")
         .setRequired(false),
-        options: { cooldown: "10s" }
     ),
   run: async ({ client, interaction }) => {
     try {
@@ -64,4 +63,5 @@ module.exports = {
       await interaction.editReply("An error occurred while fetching balance.");
     }
   },
+  options: { cooldown: "10s" },
 };

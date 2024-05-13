@@ -8,7 +8,7 @@ module.exports = {
     .setName("monthly")
     .setDescription("Claim Your Monthly Coins"),
   options: {
-    cooldown: "1M" // 1 month cooldown
+    cooldown: "1M", // 1 month cooldown
   },
   run: async ({ client, interaction }) => {
     try {

@@ -4,7 +4,6 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("coinflip")
     .setDescription("Flip a coin"),
-    options: { cooldown: "10s" }
   run: async ({ interaction }) => {
     try {
       const message = await interaction.reply("Flipping coin...");
