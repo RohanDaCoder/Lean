@@ -24,24 +24,14 @@ module.exports = {
         .setRequired(false),
     ),
   run: async ({ client, interaction }) => {
-      /**
-       *    *
-       *       * @param {Client} client
-       *          * @param {Interaction} interaction
-       *             */
-    /**
-     *
-     * @param {Client} client
-     * @param {Interaction} interaction
-     */
-
     try {
       await interaction.deferReply();
-Interaction.repl
       const senderId = interaction.user.id;
       const amount = interaction.options.getNumber("amount");
-      const receiverId =
+      const receiverId =
         interaction.options.getUser("user_mention")?.id ??
+        interaction.options.getString("user_id");
+      interaction.options.getUser("user_mention")?.id ??
         interaction.options.getString("user_id");
 
       const eco = new EconomyManager();

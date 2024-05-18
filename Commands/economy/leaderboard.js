@@ -8,7 +8,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("leaderboard")
     .setDescription("View the leaderboard"),
-  
+
   async run({ interaction, client }) {
     const dirPath = path.join(__dirname, "../../Database/Profiles");
     let leaderboard = [];

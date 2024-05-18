@@ -56,8 +56,16 @@ module.exports = {
       .setTitle("Coin Flip Result")
       .setDescription(flip === "heads" ? "Heads 🤞" : "Tails 👌")
       .addFields([
-        { name: "Outcome", value: choice === flip ? "You won!" : "You lost.", inline: true },
-        { name: "Winnings", value: economyManager.formatMoney(winnings), inline: true },
+        {
+          name: "Outcome",
+          value: choice === flip ? "You won!" : "You lost.",
+          inline: true,
+        },
+        {
+          name: "Winnings",
+          value: economyManager.formatMoney(winnings),
+          inline: true,
+        },
       ]);
 
     await interaction.reply({ embeds: [coinFlipEmbed] });

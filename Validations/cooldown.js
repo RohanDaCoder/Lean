@@ -1,6 +1,8 @@
 const SimpleJsonDB = require("simple-json-db");
 const path = require("path");
-const cooldowns = new SimpleJsonDB(path.join(__dirname, "../Database/cooldowns.json")); // Ensure correct path
+const cooldowns = new SimpleJsonDB(
+  path.join(__dirname, "../Database/cooldowns.json"),
+); // Ensure correct path
 const config = require("../config.js");
 
 function parseCooldown(cooldownString) {
