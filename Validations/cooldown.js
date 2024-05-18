@@ -1,4 +1,8 @@
-const cooldowns = new Map();
+const SimpleJsonDB = require("simple-json-db");
+const path = require("path");
+const cooldowns = new SimpleJsonDB(path.join(__dirname, "../Database/cooldowns.json")); // Ensure correct path
+const config = require("../config.js");
+
 function parseCooldown(cooldownString) {
   const regex = /(\d+)([smhdw])/;
   const match = cooldownString.match(regex);
@@ -25,18 +29,21 @@ function parseCooldown(cooldownString) {
 
 module.exports = async ({ interaction, commandObj }) => {
   const userID = interaction.user.id;
-  if (process.config.devIDs.includes(userID)) return false;
+
   const cooldownKey = `${userID}-${commandObj.data.name}`;
   const cooldownString = commandObj.options?.cooldown || "3s";
   const cooldownTime = parseCooldown(cooldownString);
 
   if (!cooldownTime) {
     console.error("Invalid cooldown time format:", cooldownString);
-    return true; // Invalid cooldown time format, stop command execution
+    return true;
   }
 
-  if (cooldowns.has(cooldownKey) && cooldowns.get(cooldownKey) > Date.now()) {
-    const remainingTime = cooldowns.get(cooldownKey) - Date.now();
+  const now = Date.now();
+  const cooldownExpiration = cooldowns.get(cooldownKey);
+
+  if (cooldownExpiration && cooldownExpiration > now) {
+    const remainingTime = cooldownExpiration - now;
     const { default: prettyMS } = await import("pretty-ms");
     const prettyRemainingTime = prettyMS(remainingTime, { verbose: true });
     interaction.reply({
@@ -46,6 +53,5 @@ module.exports = async ({ interaction, commandObj }) => {
     return true;
   }
 
-  cooldowns.set(cooldownKey, Date.now() + cooldownTime);
-  return false;
+  cooldowns.set(cooldownKey, now + cooldownTime);
 };

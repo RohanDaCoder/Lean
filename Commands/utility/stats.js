@@ -6,17 +6,14 @@ module.exports = {
     .setDescription("Display bot statistics"),
   run: async ({ client, interaction }) => {
     // Fetching values from the client
-    const { default: prettyMS } = await import("pretty-ms");
     const ping = client.ws.ping;
-    try {
-      const uptime = prettyMS(client.uptime);
-    } catch (e) {}
+    const uptime = client.uptime;
     const memoryUsage = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
       2,
     );
     const guildsCount = client.guilds.cache.size;
     const usersCount = client.users.cache.size;
-    const apiLatency = prettyMS(Date.now() - interaction.editedTimestamp);
+    const apiLatency = Date.now() - interaction.editedTimestamp;
     const version = require("../../package.json").version;
     const discordJSVersion = require("discord.js").version;
     const nodeVersion = process.version;

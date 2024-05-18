@@ -24,7 +24,7 @@ class EconomyManager {
   }
 
   async GetProfile(userID) {
-    const dbPath = path.join(__dirname, `../Database/${userID}.json`);
+    const dbPath = path.join(__dirname, `../Database/Profiles/${userID}.json`);
     if (!fs.existsSync(dbPath)) {
       fs.writeFileSync(dbPath, JSON.stringify(defaultProfile(userID)));
     }

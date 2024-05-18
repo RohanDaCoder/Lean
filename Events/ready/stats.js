@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const ms = require("ms");
 module.exports = (c, client, handler) => {
   setInterval(() => {
     client.channels
@@ -7,7 +6,7 @@ module.exports = (c, client, handler) => {
       .then((channel) => {
         channel.messages
           .fetch("1237775445685174382")
-          .then((msg) => {
+          .then(async (msg) => {
             const ping = client.ws.ping;
             const uptime = client.uptime;
             const memoryUsage = (
@@ -17,7 +16,7 @@ module.exports = (c, client, handler) => {
             ).toFixed(2);
             const guildsCount = client.guilds.cache.size;
             const usersCount = client.users.cache.size;
-            const apiLatency = ms(Date.now() - msg.editedTimestamp);
+            const apiLatency = Date.now() - msg.editedTimestamp;
             const version = require("../../package.json").version;
             const discordJSVersion = require("discord.js").version;
             const nodeVersion = process.version;
@@ -85,5 +84,5 @@ module.exports = (c, client, handler) => {
       .catch((error) => {
         console.log(error.message);
       }); // Ignore errors
-  }, 10000); // Refresh every 30 seconds
+  }, 30000); // Refresh every 30 seconds
 };

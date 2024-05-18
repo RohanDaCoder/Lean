@@ -21,12 +21,13 @@ const client = new Client({
 
 client.config = config;
 process.client = client;
+process.config;
 
 new CommandKit({
   client,
   commandsPath: path.join(__dirname, "Commands"),
   eventsPath: path.join(__dirname, "Events"),
-  validationsPath: path.join(__dirname, "validation"),
+  validationsPath: path.join(__dirname, "Validations"),
   devGuildIds: ["964473061913030696"],
   devUserIds: config.devIDs,
   bulkRegister: true,
