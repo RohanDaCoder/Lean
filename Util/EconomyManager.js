@@ -13,7 +13,7 @@ const defaultProfile = (id) => ({
   monthly: null,
 });
 
-class EconomyManager {
+const EconomyManager = {
   formatMoney(amount) {
     if (amount >= 1e9) return `${(amount / 1e9).toFixed(1)}b ${emojis.money}`;
     else if (amount >= 1e6)
@@ -21,7 +21,7 @@ class EconomyManager {
     else if (amount >= 1e3)
       return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;
     else return `${amount} ${emojis.money}`;
-  }
+  },
 
   async GetProfile(userID) {
     const dbPath = path.join(__dirname, `../Database/Profiles/${userID}.json`);
@@ -34,7 +34,7 @@ class EconomyManager {
       db.set("id", userID);
     }
     return { db, profile };
-  }
+  },
 
   async SetMoney(o) {
     const { db } = await this.GetProfile(o.userID);
@@ -43,7 +43,7 @@ class EconomyManager {
       return Math.min(o.amount, 1e9);
     }
     return 0;
-  }
+  },
 
   async GetMoney(i) {
     const { db } = await this.GetProfile(i.userID);
@@ -54,7 +54,15 @@ class EconomyManager {
       raw: amount !== undefined ? amount : 0,
       formatted: formattedAmount,
     };
-  }
+  },
+  async set(o) {
+    const { db } = await this.GetProfile(o.userID);
+    await db.set(o.key, o.value);
+  },
+  async get(o) {
+    const { db } = await this.GetProfile(o.userID);
+    await db.get(o.key, o.value);
+  },
 }
 
 module.exports = EconomyManager;
