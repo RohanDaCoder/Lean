@@ -6,6 +6,7 @@ const {
   WebhookClient,
   EmbedBuilder,
 } = require("discord.js");
+const Discord = require("discord.js");
 
 const { CommandKit } = require("commandkit");
 const config = require("./config.js");
@@ -21,15 +22,15 @@ const client = new Client({
 
 client.config = config;
 process.client = client;
-process.config;
-
+process.config = config;
+process.discord = Discord;
 new CommandKit({
   client,
   commandsPath: path.join(__dirname, "Commands"),
   eventsPath: path.join(__dirname, "Events"),
   validationsPath: path.join(__dirname, "Validations"),
   devGuildIds: ["1101454417586294854"],
-  devUserIds: config.devIDs,
+  devUserIds: ["922419431508938773"],
   bulkRegister: true,
 });
 

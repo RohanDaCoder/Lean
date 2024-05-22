@@ -12,12 +12,8 @@ module.exports = {
     ),
 
   run: async ({ client, interaction }) => {
-    let user = interaction.options.getUser("user");
-
-    if (!user) {
-      user = interaction.user;
-    }
-
+    let user = interaction.options.getUser("user") || interaction.user;
+    
     const embed = new EmbedBuilder()
       .setTitle(`${user.username}'s Avatar`)
       .setColor("Blurple")

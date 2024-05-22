@@ -9,5 +9,5 @@ module.exports = {
     weekly: 5000,
     monthly: 10000,
   },
-  devIDs: ["922419431508938773"],
+  usageLogChannel: "1132214287688011886"
 };
