@@ -1,6 +1,6 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const EconomyManager = require("../../Util/EconomyManager.js");
-const economyManager = new EconomyManager();
+const economyManager = require("../../Util/EconomyManager.js");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("withdraw")
