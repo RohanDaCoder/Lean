@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const InventoryManager = require("../../Util/InventoryManager");
+const { getItemChoices } = require("../../Util/Items");
+const inv = require("../../Util/InventoryManager");
 
 const actionChoices = [
   { name: "Add", value: "add" },
@@ -14,42 +15,68 @@ module.exports = {
       option
         .setName("action")
         .setDescription("Action (add or remove)")
-        .addChoices(actionChoices)
-        .setRequired(true),
+        .setRequired(true)
+        .addChoices(actionChoices),
     )
     .addStringOption((option) =>
       option
         .setName("item")
         .setDescription("The item to add or remove")
-        .setRequired(true),
+        .setRequired(true)
+        .addChoices(getItemChoices()),
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName("amount")
+        .setDescription("The amount of the item to add or remove")
+        .setRequired(false),
     )
     .addUserOption((option) =>
       option
-        .setName("user")
-        .setDescription("The user whose inventory you want to modify")
-        .setRequired(true),
+        .setName("user_mention")
+        .setDescription("Mention the user whose inventory you want to modify")
+        .setRequired(false),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("user_id")
+        .setDescription("The ID of the user whose inventory you want to modify")
+        .setRequired(false),
     ),
 
   async run({ client, interaction }) {
-    const userId = interaction.options.getUser("user").id;
+    let userId =
+      interaction.options.getUser("user_mention")?.id ||
+      interaction.options.getString("user_id") ||
+      interaction.user.id;
     const action = interaction.options.getString("action").toLowerCase();
-    const item = interaction.options.getString("item");
+    const itemId = interaction.options.getString("item");
+    const amount = interaction.options.getInteger("amount") || 1;
 
     await interaction.deferReply();
     try {
-      const inventoryManager = new InventoryManager();
-      let userInventory = await inventoryManager.getInventory(userId);
+      let userInventory = await inv.GetInventory(userId);
 
       if (action === "add") {
-        userInventory.push(item);
+        await inv.AddItem(userId, itemId, amount);
       } else if (action === "remove") {
-        userInventory = userInventory.filter((invItem) => invItem !== item);
+        await inv.RemoveItem(userId, itemId, amount);
       }
 
-      await inventoryManager.setInventory(userId, userInventory);
+      userInventory = await inv.GetInventory(userId);
 
       const user = await client.users.fetch(userId);
-      const title = `${action === "add" ? "Added" : "Removed"} Item`;
+      const title = `${action === "add" ? "Added" : "Removed"} ${amount} ${amount === 1 ? "item" : "items"}`;
+
+      const itemsList =
+        userInventory.length > 0
+          ? userInventory
+              .map(
+                (item, index) =>
+                  `${index + 1}. ${item.name} (x${item.quantity})`,
+              )
+              .join("\n")
+          : "This user's inventory is empty.";
 
       const inventoryEmbed = new EmbedBuilder()
         .setTitle(title)
@@ -57,10 +84,7 @@ module.exports = {
           name: user.tag,
           iconURL: user.displayAvatarURL({ dynamic: true }),
         })
-        .addFields({
-          name: `Updated Inventory`,
-          value: userInventory.length > 0 ? userInventory.join(", ") : "Empty",
-        })
+        .setDescription(itemsList)
         .setTimestamp();
 
       await interaction.editReply({ embeds: [inventoryEmbed] });

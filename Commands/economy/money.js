@@ -79,7 +79,7 @@ module.exports = {
 
     await interaction.deferReply();
     try {
-      const eco = new EconomyManager();
+      const eco = require("../../Util/EconomyManager.js");
       let currentBalance = await eco.GetMoney({
         userID: userId,
         balance: balanceType,

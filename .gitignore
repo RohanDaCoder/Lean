@@ -6,3 +6,4 @@ package-lock.json
 Database/
 .env
 nodemon.json
+README.md

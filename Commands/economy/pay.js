@@ -34,7 +34,7 @@ module.exports = {
       interaction.options.getUser("user_mention")?.id ??
         interaction.options.getString("user_id");
 
-      const eco = new EconomyManager();
+      const eco = require("../../Util/EconomyManager.js");
       const senderWallet = await eco.GetMoney({
         userID: senderId,
         balance: "wallet",

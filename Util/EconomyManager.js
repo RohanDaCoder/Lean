@@ -55,14 +55,16 @@ const EconomyManager = {
       formatted: formattedAmount,
     };
   },
+
   async set(o) {
     const { db } = await this.GetProfile(o.userID);
     await db.set(o.key, o.value);
   },
+
   async get(o) {
     const { db } = await this.GetProfile(o.userID);
     await db.get(o.key, o.value);
   },
-}
+};
 
 module.exports = EconomyManager;
