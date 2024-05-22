@@ -5,7 +5,7 @@ const { items } = require("../../Util/Items");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("inventory")
-    .setDescription("View inventory")
+    .setDescription("View Someone's inventory")
     .addUserOption((option) =>
       option
         .setName("user_mention")
@@ -30,10 +30,11 @@ module.exports = {
       const userInventory = await InventoryManager.GetInventory(userId);
 
       const inventoryEmbed = new EmbedBuilder()
-        .setColor("#0099ff")
-        .setTitle("Inventory")
-        .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() });
-
+        .setColor("Random")
+        .setTitle(`${user.tag}'s Inventory`)
+        .setThumbnail(user.displayAvatarURL({ dynamic: true }))
+        .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() })
+        .setTimestamp();
       if (userInventory.length > 0) {
         const itemsList = userInventory
           .map((item, index) => {

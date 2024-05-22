@@ -1,5 +1,4 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const EconomyManager = require("../../Util/EconomyManager.js");
 const economyManager = require("../../Util/EconomyManager.js");
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,6 +18,10 @@ module.exports = {
       userID: userId,
       balance: "bank",
     });
+    const walletBalance = await economyManager.GetMoney({
+      userID: userId,
+      balance: "wallet",
+    });
 
     if (amount > bankBalance.raw) {
       return interaction.reply({
@@ -37,7 +40,7 @@ module.exports = {
     await economyManager.SetMoney({
       userID: userId,
       balance: "wallet",
-      amount: amount,
+      amount: walletBalance.raw + amount,
     });
 
     await interaction.reply({
