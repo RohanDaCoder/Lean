@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-This Is The Unstable/Development Branch. If You Want A Stable Version, [Click Me.](https://github.com/RohanDaCoder/Lean/tree/stable)
-=======
-This Is The Stable Branch. If You Want The Development Branch, [Click Me.](https://github.com/RohanDaCoder/Lean)
->>>>>>> stable
+This Is The Unstable/Development Branch. If You Want The Stable Branch, [Click Me.](https://github.com/RohanDaCoder/Lean/tree/stable)
+
 [![forthebadge made-with-javascript](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://nodejs.org/)
 
 [![GitHub release](https://img.shields.io/github/release/RohanDaCoder/Lean?include_prereleases=&sort=semver&color=blue)](https://github.com/RohanDaCoder/Lean/releases/)
