@@ -29,7 +29,6 @@ const items = [
     value: 300,
     rarity: "Rare",
   },
-  // Add more items as needed
 ];
 
 const getItemChoices = () =>

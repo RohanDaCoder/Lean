@@ -11,11 +11,17 @@ class ButtonManager {
     this.collectors = [];
   }
 
-  createButton({ customId, label, style = ButtonStyle.Primary }) {
+  createButton({
+    customId,
+    label,
+    style = ButtonStyle.Primary,
+    disabled = false,
+  }) {
     const button = new ButtonBuilder()
       .setCustomId(customId)
       .setLabel(label)
-      .setStyle(style);
+      .setStyle(style)
+      .setDisabled(disabled);
 
     this.buttons.push(button);
     return button;
@@ -25,14 +31,6 @@ class ButtonManager {
     const row = new ActionRowBuilder().addComponents(this.buttons);
     this.buttons = []; // Clear buttons after creating a row
     return row;
-  }
-
-  disableButtons(row) {
-    row.components.forEach((button) => {
-      if (button instanceof ButtonBuilder) {
-        button.setDisabled(true);
-      }
-    });
   }
 
   setupCollector({ interaction, message, time = 30000, onCollect, onEnd }) {
@@ -54,8 +52,6 @@ class ButtonManager {
     });
 
     collector.on("end", async (collected) => {
-      const disabledRow = this.disableButtons(message.components[0]);
-      await message.edit({ components: [disabledRow] });
       if (onEnd) {
         onEnd(collected);
       }

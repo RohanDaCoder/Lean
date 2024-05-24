@@ -9,5 +9,5 @@ module.exports = {
     weekly: 5000,
     monthly: 10000,
   },
-  usageLogChannel: "1132214287688011886"
+  usageLogChannel: "1132214287688011886",
 };

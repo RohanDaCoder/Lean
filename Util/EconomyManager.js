@@ -1,3 +1,4 @@
+//Util/EconomyManager.js
 const SimpleJsonDB = require("simple-json-db");
 const fs = require("fs");
 const path = require("path");

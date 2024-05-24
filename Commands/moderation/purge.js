@@ -8,19 +8,13 @@ module.exports = {
       option
         .setName("amount")
         .setDescription("Amount of messages to clear")
-        .setRequired(false),
+        .setRequired(true)
+        .setMinValue(1)
+        .setMaxValue(100),
     ),
 
   run: async ({ interaction }) => {
-    const amount = interaction.options.getInteger("amount") || 50;
-
-    if (amount <= 0 || amount > 100) {
-      return interaction.reply({
-        content: "You can only purge 1-100 messages at a time.",
-        ephemeral: true,
-      });
-    }
-
+    const amount = interaction.options.getInteger("amount");
     try {
       const deletedMessages = await interaction.channel.bulkDelete(
         amount,
@@ -40,7 +34,7 @@ module.exports = {
   },
 
   options: {
-    userPermissions: ["MANAGE_MESSAGES"],
-    botPermissions: ["MANAGE_MESSAGES"],
+    userPermissions: ["ManageMessages"],
+    botPermissions: ["ManageMessages"],
   },
 };
