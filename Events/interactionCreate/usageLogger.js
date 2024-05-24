@@ -1,33 +1,35 @@
 const Discord = require("discord.js");
-const config = require("../../config.js");
 module.exports = async (interaction, client) => {
+  const user = interaction.user;
+  if (!interaction.commandName) return;
+
   const usageEmbed = new Discord.EmbedBuilder()
     .setTitle(`Usage Logger`)
     .setAuthor({
-      user: interaction.user.tag,
-      iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
+      name: user.tag || "Unknown",
+      iconURL: user.displayAvatarURL({ dynamic: true }),
     })
     .addFields(
       {
         name: "Name",
-        value: interaction.user.tag,
+        value: user.tag || "Unknown",
       },
       {
         name: "Guild",
-        value: interaction.guild.name,
+        value: interaction.guild.name || "Unknown",
       },
       {
         name: "Channel",
-        value: interaction.channel.name,
+        value: interaction.channel.name || "Unknown",
       },
       {
         name: "Command",
-        value: interaction.commandName,
+        value: interaction.commandName || "Unknown",
       },
     )
-    .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
-    .setTimestamp();
-  if (!config) return;
-  const channel = await client.channels.fetch(client.config.usageLogChannel);
-  channel.send({ embeds: [usageEmbed] });
+    .setThumbnail(user.displayAvatarURL({ dynamic: true }))
+    .setTimestamp()
+    .setColor("Random");
+
+  await process.usageChannel.send({ embeds: [usageEmbed] });
 };

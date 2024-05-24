@@ -1,0 +1,25 @@
+{
+    "id": "922419431508938773",
+    "wallet": 8630,
+    "bank": 0,
+    "inventory": [
+        {
+            "id": "shield",
+            "name": "Shield",
+            "quantity": 5
+        },
+        {
+            "id": "sword",
+            "name": "Sword",
+            "quantity": 2
+        },
+        {
+            "id": "magic_wand",
+            "name": "Magic Wand",
+            "quantity": 1
+        }
+    ],
+    "daily": null,
+    "weekly": null,
+    "monthly": null
+}
