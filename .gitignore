@@ -1,10 +1,6 @@
-replit.nix
-.replit
 node_modules/
 .config
 package-lock.json
 Database/
 .env
-nodemon.json
-README.md
 config.js
