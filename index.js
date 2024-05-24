@@ -20,18 +20,14 @@ const client = new Client({
   ],
 });
 
+new CommandKit({
+  client,
+  ...config.CommandKit,
+});
+
 client.config = config;
 process.client = client;
 process.config = config;
 process.discord = Discord;
-new CommandKit({
-  client,
-  commandsPath: path.join(__dirname, "Commands"),
-  eventsPath: path.join(__dirname, "Events"),
-  validationsPath: path.join(__dirname, "Validations"),
-  devGuildIds: ["1101454417586294854"],
-  devUserIds: ["922419431508938773"],
-  bulkRegister: true,
-});
 
 client.login(process.env.TOKEN);
