@@ -7,3 +7,4 @@ Database/
 .env
 nodemon.json
 README.md
+config.js
