@@ -1,6 +1,6 @@
 replit.nix
 .replit
-node_modules
+node_modules/
 .config
 package-lock.json
 Database/
