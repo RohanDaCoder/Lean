@@ -5,7 +5,7 @@ module.exports = async (interaction, client) => {
     .setTitle(`Usage Logger`)
     .setAuthor({
       user: interaction.user.tag,
-      iconURL: interaction.user.defaultAvatarURL({ dynamic: true }),
+      iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
     })
     .addFields(
       {
@@ -25,7 +25,7 @@ module.exports = async (interaction, client) => {
         value: interaction.commandName,
       },
     )
-    .setThumbnail(interaction.user.defaultAvatarURL({ dynamic: true }))
+    .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
     .setTimestamp();
   if (!config) return;
   const channel = await client.channels.fetch(client.config.usageLogChannel);
