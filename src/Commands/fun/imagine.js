@@ -46,6 +46,7 @@ module.exports = {
         .setRequired(false),
     ),
   run: async ({ interaction }) => {
+  if(!process.env.REPLICATE_API_KEY) return interaction.reply(`**The Imagine Command Was Not Setuped.**`)
     try {
       const prompt = interaction.options.getString("prompt");
       const model = interaction.options.getString("model") || models[0].value;
