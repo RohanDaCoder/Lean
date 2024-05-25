@@ -1,10 +1,16 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  ButtonStyle,
+  EmbedBuilder,
+} = require("discord.js");
 const ButtonManager = require("../../Util/ButtonManager");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("help")
-    .setDescription("Displays a list of commands categorized by their function."),
+    .setDescription(
+      "Displays a list of commands categorized by their function.",
+    ),
   options: {
     devOnly: false,
   },
@@ -25,7 +31,7 @@ module.exports = {
         admin: [],
       };
 
-      commands.forEach(command => {
+      commands.forEach((command) => {
         const category = command.category || "Uncategorized";
         if (categories[category]) {
           categories[category].push(command);
@@ -49,12 +55,13 @@ module.exports = {
       const isDev = devUserIds.includes(userId);
 
       const categoryNames = Object.keys(categories);
-      categoryNames.forEach(category => {
+      categoryNames.forEach((category) => {
         if (category === "admin" && !isDev) return; // Skip admin category for non-developers
 
         buttonManager.createButton({
           customId: `help_category_${category}`,
-          label: buttonNames[category] || category,  // Use custom name if available
+          label: buttonNames[category] || category, // Use custom name if available
+          style: ButtonStyle.Secondary,
         });
       });
 
@@ -74,6 +81,7 @@ module.exports = {
 
       buttonManager.setupCollector({
         interaction,
+        time: 120000,
         message: initialReply,
         onCollect: async (i) => {
           const category = i.customId.replace("help_category_", "");
@@ -81,10 +89,18 @@ module.exports = {
 
           const embed = new EmbedBuilder()
             .setTitle(`Commands in ${category} category`)
-            .setDescription(categoryCommands.map(cmd => `**/${cmd.data.name}** - ${cmd.data.description}`).join("\n"))
+            .setDescription(
+              categoryCommands
+                .map((cmd) => `**/${cmd.data.name}** - ${cmd.data.description}`)
+                .join("\n"),
+            )
             .setColor("#0099ff");
 
-          await i.update({ embeds: [embed], components: [row], ephemeral: true });
+          await i.update({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true,
+          });
         },
         onEnd: (collected) => {
           console.log(`Collected ${collected.size} interactions.`);
@@ -92,7 +108,10 @@ module.exports = {
       });
     } catch (error) {
       console.error("Error in help command:", error);
-      await interaction.reply({ content: "An error occurred while executing the command.", ephemeral: true });
+      await interaction.reply({
+        content: "An error occurred while executing the command.",
+        ephemeral: true,
+      });
     }
   },
 };
