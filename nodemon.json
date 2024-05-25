@@ -2,5 +2,5 @@
   "events": {
     "start": "clear"
   },
-  "ignore": ["./Database/"]
+  "ignore": ["./src/Database/"]
 }

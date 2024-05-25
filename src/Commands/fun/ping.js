@@ -36,7 +36,7 @@ module.exports = {
 
     await msg.edit({
       embeds: [pingEmbed],
-      content: "Pinged.."
+      content: "Pinged..",
     });
   },
 };

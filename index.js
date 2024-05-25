@@ -9,7 +9,7 @@ const {
 const Discord = require("discord.js");
 
 const { CommandKit } = require("commandkit");
-const config = require("./config.js");
+const config = require("./src/config.js");
 const path = require("path");
 
 const client = new Client({
