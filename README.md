@@ -11,16 +11,15 @@ This is an discord bot currently under development, it plans to serve moderation
 
 - **Name:** Lean
 - **Language:** JavaScript
-- **Framework:** CommandKit by [UnderCtrl](https://github.com/underctrl-io/commandkit)
-- **Version:** Originally built on Discord.js v13, recently updated to v14
+- **Framework:** [CommandKit](https://github.com/underctrl-io/commandkit) by UnderCtrl
+- **Version:** Discord.js V14
 - **Purpose:** To explore bot development, learn JavaScript, and experiment with Discord APIs
 
 ## Features
 
 - Slash commands for easy interaction
 - Event handling with CommandKit
-- Easy setup and hosting with a simple `.env` file
-- Utilizes esbuild for faster builds (though perhaps not entirely necessary for a JavaScript project)
+- Easy setup
 
 ## Planned Features
 
@@ -33,7 +32,7 @@ Feel free to contribute to this project! As a solo developer, any help, suggesti
 
 ## Socials
 
-- Discord Server: [Join now](https://discord.gg/YOUR_DISCORD_INVITE)
+- Discord Server: [Join now](https://discord.com/invite/vCpBebaP8w)
 - YouTube: [RohanPlayz_YT](https://youtube.com/@RohanPlayz_YT)
 
 ## Invite Link
