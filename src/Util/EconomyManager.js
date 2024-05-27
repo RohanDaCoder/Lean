@@ -1,9 +1,9 @@
-//Util/EconomyManager.js
-const SimpleJsonDB = require("simple-json-db");
 const fs = require("fs");
 const path = require("path");
+const Database = require("./Database"); // Import the Database class
 const { emojis } = require("../config.js");
 
+// Default profile template
 const defaultProfile = (id) => ({
   id,
   wallet: 0,
@@ -14,27 +14,29 @@ const defaultProfile = (id) => ({
   monthly: null,
 });
 
+// Utility function to get the profile path
+const getProfilePath = (userID) => path.join(__dirname, `../Database/Profiles/${userID}.json`);
+
 const EconomyManager = {
   formatMoney(amount) {
     if (amount >= 1e9) return `${(amount / 1e9).toFixed(1)}b ${emojis.money}`;
-    else if (amount >= 1e6)
-      return `${(amount / 1e6).toFixed(1)}m ${emojis.money}`;
-    else if (amount >= 1e3)
-      return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;
+    else if (amount >= 1e6) return `${(amount / 1e6).toFixed(1)}m ${emojis.money}`;
+    else if (amount >= 1e3) return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;
     else return `${amount} ${emojis.money}`;
   },
 
   async GetProfile(userID) {
-    const dbPath = path.join(__dirname, `../Database/Profiles/${userID}.json`);
-    if (!fs.existsSync(dbPath)) {
-      fs.writeFileSync(dbPath, JSON.stringify(defaultProfile(userID)));
+    const profilePath = getProfilePath(userID);
+    if (!fs.existsSync(profilePath)) {
+      fs.writeFileSync(profilePath, JSON.stringify(defaultProfile(userID)));
     }
-    const db = new SimpleJsonDB(dbPath);
-    const profile = db.JSON();
+    const profileDb = new Database(profilePath);
+    let profile = profileDb.toJSON();
     if (profile.id !== userID) {
-      db.set("id", userID);
+      profile.id = userID;
+      profileDb.set("id", userID);
     }
-    return { db, profile };
+    return { db: profileDb, profile };
   },
 
   async SetMoney(o) {
@@ -64,7 +66,8 @@ const EconomyManager = {
 
   async get(o) {
     const { db } = await this.GetProfile(o.userID);
-    await db.get(o.key, o.value);
+    const value = await db.get(o.key);
+    return value;
   },
 };
 
