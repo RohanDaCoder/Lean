@@ -15,13 +15,16 @@ const defaultProfile = (id) => ({
 });
 
 // Utility function to get the profile path
-const getProfilePath = (userID) => path.join(__dirname, `../Database/Profiles/${userID}.json`);
+const getProfilePath = (userID) =>
+  path.join(__dirname, `../Database/Profiles/${userID}.json`);
 
 const EconomyManager = {
   formatMoney(amount) {
     if (amount >= 1e9) return `${(amount / 1e9).toFixed(1)}b ${emojis.money}`;
-    else if (amount >= 1e6) return `${(amount / 1e6).toFixed(1)}m ${emojis.money}`;
-    else if (amount >= 1e3) return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;
+    else if (amount >= 1e6)
+      return `${(amount / 1e6).toFixed(1)}m ${emojis.money}`;
+    else if (amount >= 1e3)
+      return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;
     else return `${amount} ${emojis.money}`;
   },
 

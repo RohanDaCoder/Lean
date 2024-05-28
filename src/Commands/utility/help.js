@@ -28,6 +28,7 @@ module.exports = {
         utility: [],
         moderation: [],
         economy: [],
+        dev: [],
         admin: [],
       };
 
@@ -49,6 +50,7 @@ module.exports = {
         economy: "💰 Economy",
         admin: "⚠️ Admin",
         Uncategorized: "Miscellaneous",
+        dev: "🗿 Developer",
       };
 
       // Check if the user is a developer
@@ -56,7 +58,15 @@ module.exports = {
 
       const categoryNames = Object.keys(categories);
       categoryNames.forEach((category) => {
-        if (category === "admin" && !isDev) return; // Skip admin category for non-developers
+        // Check if the user has Administrator permission for Admin category
+        if (
+          category === "admin" &&
+          !interaction.member.permissions.has("ADMINISTRATOR")
+        )
+          return;
+
+        // Skip showing the dev category if the user is not a developer
+        if (category === "dev" && !isDev) return;
 
         buttonManager.createButton({
           customId: `help_category_${category}`,
