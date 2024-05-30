@@ -5,16 +5,18 @@ module.exports = {
     .setName("stats")
     .setDescription("Display bot statistics"),
   run: async ({ client, interaction }) => {
+  await interaction.deferReply();
+  const { default: prettyMS } = await import("pretty-ms");
     // Fetching values from the client
     const ping = client.ws.ping;
-    const uptime = client.uptime;
+    const uptime = prettyMS(client.uptime);
     const memoryUsage = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
       2,
     );
     const guildsCount = client.guilds.cache.size;
     const usersCount = client.users.cache.size;
-    const apiLatency = Date.now() - interaction.editedTimestamp;
-    const version = require("../../package.json").version;
+    const apiLatency = Date.now() - interaction.createdTimestamp;
+    const version = require("../../../package.json").version;
     const discordJSVersion = require("discord.js").version;
     const nodeVersion = process.version;
 
@@ -25,13 +27,13 @@ module.exports = {
       .setTimestamp()
       .addFields(
         {
-          name: "<a:a_online:1007918346374746133> Ping",
+          name: `🛜 Ping`,
           value: `┕ \`${ping}ms\``,
           inline: true,
         },
         {
           name: ":clock1: Uptime",
-          value: `┕ \`${uptime}m\``,
+          value: `┕ \`${uptime}\``,
           inline: true,
         },
         {
@@ -72,7 +74,7 @@ module.exports = {
       );
 
     // Sending the embed
-    await interaction.reply({
+    await interaction.editReply({
       embeds: [embed],
     });
   },

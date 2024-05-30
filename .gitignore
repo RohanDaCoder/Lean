@@ -3,4 +3,5 @@ node_modules/
 package-lock.json
 .env
 config.js
-Database/
+src/Database/Guilds/*
+src/Database/Profiles/*
