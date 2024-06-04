@@ -5,8 +5,8 @@ module.exports = {
     .setName("stats")
     .setDescription("Display bot statistics"),
   run: async ({ client, interaction }) => {
-  await interaction.deferReply();
-  const { default: prettyMS } = await import("pretty-ms");
+    await interaction.deferReply();
+    const { default: prettyMS } = await import("pretty-ms");
     // Fetching values from the client
     const ping = client.ws.ping;
     const uptime = prettyMS(client.uptime);
