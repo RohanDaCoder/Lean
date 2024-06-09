@@ -3,14 +3,14 @@ const path = require("path");
 const {
   updateServerStats,
   channelExists,
-} = require("../../../Util/ServerStatsUtils.js");
+} = require("../../Util/ServerStatsUtils");
 const colors = require("colors");
 
 module.exports = async (client) => {
   // Function to update server stats for all guilds
   async function updateAllGuildStats() {
     try {
-      const guildsDir = path.join(__dirname, "../Database/Guilds/");
+      const guildsDir = path.join(__dirname, "../../Database/Guilds/");
       const files = await fs.readdir(guildsDir);
 
       for (const file of files) {
@@ -52,19 +52,26 @@ module.exports = async (client) => {
               totalBotsChannelExists
             ) {
               await updateServerStats(guild, guildConfig);
-              console.log(`Updated server stats for guild: ${guild.name}`);
+              console.log(
+                colors.green(`Updated server stats for guild: ${guild.name}`),
+              );
             } else {
               console.log(
-                `One or more channels do not exist in guild: ${guild.name}`,
+                colors.yellow(
+                  `One or more channels do not exist in guild: ${guild.name}`,
+                ),
               );
             }
           }
         } else {
-          console.log(`Guild not found: ${guildId}`);
+          console.log(colors.red(`Guild not found: ${guildId}`));
         }
       }
     } catch (error) {
-      console.error("Error updating server stats for all guilds:", error);
+      console.error(
+        colors.red("Error updating server stats for all guilds:"),
+        error,
+      );
     }
   }
 
