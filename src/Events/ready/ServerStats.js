@@ -3,7 +3,7 @@ const path = require("path");
 const {
   updateServerStats,
   channelExists,
-} = require("../../Util/ServerStatsUtils.js");
+} = require("../../../Util/ServerStatsUtils.js");
 const colors = require("colors");
 
 module.exports = async (client) => {

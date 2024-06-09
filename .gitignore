@@ -5,3 +5,4 @@ package-lock.json
 config.js
 src/Database/Guilds/*
 src/Database/Profiles/*
+src/Database/cooldowns.json
