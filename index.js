@@ -30,7 +30,7 @@ new CommandKit({
   ...config.CommandKit,
 });
 
-const { GiveawaysManager } = require("discord-giveaways");
+const { GiveawaysManager } = require("./src/Util/GiveawayManager");
 client.giveawaysManager = new GiveawaysManager(client, {
   storage: "./src/Database/giveaways.json",
   default: {
