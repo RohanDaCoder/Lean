@@ -3,7 +3,7 @@ const colors = require("colors");
 console.clear();
 const {
   Client,
-  GatewayIntentBits,
+  IntentsBitField,
   WebhookClient,
   EmbedBuilder,
   Partials,
@@ -17,16 +17,33 @@ const path = require("path");
 
 const client = new Client({
   intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildMembers,
+    IntentsBitField.Flags.Guilds,
+    IntentsBitField.Flags.MessageContent,
+    IntentsBitField.Flags.GuildMessages,
+    IntentsBitField.Flags.GuildMembers,
+    IntentsBitField.Flags.GuildMessageReactions,
   ],
 });
 
 new CommandKit({
   client,
   ...config.CommandKit,
+});
+
+const { GiveawaysManager } = require("discord-giveaways");
+client.giveawaysManager = new GiveawaysManager(client, {
+  storage: "./src/Database/giveaways.json",
+  default: {
+    botsCanWin: false,
+    embedColor: "#2F3136",
+    reaction: "🎉",
+    lastChance: {
+      enabled: true,
+      content: `🛑 **Last chance to enter** 🛑`,
+      threshold: 10000,
+      embedColor: "#FF0000",
+    },
+  },
 });
 
 client.config = config;

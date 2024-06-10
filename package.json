@@ -37,6 +37,7 @@
     "axios": "^1.6.8",
     "colors": "^1.4.0",
     "discord-gamecord": "^4.4.2",
+    "discord-giveaways": "^6.0.1",
     "path": "^0.12.7",
     "pretty-ms": "^9.0.0",
     "replicate": "^0.29.4",

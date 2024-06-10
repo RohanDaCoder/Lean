@@ -1,9 +1,10 @@
 const {
   SlashCommandBuilder,
-  ButtonStyle,
   EmbedBuilder,
+  ActionRowBuilder,
+  StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder,
 } = require("discord.js");
-const ButtonManager = require("../../Util/ButtonManager");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -15,8 +16,6 @@ module.exports = {
     devOnly: false,
   },
   async run({ interaction, client, handler }) {
-    const buttonManager = new ButtonManager();
-
     try {
       const commands = handler.commands;
       const devUserIds = handler.devUserIds;
@@ -30,17 +29,18 @@ module.exports = {
         economy: [],
         dev: [],
         admin: [],
+        giveaway: [],
       };
 
-      commands.forEach((command) => {
-        const category = command.category || "Uncategorized";
+      for (const command in commands) {
+        const category = commands[command].category || "Uncategorized";
         if (categories[category]) {
-          categories[category].push(command);
+          categories[category].push(commands[command]);
         } else {
           if (!categories["Uncategorized"]) categories["Uncategorized"] = [];
-          categories["Uncategorized"].push(command);
+          categories["Uncategorized"].push(commands[command]);
         }
-      });
+      }
 
       // Custom button labels
       const buttonNames = {
@@ -51,76 +51,80 @@ module.exports = {
         admin: "⚠️ Admin",
         Uncategorized: "Miscellaneous",
         dev: "🗿 Developer",
+        giveaway: "🎁 Giveaway",
       };
 
       // Check if the user is a developer
       const isDev = devUserIds.includes(userId);
 
       const categoryNames = Object.keys(categories);
-      categoryNames.forEach((category) => {
-        // Check if the user has Administrator permission for Admin category
-        if (
-          category === "admin" &&
-          !interaction.member.permissions.has("ADMINISTRATOR")
-        )
-          return;
+      const selectOptions = [];
 
-        // Skip showing the dev category if the user is not a developer
-        if (category === "dev" && !isDev) return;
+      for (const category of categoryNames) {
+        const label = buttonNames[category] || category;
+        const value = category;
 
-        buttonManager.createButton({
-          customId: `help_category_${category}`,
-          label: buttonNames[category] || category, // Use custom name if available
-          style: ButtonStyle.Secondary,
-        });
-      });
+        selectOptions.push(
+          new StringSelectMenuOptionBuilder()
+            .setLabel(label)
+            .setValue(value)
+        );
+      }
 
-      const row = buttonManager.createActionRow();
-
+      const selectMenu = new StringSelectMenuBuilder()
+        .setCustomId("help_select_menu")
+        .setPlaceholder("Select a category")
+        .addOptions(selectOptions);
+      
       // Initial Embed
       const initialEmbed = new EmbedBuilder()
         .setTitle("Help Menu")
         .setDescription("Select a category to see the commands")
         .setColor("#0099ff");
+      
+      const row = new ActionRowBuilder().addComponents(selectMenu);
 
-      const initialReply = await interaction.reply({
+      await interaction.reply({
         embeds: [initialEmbed],
         components: [row],
-        ephemeral: true,
+        ephemeral: false,
       });
 
-      buttonManager.setupCollector({
-        interaction,
+      // Interaction collector for the select menu
+      const collector = interaction.channel.createMessageComponentCollector({
+        filter: (i) =>
+          i.customId === "help_select_menu" &&
+          i.user.id === interaction.user.id,
         time: 120000,
-        message: initialReply,
-        onCollect: async (i) => {
-          const category = i.customId.replace("help_category_", "");
-          const categoryCommands = categories[category];
+      });
 
-          const embed = new EmbedBuilder()
-            .setTitle(`Commands in ${category} category`)
-            .setDescription(
-              categoryCommands
-                .map((cmd) => `**/${cmd.data.name}** - ${cmd.data.description}`)
-                .join("\n"),
-            )
-            .setColor("#0099ff");
+      collector.on("collect", async (i) => {
+        const category = i.values[0];
+        const categoryCommands = categories[category];
 
-          await i.update({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true,
-          });
-        },
-        onEnd: (collected) => {
-          console.log(`Collected ${collected.size} interactions.`);
-        },
+        const embed = new EmbedBuilder()
+          .setTitle(`Commands in ${category} category`)
+          .setDescription(
+            categoryCommands
+              .map((cmd) => `**/${cmd.data.name}** - ${cmd.data.description}`)
+              .join("\n")
+          )
+          .setColor("#0099ff");
+
+        await i.update({
+          embeds: [embed],
+          ephemeral: false,
+        });
+      });
+
+      collector.on("end", (collected) => {
+        console.log(`Collected ${collected.size} interactions.`);
       });
     } catch (error) {
       console.error("Error in help command:", error);
       await interaction.reply({
         content: "An error occurred while executing the command.",
-        ephemeral: true,
+        ephemeral: false,
       });
     }
   },
