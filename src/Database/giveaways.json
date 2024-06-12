@@ -1,1 +1,56 @@
-[{"messageId":"1249565603346513941","channelId":"1244254187014066229","guildId":"1244254187014066226","startAt":1717990055268,"endAt":1717993655268,"ended":true,"winnerCount":1,"prize":"Gyatt","messages":{"giveaway":"🎉🎉 **GIVEAWAY** 🎉🎉","giveawayEnded":"🎉🎉 **GIVEAWAY ENDED** 🎉🎉","title":"{this.prize}","inviteToParticipate":"React with 🎉 to participate!","winMessage":"Congratulations, {winners}! You won **{this.prize}**!\n{this.messageURL}","drawing":"Drawing: {timestamp}","dropMessage":"Be the first to react with 🎉 !","embedFooter":"{this.winnerCount} winner(s)","noWinner":"Giveaway cancelled, no valid participations.","winners":"Winner(s):","endedAt":"Ended at","hostedBy":"Hosted by: {this.hostedBy}"},"bonusEntries":"[{\"bonus\":function anonymous(member\n) {\nreturn member.roles.cache.some((r) => r.name === 'undefined') ? null : null\n},\"cumulative\":false}]","winnerIds":["922419431508938773"],"extraData":{"server":"null","role":"null"}},{"messageId":"1249571048517668874","channelId":"1244254187014066229","guildId":"1244254187014066226","startAt":1717991353441,"endAt":1718077753441,"ended":false,"winnerCount":1,"prize":"a","messages":{"giveaway":"🎉🎉 **GIVEAWAY** 🎉🎉","giveawayEnded":"🎉🎉 **GIVEAWAY ENDED** 🎉🎉","title":"{this.prize}","inviteToParticipate":"React with 🎉 to participate!","winMessage":"Congratulations, {winners}! You won **{this.prize}**!\n{this.messageURL}","drawing":"Drawing: {timestamp}","dropMessage":"Be the first to react with 🎉 !","embedFooter":"{this.winnerCount} winner(s)","noWinner":"Giveaway cancelled, no valid participations.","winners":"Winner(s):","endedAt":"Ended at","hostedBy":"Hosted by: {this.hostedBy}"},"bonusEntries":"[{\"bonus\":function anonymous(member\n) {\nreturn member.roles.cache.some((r) => r.name === 'undefined') ? null : null\n},\"cumulative\":false}]","extraData":{"server":"null","role":"null"}}]
+[
+  {
+    "messageId": "1249565603346513941",
+    "channelId": "1244254187014066229",
+    "guildId": "1244254187014066226",
+    "startAt": 1717990055268,
+    "endAt": 1717993655268,
+    "ended": true,
+    "winnerCount": 1,
+    "prize": "Gyatt",
+    "messages": {
+      "giveaway": "🎉🎉 **GIVEAWAY** 🎉🎉",
+      "giveawayEnded": "🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+      "title": "{this.prize}",
+      "inviteToParticipate": "React with 🎉 to participate!",
+      "winMessage": "Congratulations, {winners}! You won **{this.prize}**!\n{this.messageURL}",
+      "drawing": "Drawing: {timestamp}",
+      "dropMessage": "Be the first to react with 🎉 !",
+      "embedFooter": "{this.winnerCount} winner(s)",
+      "noWinner": "Giveaway cancelled, no valid participations.",
+      "winners": "Winner(s):",
+      "endedAt": "Ended at",
+      "hostedBy": "Hosted by: {this.hostedBy}"
+    },
+    "bonusEntries": "[{\"bonus\":function anonymous(member\n) {\nreturn member.roles.cache.some((r) => r.name === 'undefined') ? null : null\n},\"cumulative\":false}]",
+    "winnerIds": ["922419431508938773"],
+    "extraData": { "server": "null", "role": "null" }
+  },
+  {
+    "messageId": "1249571048517668874",
+    "channelId": "1244254187014066229",
+    "guildId": "1244254187014066226",
+    "startAt": 1717991353441,
+    "endAt": 1718107845209,
+    "ended": true,
+    "winnerCount": 1,
+    "prize": "a",
+    "messages": {
+      "giveaway": "🎉🎉 **GIVEAWAY** 🎉🎉",
+      "giveawayEnded": "🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+      "title": "{this.prize}",
+      "inviteToParticipate": "React with 🎉 to participate!",
+      "winMessage": "Congratulations, {winners}! You won **{this.prize}**!\n{this.messageURL}",
+      "drawing": "Drawing: {timestamp}",
+      "dropMessage": "Be the first to react with 🎉 !",
+      "embedFooter": "{this.winnerCount} winner(s)",
+      "noWinner": "Giveaway cancelled, no valid participations.",
+      "winners": "Winner(s):",
+      "endedAt": "Ended at",
+      "hostedBy": "Hosted by: {this.hostedBy}"
+    },
+    "bonusEntries": "[{\"bonus\":function anonymous(member\n) {\nreturn member.roles.cache.some((r) => r.name === 'undefined') ? null : null\n},\"cumulative\":false}]",
+    "winnerIds": ["922419431508938773"],
+    "extraData": { "server": "null", "role": "null" }
+  }
+]

@@ -65,9 +65,7 @@ module.exports = {
         const value = category;
 
         selectOptions.push(
-          new StringSelectMenuOptionBuilder()
-            .setLabel(label)
-            .setValue(value)
+          new StringSelectMenuOptionBuilder().setLabel(label).setValue(value),
         );
       }
 
@@ -75,13 +73,13 @@ module.exports = {
         .setCustomId("help_select_menu")
         .setPlaceholder("Select a category")
         .addOptions(selectOptions);
-      
+
       // Initial Embed
       const initialEmbed = new EmbedBuilder()
         .setTitle("Help Menu")
         .setDescription("Select a category to see the commands")
         .setColor("#0099ff");
-      
+
       const row = new ActionRowBuilder().addComponents(selectMenu);
 
       await interaction.reply({
@@ -107,7 +105,7 @@ module.exports = {
           .setDescription(
             categoryCommands
               .map((cmd) => `**/${cmd.data.name}** - ${cmd.data.description}`)
-              .join("\n")
+              .join("\n"),
           )
           .setColor("#0099ff");
 
