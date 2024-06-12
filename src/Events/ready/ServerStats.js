@@ -74,9 +74,7 @@ async function updateAllGuildStats(interaction) {
       }
       return;
    }
-   console.error(
-   colors.red("Error updating server stats for all guilds:"),
-   error, );
+   console.error("Error updating server stats for all guilds: " + error);
    if (interaction) await interaction.followUp({
       content: `Error updating server stats for all guilds: ${error.message}`,
       ephemeral: true,
