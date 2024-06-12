@@ -180,6 +180,7 @@ async function updateServerStats(guild, guildConfig) {
       `Total Bots: ${totalBotsCount}`,
     );
   } catch (error) {
+  if(error.code === 50001) return console.log("Missing Access");
     console.error("Error updating server stats:", error);
   }
 }
