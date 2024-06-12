@@ -209,7 +209,6 @@ async function createOrUpdateChannel(
     return newChannel;
   } catch (error) {
     console.error("Error creating or updating channel:", error);
-    throw error;
   }
 }
 
@@ -221,8 +220,7 @@ async function updateChannelName(guild, channelId, name) {
     }
   } catch (error) {
     if(error.code === 50001) return;
-    console.error("Error updating channel name:", error);
-    throw error;
+    console.error("Error updating channel name: " + error);
   }
 }
 
