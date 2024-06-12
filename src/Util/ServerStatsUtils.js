@@ -180,7 +180,7 @@ async function updateServerStats(guild, guildConfig) {
       `Total Bots: ${totalBotsCount}`,
     );
   } catch (error) {
-  if(error.code === 50001) return console.log("Missing Access");
+  if(error.code === 50001) return;
     console.error("Error updating server stats:", error);
   }
 }
@@ -220,6 +220,7 @@ async function updateChannelName(guild, channelId, name) {
       await channel.edit({ name });
     }
   } catch (error) {
+    if(error.code === 50001) return;
     console.error("Error updating channel name:", error);
     throw error;
   }
