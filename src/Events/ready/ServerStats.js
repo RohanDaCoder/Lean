@@ -34,7 +34,6 @@ async function updateAllGuildStats(interaction) {
             ephemeral: true,
           });
         }
-        console.log(`I don't have enough permission for ${guild.name}`);
         continue; // Skip to the next guild
       }
 
