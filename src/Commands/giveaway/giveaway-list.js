@@ -38,7 +38,7 @@ module.exports = {
       .setTitle("Currently Active Giveaways")
       .setColor("#f58142")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | ${config.footerText}`,
+        text: `Requested by ${interaction.user.username}`,
         iconURL: interaction.user.displayAvatarURL(),
       })
       .setTimestamp();
