@@ -26,12 +26,12 @@ module.exports = {
           ephemeral: true
         });
       }
-
+      
       const embed = new EmbedBuilder()
         .setTitle(data.title)
         .setURL(data.imdburl)
         .setThumbnail(data.poster)
-        .setColor('RANDOM')
+        .setColor('Random')
         .setDescription(data.plot)
         .addFields(
           { name: "Year", value: data.year.toString(), inline: true },
