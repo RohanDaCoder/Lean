@@ -236,8 +236,8 @@ async function channelExists(guild, channelId) {
 
 async function updateAllGuildStats(interaction) {
   try {
-    const guildsDir = path.join(__dirname, "../../Database/Guilds/");
-    const files = await fs.readdir(guildsDir);
+    const guildsDir = path.join(__dirname, "../Database/Guilds/");
+    const files = await fs.promises.readdir(guildsDir); // Use fs.promises.readdir for async/await
 
     for (const file of files) {
       const guildConfigPath = path.join(guildsDir, file);
@@ -245,61 +245,47 @@ async function updateAllGuildStats(interaction) {
 
       const guildId = path.basename(file, ".json");
       const guild = await process.client.guilds.fetch(guildId);
-      if (
-        !guild.members.me.permissions.has(
-          PermissionsBitField.Flags.ManageChannels,
-        )
-      ) {
-        if (interaction) {
-          await interaction.followUp({
-            content: `I don't have enough permissions to update the channels of ${guild.name}`,
-            ephemeral: true,
-          });
-        }
-        continue; // Skip to the next guild
-      }
 
-      if (guild) {
-        const allChannelsExist =
-          guildConfig.serverStatsCategory &&
-          guildConfig.totalMembersChannel &&
-          guildConfig.totalHumanMembersChannel &&
-          guildConfig.totalBotsChannel;
-
-        if (allChannelsExist) {
-          const categoryExists = await channelExists(
-            guild,
-            guildConfig.serverStatsCategory,
-          );
-          const totalMembersChannelExists = await channelExists(
-            guild,
-            guildConfig.totalMembersChannel,
-          );
-          const totalHumanMembersChannelExists = await channelExists(
-            guild,
-            guildConfig.totalHumanMembersChannel,
-          );
-          const totalBotsChannelExists = await channelExists(
-            guild,
-            guildConfig.totalBotsChannel,
-          );
-
-          if (
-            categoryExists &&
-            totalMembersChannelExists &&
-            totalHumanMembersChannelExists &&
-            totalBotsChannelExists
-          ) {
-            await updateServerStats(guild, guildConfig);
-          }
-        }
-      } else {
+      if (!guild) {
         console.log(colors.red(`Guild not found: ${guildId}`));
         if (interaction) {
           await interaction.followUp({
             content: `Guild not found: ${guildId}`,
             ephemeral: true,
           });
+        }
+        continue; // Skip to the next guild if guild is not found
+      }
+
+      if (!guild.members.me.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
+        if (interaction) {
+          await interaction.followUp({
+            content: `I don't have enough permissions to update the channels of ${guild.name}`,
+            ephemeral: true,
+          });
+        }
+        continue; // Skip to the next guild if bot doesn't have manage channels permission
+      }
+
+      const allChannelsExist =
+        guildConfig.serverStatsCategory &&
+        guildConfig.totalMembersChannel &&
+        guildConfig.totalHumanMembersChannel &&
+        guildConfig.totalBotsChannel;
+
+      if (allChannelsExist) {
+        const categoryExists = await channelExists(guild, guildConfig.serverStatsCategory);
+        const totalMembersChannelExists = await channelExists(guild, guildConfig.totalMembersChannel);
+        const totalHumanMembersChannelExists = await channelExists(guild, guildConfig.totalHumanMembersChannel);
+        const totalBotsChannelExists = await channelExists(guild, guildConfig.totalBotsChannel);
+
+        if (
+          categoryExists &&
+          totalMembersChannelExists &&
+          totalHumanMembersChannelExists &&
+          totalBotsChannelExists
+        ) {
+          await updateServerStats(guild, guildConfig);
         }
       }
     }
