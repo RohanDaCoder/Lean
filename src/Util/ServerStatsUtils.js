@@ -257,7 +257,11 @@ async function updateAllGuildStats(interaction) {
         continue; // Skip to the next guild if guild is not found
       }
 
-      if (!guild.members.me.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
+      if (
+        !guild.members.me.permissions.has(
+          PermissionsBitField.Flags.ManageChannels,
+        )
+      ) {
         if (interaction) {
           await interaction.followUp({
             content: `I don't have enough permissions to update the channels of ${guild.name}`,
@@ -274,10 +278,22 @@ async function updateAllGuildStats(interaction) {
         guildConfig.totalBotsChannel;
 
       if (allChannelsExist) {
-        const categoryExists = await channelExists(guild, guildConfig.serverStatsCategory);
-        const totalMembersChannelExists = await channelExists(guild, guildConfig.totalMembersChannel);
-        const totalHumanMembersChannelExists = await channelExists(guild, guildConfig.totalHumanMembersChannel);
-        const totalBotsChannelExists = await channelExists(guild, guildConfig.totalBotsChannel);
+        const categoryExists = await channelExists(
+          guild,
+          guildConfig.serverStatsCategory,
+        );
+        const totalMembersChannelExists = await channelExists(
+          guild,
+          guildConfig.totalMembersChannel,
+        );
+        const totalHumanMembersChannelExists = await channelExists(
+          guild,
+          guildConfig.totalHumanMembersChannel,
+        );
+        const totalBotsChannelExists = await channelExists(
+          guild,
+          guildConfig.totalBotsChannel,
+        );
 
         if (
           categoryExists &&

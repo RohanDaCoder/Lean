@@ -9,12 +9,10 @@ function generateWelcomeEmbed(
 ) {
   const memCount = encodeURIComponent("#" + memberCount);
   const apiURL = `https://api.popcat.xyz/welcomecard?background=${encodeURIComponent(backgroundURL)}&text1=${encodeURIComponent(username)}&text2=Welcome+to+${encodeURIComponent(guildName)}!&text3=You+are+member+${memCount}&avatar=${encodeURIComponent(avatarURL)}`;
-console.log(apiURL);
+  console.log(apiURL);
   const embed = new EmbedBuilder()
     .setTitle("Welcome!")
-    .setDescription(
-      `Welcome to ${guildName}, ${username}!`,
-    )
+    .setDescription(`Welcome to ${guildName}, ${username}!`)
     .setColor("#00ff00")
     .setImage(apiURL)
     .setTimestamp();
