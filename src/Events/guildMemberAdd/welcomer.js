@@ -67,22 +67,3 @@ function generateWelcomeEmbed(
     .setTimestamp();
   return embed;
 }
-
-function generateLeaveEmbed(
-  username,
-  guildName,
-  memberCount,
-  avatarURL,
-  backgroundURL,
-) {
-  const memCount = encodeURIComponent("#" + memberCount);
-  const apiURL = `https://api.popcat.xyz/welcomecard?background=${encodeURIComponent(backgroundURL)}&text1=${encodeURIComponent(username)}&text2=Goodbye+from+${encodeURIComponent(guildName)}!&text3=We+now+have+${memCount}+members&avatar=${encodeURIComponent(avatarURL)}`;
-
-  const embed = new EmbedBuilder()
-    .setTitle("Goodbye!")
-    .setDescription(`${username} has left ${guildName}.`)
-    .setColor("#ff0000")
-    .setImage(apiURL)
-    .setTimestamp();
-  return embed;
-};
