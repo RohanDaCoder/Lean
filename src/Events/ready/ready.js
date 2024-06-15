@@ -1,4 +1,5 @@
 const { ActivityType } = require("discord.js");
+const { updateAllGuildStats } = require("../../Util/ServerStatsUtils");
 
 module.exports = async (c, client, handler) => {
   const colors = require("colors");
@@ -6,7 +7,7 @@ module.exports = async (c, client, handler) => {
   process.usageChannel = await client.channels.fetch(
     client.config.channels.usage,
   );
-
+  updateAllGuildStats();
   client.user.setActivity(client.config.activity, {
     type: ActivityType.Watching,
   });

@@ -1,4 +1,4 @@
-const { updateAllGuildStats } = require("../../Events/ready/ServerStats");
+const { updateAllGuildStats } = require("../../Util/ServerStatsUtils.js");
 const Database = require("../../Util/Database");
 const path = require("path");
 
@@ -26,6 +26,5 @@ module.exports = {
   },
   options: {
     devOnly: false,
-    botPermissions: ["ManageChannels"],
   },
 };

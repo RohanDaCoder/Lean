@@ -58,7 +58,7 @@ module.exports = {
 
   options: {
     devOnly: false,
-    userPermissions: ["KICK_MEMBERS"],
-    botPermissions: ["KICK_MEMBERS"],
+    userPermissions: ["KickMembers"],
+    botPermissions: ["KickMembers"],
   },
 };

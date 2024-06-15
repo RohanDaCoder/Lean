@@ -58,7 +58,7 @@ module.exports = {
 
   options: {
     devOnly: false,
-    userPermissions: ["BAN_MEMBERS"],
-    botPermissions: ["BAN_MEMBERS"],
+    userPermissions: ["BanMembers"],
+    botPermissions: ["BanMembers"],
   },
 };

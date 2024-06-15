@@ -10,23 +10,41 @@ module.exports = {
         .setDescription("Amount of messages to clear")
         .setRequired(true)
         .setMinValue(1)
-        .setMaxValue(100),
+        .setMaxValue(300),
     ),
 
   run: async ({ interaction }) => {
+    await interaction.deferReply();
+
     const amount = interaction.options.getInteger("amount");
+    const maxMessagesPerBatch = 100;
+    let messagesToDelete = amount;
+
     try {
-      const deletedMessages = await interaction.channel.bulkDelete(
-        amount,
-        true,
-      );
-      await interaction.reply({
-        content: `Successfully deleted ${deletedMessages.size} messages.`,
+      let totalDeleted = 0;
+
+      while (messagesToDelete > 0) {
+        const currentBatchSize = Math.min(
+          messagesToDelete,
+          maxMessagesPerBatch,
+        );
+        const deletedMessages = await interaction.channel.bulkDelete(
+          currentBatchSize,
+          true,
+        );
+        totalDeleted += deletedMessages.size;
+        messagesToDelete -= deletedMessages.size;
+
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 second delay between calls
+      }
+
+      await interaction.editReply({
+        content: `Successfully deleted ${totalDeleted} messages.`,
         ephemeral: true,
       });
     } catch (error) {
       console.error(error);
-      await interaction.reply({
+      await interaction.editReply({
         content: "There was an error trying to purge messages in this channel.",
         ephemeral: true,
       });

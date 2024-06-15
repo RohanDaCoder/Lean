@@ -59,8 +59,8 @@ module.exports = {
   },
 
   options: {
-    userPermissions: ["MODERATE_MEMBERS"],
-    botPermissions: ["MODERATE_MEMBERS"],
+    userPermissions: ["ModerateMembers"],
+    botPermissions: ["ModerateMembers"],
   },
 };
 

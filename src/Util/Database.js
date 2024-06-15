@@ -10,17 +10,14 @@ class Database {
 
   async _init() {
     try {
-      const fileExists = await fs
-        .access(this.filePath)
-        .then(() => true)
-        .catch(() => false);
+      const fileExists = await fs.stat(this.filePath);
       if (!fileExists) {
         await fs.writeFile(this.filePath, "{}");
       }
       const data = await fs.readFile(this.filePath, "utf8");
       this.storage = JSON.parse(data);
     } catch (err) {
-      throw new Error(`Initialization error: ${err.message}`);
+      throw new Error(`Database Initialization error: ${err.message}`);
     }
   }
 
