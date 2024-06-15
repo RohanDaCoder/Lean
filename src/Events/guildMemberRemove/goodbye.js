@@ -3,12 +3,12 @@ const Database = require("../../Util/Database");
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = async (member, client, handler) => {
-  await welcomeUser(member, client);
+  await goodbyeUser(member, client);
 };
 
-async function welcomeUser(member, client) {
-  if (!member) return console.error("No User Provided When Welcoming User");
-  if (!client) return console.error("No Client Provided When Welcoming User");
+async function goodbyeUser(member, client) {
+  if (!member) return console.error("No User Provided When goodbyeing User");
+  if (!client) return console.error("No Client Provided When goodbyeing User");
   const guildId = member.guild.id;
 
   const filePath = path.join(
@@ -35,7 +35,7 @@ async function welcomeUser(member, client) {
 
     const backgroundURL = "https://cdn.popcat.xyz/welcome-bg.png";
 
-    const embed = generateWelcomeEmbed(
+    const embed = generateLeaveEmbed(
       member.user.username,
       guild.name,
       memberCount,
@@ -49,25 +49,6 @@ async function welcomeUser(member, client) {
   }
 }
 
-function generateWelcomeEmbed(
-  username,
-  guildName,
-  memberCount,
-  avatarURL,
-  backgroundURL,
-) {
-  const memCount = encodeURIComponent("#" + memberCount);
-  const apiURL = `https://api.popcat.xyz/welcomecard?background=${encodeURIComponent(backgroundURL)}&text1=${encodeURIComponent(username)}&text2=Welcome+to+${encodeURIComponent(guildName)}!&text3=You+are+member+${memCount}&avatar=${encodeURIComponent(avatarURL)}`;
-  console.log(apiURL);
-  const embed = new EmbedBuilder()
-    .setTitle("Welcome!")
-    .setDescription(`Welcome to ${guildName}, ${username}!`)
-    .setColor("#00ff00")
-    .setImage(apiURL)
-    .setTimestamp();
-  return embed;
-}
-
 function generateLeaveEmbed(
   username,
   guildName,
@@ -75,14 +56,12 @@ function generateLeaveEmbed(
   avatarURL,
   backgroundURL,
 ) {
-  const memCount = encodeURIComponent("#" + memberCount);
-  const apiURL = `https://api.popcat.xyz/welcomecard?background=${encodeURIComponent(backgroundURL)}&text1=${encodeURIComponent(username)}&text2=Goodbye+from+${encodeURIComponent(guildName)}!&text3=We+now+have+${memCount}+members&avatar=${encodeURIComponent(avatarURL)}`;
-
+  const apiURL = `https://api.popcat.xyz/welcomecard?background=${encodeURIComponent(backgroundURL)}&text1=${encodeURIComponent(username)}&text2=Goodbye!&text3=We+now+have+${memberCount}+members&avatar=${encodeURIComponent(avatarURL)}`;
   const embed = new EmbedBuilder()
     .setTitle("Goodbye!")
-    .setDescription(`${username} has left ${guildName}.`)
+    .setDescription(`${username} has left the server.`)
     .setColor("#ff0000")
     .setImage(apiURL)
     .setTimestamp();
   return embed;
-};
+}
