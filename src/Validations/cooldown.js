@@ -1,29 +1,27 @@
-const SimpleJsonDB = require("simple-json-db");
 const path = require("path");
-const cooldowns = new SimpleJsonDB(
-  path.join(__dirname, "../Database/cooldowns.json"),
-); // Ensure correct path
+const Database = require("../Util/Database");
+
+const cooldownsDBPath = path.join(__dirname, "../Database/cooldowns.json");
+const cooldowns = new Database(cooldownsDBPath);
 const config = require("../config.js");
 
 function parseCooldown(cooldownString) {
   const regex = /(\d+)([smhdw])/;
   const match = cooldownString.match(regex);
   if (!match) return null;
-
   const value = parseInt(match[1]);
   const unit = match[2];
-
   switch (unit) {
     case "s":
-      return value * 1000; // seconds
+      return value * 1000;
     case "m":
-      return value * 60000; // minutes
+      return value * 60000;
     case "h":
-      return value * 3600000; // hours
+      return value * 3600000;
     case "d":
-      return value * 86400000; // days
+      return value * 86400000;
     case "w":
-      return value * 604800000; // weeks
+      return value * 604800000;
     default:
       return null;
   }
@@ -31,7 +29,6 @@ function parseCooldown(cooldownString) {
 
 module.exports = async ({ interaction, commandObj }) => {
   const userID = interaction.user.id;
-
   const cooldownKey = `${userID}-${commandObj.data.name}`;
   const cooldownString = commandObj.options?.cooldown || "3s";
   const cooldownTime = parseCooldown(cooldownString);
@@ -42,7 +39,7 @@ module.exports = async ({ interaction, commandObj }) => {
   }
 
   const now = Date.now();
-  const cooldownExpiration = cooldowns.get(cooldownKey);
+  const cooldownExpiration = await cooldowns.get(cooldownKey);
 
   if (cooldownExpiration && cooldownExpiration > now) {
     const remainingTime = cooldownExpiration - now;
@@ -55,5 +52,9 @@ module.exports = async ({ interaction, commandObj }) => {
     return true;
   }
 
-  cooldowns.set(cooldownKey, now + cooldownTime);
+  await cooldowns.set(cooldownKey, now + cooldownTime);
+
+  if (cooldownExpiration && cooldownExpiration <= now) {
+    await cooldowns.delete(cooldownKey);
+  }
 };

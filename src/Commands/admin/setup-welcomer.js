@@ -52,9 +52,8 @@ module.exports = {
     }
   },
   options: {
-    botPermissions: [
-      PermissionFlagsBits.ViewChannel,
-      PermissionFlagsBits.SendMessages,
+    userPermissions: [
+      "ManageServer",
     ],
   },
 };

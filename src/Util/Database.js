@@ -1,4 +1,5 @@
 const fs = require("fs").promises;
+const path = require("path");
 
 class Database {
   constructor(filePath) {
@@ -10,23 +11,27 @@ class Database {
 
   async _init() {
     try {
-      const fileExists = await fs.stat(this.filePath);
-      if (!fileExists) {
-        await fs.writeFile(this.filePath, "{}");
+      // Ensure the directory exists
+      await fs.mkdir(path.dirname(this.filePath), { recursive: true });
+      
+      // Read or create the file
+      try {
+        const data = await fs.readFile(this.filePath, "utf8");
+        this.storage = JSON.parse(data);
+      } catch (err) {
+        if (err.code === "ENOENT") {
+          await fs.writeFile(this.filePath, "{}");
+        } else {
+          throw err;
+        }
       }
-      const data = await fs.readFile(this.filePath, "utf8");
-      this.storage = JSON.parse(data);
     } catch (err) {
       throw new Error(`Database Initialization error: ${err.message}`);
     }
   }
 
   async _write() {
-    try {
-      await fs.writeFile(this.filePath, JSON.stringify(this.storage, null, 4));
-    } catch (err) {
-      throw new Error(`Error writing to file: ${err.message}`);
-    }
+    await fs.writeFile(this.filePath, JSON.stringify(this.storage, null, 4));
   }
 
   async set(key, value) {

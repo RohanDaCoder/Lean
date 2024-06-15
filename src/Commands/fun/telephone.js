@@ -56,6 +56,9 @@ module.exports = {
       });
     }
   },
+  options: {
+    cooldown: "30s",
+  }
 };
 
 async function joinLobby(interaction, client) {
