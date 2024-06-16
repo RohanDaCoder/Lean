@@ -15,14 +15,14 @@ module.exports = {
       const pickupLine = response.data.pickupline;
 
       await interaction.editReply({
-        content: `💘 ${pickupLine}`
+        content: `💘 ${pickupLine}`,
       });
     } catch (error) {
       console.error("Error fetching pickup line:", error);
       await interaction.editReply({
         content: "An error occurred while fetching a pickup line.",
-        ephemeral: true
+        ephemeral: true,
       });
     }
-  }
+  },
 };

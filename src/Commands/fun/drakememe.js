@@ -5,17 +5,17 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("drake")
     .setDescription("Generate a Drake meme.")
-    .addStringOption(option =>
+    .addStringOption((option) =>
       option
         .setName("disagree")
         .setDescription("The text for the 'disagree' part of the meme")
-        .setRequired(true)
+        .setRequired(true),
     )
-    .addStringOption(option =>
+    .addStringOption((option) =>
       option
         .setName("agree")
         .setDescription("The text for the 'agree' part of the meme")
-        .setRequired(true)
+        .setRequired(true),
     ),
 
   async run({ interaction }) {

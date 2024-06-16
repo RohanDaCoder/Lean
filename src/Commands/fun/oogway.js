@@ -5,10 +5,11 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("oogway")
     .setDescription("Get a wisdom quote from Master Oogway.")
-    .addStringOption(option =>
-      option.setName("text")
+    .addStringOption((option) =>
+      option
+        .setName("text")
         .setDescription("Customize the quote with additional text.")
-        .setRequired(true)
+        .setRequired(true),
     ),
 
   async run({ interaction }) {
@@ -18,7 +19,7 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setTitle("Master Oogway's Wisdom")
-        .setColor('#FFD700')
+        .setColor("#FFD700")
         .setImage(apiUrl)
         .setTimestamp();
 
@@ -27,8 +28,8 @@ module.exports = {
       console.error("Error fetching Oogway quote:", error);
       await interaction.reply({
         content: "An error occurred while fetching Master Oogway's wisdom.",
-        ephemeral: true
+        ephemeral: true,
       });
     }
-  }
+  },
 };

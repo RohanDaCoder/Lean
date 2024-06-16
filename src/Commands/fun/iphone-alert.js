@@ -5,10 +5,11 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("iphone-alert")
     .setDescription("Creates an iPhone alert meme with your text.")
-    .addStringOption(option => 
-      option.setName("text")
+    .addStringOption((option) =>
+      option
+        .setName("text")
         .setDescription("The text to display in the alert.")
-        .setRequired(true)
+        .setRequired(true),
     ),
 
   async run({ interaction }) {
@@ -21,16 +22,17 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle("iPhone Alert Meme")
         .setImage(apiUrl)
-        .setColor('Random')
+        .setColor("Random")
         .setTimestamp();
 
       await interaction.editReply({ embeds: [embed] });
     } catch (error) {
       console.error("Error creating iPhone alert meme:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to create the iPhone alert meme.",
-        ephemeral: true
+        content:
+          "An error occurred while trying to create the iPhone alert meme.",
+        ephemeral: true,
       });
     }
-  }
+  },
 };

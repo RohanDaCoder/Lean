@@ -4,15 +4,17 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("poohmeme")
     .setDescription("Creates a Pooh meme with custom texts.")
-    .addStringOption(option =>
-      option.setName("text1")
+    .addStringOption((option) =>
+      option
+        .setName("text1")
         .setDescription("First text for the meme.")
-        .setRequired(true)
+        .setRequired(true),
     )
-    .addStringOption(option =>
-      option.setName("text2")
+    .addStringOption((option) =>
+      option
+        .setName("text2")
         .setDescription("Second text for the meme.")
-        .setRequired(true)
+        .setRequired(true),
     ),
 
   async run({ interaction }) {
@@ -26,18 +28,18 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle("Pooh Meme")
         .setImage(apiUrl)
-        .setColor('Random')
+        .setColor("Random")
         .setTimestamp();
 
       await interaction.editReply({
-        embeds: [embed]
+        embeds: [embed],
       });
     } catch (error) {
       console.error("Error creating Pooh meme:", error);
       await interaction.editReply({
         content: "An error occurred while trying to create the Pooh meme.",
-        ephemeral: true
+        ephemeral: true,
       });
     }
-  }
+  },
 };

@@ -2,6 +2,9 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 
 module.exports = {
+  options: {
+    botPermissions: ["EmbedLinks"],
+  },
   data: new SlashCommandBuilder()
     .setName("getskin")
     .setDescription("Get the skin of a Minecraft player.")

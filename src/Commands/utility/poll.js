@@ -38,8 +38,7 @@ module.exports = {
 
   options: {
     devOnly: false,
-    userPermissions: ["MANAGE_MESSAGES"],
-    botPermissions: ["MANAGE_MESSAGES", "ADD_REACTIONS"],
-    deleted: false,
+    userPermissions: ["ManageMessages"],
+    botPermissions: ["ManageMessages", "UseExternalEmojis", "AddReactions"],
   },
 };

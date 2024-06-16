@@ -59,8 +59,8 @@ module.exports = {
   },
 
   options: {
-    userPermissions: ["ModerateMembers"],
-    botPermissions: ["ModerateMembers"],
+    userPermissions: ["MuteMembers"],
+    botPermissions: ["MuteMembers"],
   },
 };
 

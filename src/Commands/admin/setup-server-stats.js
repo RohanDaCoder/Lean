@@ -43,11 +43,7 @@ module.exports = {
     }
   },
   options: {
-    botPermissions: [
-      "ManageChannels",
-    ],
-    userPermissions: [
-      "ManageServer",
-    ],
+    botPermissions: ["ManageChannels", "ViewChannels"],
+    userPermissions: ["ManageServer"],
   },
 };

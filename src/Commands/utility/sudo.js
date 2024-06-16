@@ -56,7 +56,7 @@ module.exports = {
   },
 
   options: {
-    userPermissions: ["MANAGE_WEBHOOKS"],
-    botPermissions: ["MANAGE_WEBHOOKS", "MANAGE_MESSAGES"],
+    userPermissions: ["ManageMessages"],
+    botPermissions: ["ManageWebhooks", "ManageMessages"],
   },
 };

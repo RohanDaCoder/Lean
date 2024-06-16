@@ -4,10 +4,11 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("bidenmeme")
     .setDescription("Creates a Biden Twitter post meme with custom text.")
-    .addStringOption(option =>
-      option.setName("text")
+    .addStringOption((option) =>
+      option
+        .setName("text")
         .setDescription("Text for the Biden Twitter post meme.")
-        .setRequired(true)
+        .setRequired(true),
     ),
 
   async run({ interaction }) {
@@ -20,18 +21,19 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle("Biden Twitter Post Meme")
         .setImage(apiUrl)
-        .setColor('Random')
+        .setColor("Random")
         .setTimestamp();
 
       await interaction.editReply({
-        embeds: [embed]
+        embeds: [embed],
       });
     } catch (error) {
       console.error("Error creating Biden Twitter post meme:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to create the Biden Twitter post meme.",
-        ephemeral: true
+        content:
+          "An error occurred while trying to create the Biden Twitter post meme.",
+        ephemeral: true,
       });
     }
-  }
+  },
 };

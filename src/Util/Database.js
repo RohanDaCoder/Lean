@@ -13,7 +13,7 @@ class Database {
     try {
       // Ensure the directory exists
       await fs.mkdir(path.dirname(this.filePath), { recursive: true });
-      
+
       // Read or create the file
       try {
         const data = await fs.readFile(this.filePath, "utf8");

@@ -52,8 +52,7 @@ module.exports = {
     }
   },
   options: {
-    userPermissions: [
-      "ManageServer",
-    ],
+    userPermissions: ["ManageServer"],
+    botPermissions: ["ManageChannels", "EmbedLinks", "SendMessages"],
   },
 };

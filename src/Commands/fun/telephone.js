@@ -56,7 +56,7 @@ module.exports = {
       });
     }
   },
-}
+};
 
 async function joinLobby(interaction, client) {
   try {

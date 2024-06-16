@@ -7,6 +7,9 @@ const suggestionChoices = [
 ];
 
 module.exports = {
+  options: {
+    botPermissions: ["EmbedLinks"],
+  },
   data: new SlashCommandBuilder()
     .setName("suggest")
     .setDescription("Create a suggestion for developers.")
