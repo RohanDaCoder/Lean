@@ -98,5 +98,6 @@ module.exports = {
   },
   options: {
     cooldown: "1m",
+    botPermissions: ["EmbedLinks"],
   },
 };

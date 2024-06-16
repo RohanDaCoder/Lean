@@ -22,6 +22,7 @@ module.exports = {
     ),
   options: {
     devOnly: true,
+    botPermissions: ["EmbedLinks"],
   },
   async run({ interaction, client }) {
     try {

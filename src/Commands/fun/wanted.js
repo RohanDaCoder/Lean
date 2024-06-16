@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
+options: {
+    botPermissions: ["EmbedLinks"],
+  },
   data: new SlashCommandBuilder()
     .setName("wanted")
     .setDescription("Creates a wanted poster for a user.")

@@ -47,4 +47,7 @@ module.exports = {
       embeds: [leaderboardEmbed],
     });
   },
+  options: {
+    botPermissions: ["EmbedLinks"],
+  },
 };

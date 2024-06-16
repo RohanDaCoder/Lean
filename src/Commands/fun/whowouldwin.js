@@ -47,4 +47,7 @@ module.exports = {
       });
     }
   },
+  options: {
+    botPermissions: ["EmbedLinks"],
+  },
 };

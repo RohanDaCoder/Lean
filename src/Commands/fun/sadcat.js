@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
+options: {
+    botPermissions: ["EmbedLinks"],
+  },
   data: new SlashCommandBuilder()
     .setName("sadcat")
     .setDescription("Creates a sad cat meme with custom text.")

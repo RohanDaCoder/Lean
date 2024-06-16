@@ -1,9 +1,12 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
+options: {
+    botPermissions: ["EmbedLinks"],
+  },
   data: new SlashCommandBuilder()
-    .setName("bidenmeme")
-    .setDescription("Creates a Biden Twitter post meme with custom text.")
+    .setName("bidenpost")
+    .setDescription("Make Biden Post Something On Twitter With A Custom Text")
     .addStringOption((option) =>
       option
         .setName("text")

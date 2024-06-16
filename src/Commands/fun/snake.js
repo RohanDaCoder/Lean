@@ -27,5 +27,6 @@ module.exports = {
   },
   options: {
     cooldown: "15s",
+    botPermissions: ["EmbedLinks"],
   },
 };

@@ -55,4 +55,7 @@ module.exports = {
 
     await interaction.reply({ embeds: [slotsEmbed] });
   },
+  options: {
+    botPermissions: ["EmbedLinks"],
+  },
 };

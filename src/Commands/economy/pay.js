@@ -2,6 +2,9 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const EconomyManager = require("../../Util/EconomyManager");
 
 module.exports = {
+options: {
+    botPermissions: ["EmbedLinks"],
+  },
   data: new SlashCommandBuilder()
     .setName("pay")
     .setDescription("Transfer Coins to Another User's Account")

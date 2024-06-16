@@ -2,6 +2,9 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 
 module.exports = {
+options: {
+    botPermissions: ["EmbedLinks", "AddReactions"],
+  },
   data: new SlashCommandBuilder()
     .setName("wouldyourather")
     .setDescription("Fetches a 'Would You Rather' question."),

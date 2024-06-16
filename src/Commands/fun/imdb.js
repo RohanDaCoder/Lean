@@ -2,6 +2,9 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 
 module.exports = {
+options: {
+    botPermissions: ["EmbedLinks"],
+  },
   data: new SlashCommandBuilder()
     .setName("imdb")
     .setDescription("Fetches movie information from IMDb.")
@@ -31,6 +34,7 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle(data.title)
         .setURL(data.imdburl)
+        .setImage(data.poster)
         .setThumbnail(data.poster)
         .setColor("Random")
         .setDescription(data.plot)
