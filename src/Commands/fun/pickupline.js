@@ -15,7 +15,7 @@ module.exports = {
       const pickupLine = response.data.pickupline;
 
       await interaction.editReply({
-        content: `💘 ${pickupLine}`,
+        content: pickupLine,
       });
     } catch (error) {
       console.error("Error fetching pickup line:", error);

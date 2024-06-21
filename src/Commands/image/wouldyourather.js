@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 
 module.exports = {
-options: {
+  options: {
     botPermissions: ["EmbedLinks", "AddReactions"],
   },
   data: new SlashCommandBuilder()
@@ -15,13 +15,13 @@ options: {
 
       // Fetch the WYR question from the API
       const response = await axios.get("https://api.popcat.xyz/wyr");
-      const { question, option1, option2 } = response.data;
+      const { ops1, ops2 } = response.data;
 
       // Create the embed with the WYR question and options
       const embed = new EmbedBuilder()
         .setTitle("Would You Rather...")
         .setDescription(
-          `**Question:** ${question}\n\n:one: ${option1}\n:two: ${option2}`,
+          `**Options:**\n\n:one: ${ops1}\n:two: ${ops2}`
         )
         .setColor("Random")
         .setTimestamp();
@@ -35,8 +35,7 @@ options: {
     } catch (error) {
       console.error("Error fetching WYR question:", error);
       await interaction.editReply({
-        content:
-          "An error occurred while trying to fetch the 'Would You Rather' question.",
+        content: "An error occurred while trying to fetch the 'Would You Rather' question.",
         ephemeral: true,
       });
     }

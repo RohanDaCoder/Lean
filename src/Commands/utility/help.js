@@ -30,6 +30,7 @@ module.exports = {
         dev: [],
         admin: [],
         giveaway: [],
+        image: [],
       };
 
       for (const command in commands) {
@@ -52,6 +53,7 @@ module.exports = {
         Uncategorized: "Miscellaneous",
         dev: "🗿 Developer",
         giveaway: "🎁 Giveaway",
+        image: "📷 Image Manipulation",
       };
 
       // Check if the user is a developer
@@ -93,7 +95,7 @@ module.exports = {
         filter: (i) =>
           i.customId === "help_select_menu" &&
           i.user.id === interaction.user.id,
-        time: 120000,
+        // time: 120000,
       });
 
       collector.on("collect", async (i) => {
