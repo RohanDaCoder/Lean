@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 
 module.exports = {
-options: {
+  options: {
     botPermissions: ["EmbedLinks"],
   },
   data: new SlashCommandBuilder()

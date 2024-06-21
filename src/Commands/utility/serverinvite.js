@@ -6,11 +6,13 @@ module.exports = {
     .setDescription("Get the invite link to the bot's official server"),
 
   run: async ({ interaction, client }) => {
-    const officialServerLink =  `https://discord.com/invite/vCpBebaP8w`;
+    const officialServerLink = `https://discord.com/invite/vCpBebaP8w`;
 
     const serverEmbed = new EmbedBuilder()
       .setTitle("Join My Official Server!")
-      .setDescription(`[Click here to join the official server!](${officialServerLink})`)
+      .setDescription(
+        `[Click here to join the official server!](${officialServerLink})`,
+      )
       .setColor("Random")
       .setTimestamp()
       .setAuthor({
@@ -23,8 +25,8 @@ module.exports = {
     try {
       await interaction.editReply({
         embeds: [serverEmbed],
-        ephemeral: true
-      });    
+        ephemeral: true,
+      });
     } catch {
       await interaction.user.send({ embeds: [serverEmbed] });
       await interaction.editReply({

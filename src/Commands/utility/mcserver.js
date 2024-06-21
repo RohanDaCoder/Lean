@@ -1,4 +1,8 @@
-const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  EmbedBuilder,
+  AttachmentBuilder,
+} = require("discord.js");
 const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
@@ -7,24 +11,29 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("mcserver")
     .setDescription("Fetch information about a Minecraft server.")
-    .addStringOption(option => 
-      option.setName("version")
-        .setDescription("The version of the Minecraft server (Java or Bedrock).")
+    .addStringOption((option) =>
+      option
+        .setName("version")
+        .setDescription(
+          "The version of the Minecraft server (Java or Bedrock).",
+        )
         .setRequired(true)
         .addChoices(
-          { name: 'Java', value: 'java' },
-          { name: 'Bedrock', value: 'bedrock' }
-        )
+          { name: "Java", value: "java" },
+          { name: "Bedrock", value: "bedrock" },
+        ),
     )
-    .addStringOption(option => 
-      option.setName("address")
+    .addStringOption((option) =>
+      option
+        .setName("address")
         .setDescription("The address of the Minecraft server.")
-        .setRequired(true)
+        .setRequired(true),
     )
-    .addIntegerOption(option => 
-      option.setName("port")
+    .addIntegerOption((option) =>
+      option
+        .setName("port")
         .setDescription("The port of the Minecraft server (optional).")
-        .setRequired(false)
+        .setRequired(false),
     ),
 
   run: async ({ interaction }) => {
@@ -34,12 +43,13 @@ module.exports = {
 
     // Set default ports if not provided
     if (!port) {
-      port = version === 'java' ? 25565 : 19132;
+      port = version === "java" ? 25565 : 19132;
     }
 
-    const apiUrl = version === 'java'
-      ? `https://api.mcsrvstat.us/3/${address}:${port}`
-      : `https://api.mcsrvstat.us/bedrock/3/${address}:${port}`;
+    const apiUrl =
+      version === "java"
+        ? `https://api.mcsrvstat.us/3/${address}:${port}`
+        : `https://api.mcsrvstat.us/bedrock/3/${address}:${port}`;
 
     await interaction.deferReply();
 
@@ -48,7 +58,10 @@ module.exports = {
       const data = response.data;
 
       if (!data.online) {
-        await interaction.editReply({ content: "The server is currently offline or unreachable.", ephemeral: true });
+        await interaction.editReply({
+          content: "The server is currently offline or unreachable.",
+          ephemeral: true,
+        });
         return;
       }
 
@@ -57,7 +70,7 @@ module.exports = {
       if (data.icon) {
         const imagePath = path.join(__dirname, "../../Cache/serverimage.png");
         const base64Data = data.icon.replace(/^data:image\/png;base64,/, "");
-        fs.writeFileSync(imagePath, base64Data, 'base64');
+        fs.writeFileSync(imagePath, base64Data, "base64");
         imageAttachment = new AttachmentBuilder(imagePath);
         imageUrl = `attachment://${path.basename(imagePath)}`;
       }
@@ -70,7 +83,11 @@ module.exports = {
           { name: "IP", value: data.ip, inline: true },
           { name: "Port", value: data.port.toString(), inline: true },
           { name: "Version", value: data.version || "Unknown", inline: true },
-          { name: "Players", value: `${data.players.online} / ${data.players.max}`, inline: true }
+          {
+            name: "Players",
+            value: `${data.players.online} / ${data.players.max}`,
+            inline: true,
+          },
         )
         .setTimestamp();
 
@@ -78,13 +95,16 @@ module.exports = {
         embed.setImage(imageUrl);
       }
 
-      await interaction.editReply({ embeds: [embed], files: imageAttachment ? [imageAttachment] : [] });
-
+      await interaction.editReply({
+        embeds: [embed],
+        files: imageAttachment ? [imageAttachment] : [],
+      });
     } catch (error) {
       console.error("Error fetching Minecraft server info:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to fetch the server information.",
-        ephemeral: true
+        content:
+          "An error occurred while trying to fetch the server information.",
+        ephemeral: true,
       });
     }
   },

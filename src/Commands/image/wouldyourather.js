@@ -20,9 +20,7 @@ module.exports = {
       // Create the embed with the WYR question and options
       const embed = new EmbedBuilder()
         .setTitle("Would You Rather...")
-        .setDescription(
-          `**Options:**\n\n:one: ${ops1}\n:two: ${ops2}`
-        )
+        .setDescription(`**Options:**\n\n:one: ${ops1}\n:two: ${ops2}`)
         .setColor("Random")
         .setTimestamp();
 
@@ -35,7 +33,8 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching WYR question:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to fetch the 'Would You Rather' question.",
+        content:
+          "An error occurred while trying to fetch the 'Would You Rather' question.",
         ephemeral: true,
       });
     }

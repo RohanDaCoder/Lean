@@ -3,7 +3,7 @@ const EconomyManager = require("../../Util/EconomyManager");
 const economyManager = require("../../Util/EconomyManager.js");
 
 module.exports = {
-options: {
+  options: {
     botPermissions: ["EmbedLinks"],
   },
   data: new SlashCommandBuilder()

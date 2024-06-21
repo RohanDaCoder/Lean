@@ -63,5 +63,5 @@ module.exports = {
       await interaction.editReply("An error occurred while fetching balance.");
     }
   },
-  options: { cooldown: "5s", botPermissions: ["EmbedLinks"], },
+  options: { cooldown: "5s", botPermissions: ["EmbedLinks"] },
 };
