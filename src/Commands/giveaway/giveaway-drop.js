@@ -1,6 +1,5 @@
 const messages = process.config.giveaway;
 
-
 const { SlashCommandBuilder } = require("discord.js");
 
 const data = new SlashCommandBuilder()

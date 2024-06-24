@@ -1,4 +1,3 @@
-
 const ms = require("ms");
 const { SlashCommandBuilder } = require("discord.js");
 
