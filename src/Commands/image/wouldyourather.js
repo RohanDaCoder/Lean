@@ -33,8 +33,7 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching WYR question:", error);
       await interaction.editReply({
-        content:
-          "An error occurred while trying to fetch the 'Would You Rather' question.",
+        content: `${client.config.emojis.no} An error occurred while trying to fetch the 'Would You Rather' question. \n${error.message}`,
         ephemeral: true,
       });
     }

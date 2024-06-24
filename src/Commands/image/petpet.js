@@ -35,8 +35,7 @@ module.exports = {
     } catch (error) {
       console.error("Error creating pet-pet animation:", error);
       await interaction.editReply({
-        content:
-          "An error occurred while trying to create the pet-pet animation.",
+        content: `${client.config.emojis.no} An error occurred while trying to create the pet-pet animation. \n${error.message}`,
         ephemeral: true,
       });
     }

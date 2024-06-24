@@ -30,7 +30,7 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching Oogway quote:", error);
       await interaction.reply({
-        content: "An error occurred while fetching Master Oogway's wisdom.",
+        content: `${client.config.emojis.no} An error occurred while fetching Master Oogway's wisdom. \n${error.message}`,
         ephemeral: true,
       });
     }

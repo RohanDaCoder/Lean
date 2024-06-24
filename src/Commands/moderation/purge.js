@@ -39,13 +39,13 @@ module.exports = {
       }
 
       await interaction.editReply({
-        content: `Successfully deleted ${totalDeleted} messages.`,
+        content: `${client.config.emojis.yes} Successfully deleted ${totalDeleted} messages.`,
         ephemeral: true,
       });
     } catch (error) {
       console.error(error);
       await interaction.editReply({
-        content: "There was an error trying to purge messages in this channel.",
+        content: `${client.config.emojis.no} There was an error trying to purge messages in this channel. \n${error.message}`,
         ephemeral: true,
       });
     }

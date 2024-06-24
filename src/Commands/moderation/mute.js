@@ -32,7 +32,7 @@ module.exports = {
 
     if (!milliseconds) {
       return interaction.reply({
-        content: "Incorrect duration format.",
+        content: `${client.config.emojis.no} Incorrect duration format.`,
         ephemeral: true,
       });
     }
@@ -52,7 +52,7 @@ module.exports = {
       await interaction.reply({ embeds: [muteEmbed] });
     } catch (error) {
       await interaction.reply({
-        content: "Could not mute the user.",
+        content: `${client.config.emojis.no} An Error Occured While Kicking ${userToMute.user.tag} \n${error.message}`,
         ephemeral: true,
       });
     }
@@ -68,7 +68,7 @@ function ms(duration) {
   const matches = duration.match(/(\d+)([smhd])/);
   if (!matches) return null;
 
-  const [, time, unit] = matches;
+  const [time, unit] = matches;
   const durations = { s: 1000, m: 60000, h: 3600000, d: 86400000 };
   return time * durations[unit];
 }

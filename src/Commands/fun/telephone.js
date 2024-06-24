@@ -31,14 +31,6 @@ module.exports = {
     ),
   async run({ interaction, client }) {
     try {
-      if (
-        !interaction.guild.members.me.permissions.has(
-          PermissionsBitField.Flags.EmbedLinks,
-        )
-      )
-        return await interaction.reply({
-          content: `:x: I Don't Have Enough Permissions To Run This Commands!`,
-        });
       const subcommand = interaction.options.getSubcommand();
 
       if (subcommand === "join") {
@@ -51,10 +43,13 @@ module.exports = {
     } catch (error) {
       console.error("Error occurred in command execution:", error);
       await interaction.reply({
-        content: "There was an error while executing the command.",
+        content: `${client.config.emojis.no} There was an error while executing the command. \n${error.message}`,
         ephemeral: true,
       });
     }
+  },
+  options: {
+    botPermissions: ["EmbedLinks"],
   },
 };
 
@@ -68,7 +63,7 @@ async function joinLobby(interaction, client) {
       activeChats.has(userId)
     ) {
       await interaction.reply({
-        content: "You are already in the lobby or in an active chat.",
+        content: `${client.config.emojis.no} You are already in the lobby or in an active chat.`,
         ephemeral: true,
       });
       return;
@@ -76,7 +71,7 @@ async function joinLobby(interaction, client) {
 
     lobbyQueue.push({ userId, channelId });
     await interaction.reply({
-      content: "You have joined the lobby. Waiting for another user...",
+      content: `${client.config.emojis.yes} You have joined the lobby. Waiting for another user...`,
       ephemeral: true,
     });
 
@@ -117,7 +112,7 @@ async function joinLobby(interaction, client) {
   } catch (error) {
     console.error("Error occurred in joinLobby function:", error);
     await interaction.reply({
-      content: "There was an error while joining the lobby.",
+      content: `${client.config.emojis.no} There was an error while joining the lobby. \n${error.message}`,
       ephemeral: true,
     });
   }
@@ -129,8 +124,7 @@ async function sendMessage(interaction, client) {
 
     if (!activeChats.has(userId)) {
       await interaction.reply({
-        content:
-          "You are not in an active chat. \nUse `/telephone join` to join a chat.",
+        content: `${client.config.emojis.no} You are not in an active chat. \nUse \`/telephone join\` to join a chat.`,
         ephemeral: true,
       });
       return;
@@ -158,7 +152,7 @@ async function sendMessage(interaction, client) {
   } catch (error) {
     console.error("Error occurred in sendMessage function:", error);
     await interaction.reply({
-      content: "There was an error while sending the message.",
+      content: `${client.config.emojis.no} There was an error while sending the message. \n${error.message}`,
       ephemeral: true,
     });
   }
@@ -170,7 +164,7 @@ async function leaveChat(interaction, client) {
 
     if (!activeChats.has(userId)) {
       await interaction.reply({
-        content: "You are not in an active chat.",
+        content: `${client.config.emojis.no} You are not in an active chat.`,
         ephemeral: true,
       });
       return;
@@ -213,13 +207,13 @@ async function leaveChat(interaction, client) {
     }
 
     await interaction.reply({
-      content: "You have left the chat.",
+      content: `${client.config.emojis.yes} You have left the chat.`,
       ephemeral: true,
     });
   } catch (error) {
     console.error("Error occurred in leaveChat function:", error);
     await interaction.reply({
-      content: "There was an error while leaving the chat.",
+      content: `${client.config.emojis.no} There was an error while leaving the chat. \n${error.message}`,
       ephemeral: true,
     });
   }

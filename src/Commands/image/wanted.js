@@ -34,7 +34,7 @@ module.exports = {
     } catch (error) {
       console.error("Error creating wanted poster:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to create the wanted poster.",
+        content: `${client.config.emojis.no} An error occurred while trying to create the wanted poster. \n${error.message}`,
         ephemeral: true,
       });
     }

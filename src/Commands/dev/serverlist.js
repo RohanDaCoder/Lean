@@ -47,7 +47,10 @@ module.exports = {
 
         const inviteManager = guild.invites;
         const invites = await inviteManager.fetch().catch((err) => {
-          console.error(`Failed to fetch invites for guild ${guild.id}:`, err);
+          console.error(
+            `${client.config.emojis.no} Failed to fetch invites for guild ${guild.id}:`,
+            err,
+          );
           return new Map();
         });
 
@@ -62,7 +65,7 @@ module.exports = {
                 channel.isTextBased() &&
                 channel
                   .permissionsFor(guild.members.me)
-                  .has("CREATE_INSTANT_INVITE"),
+                  .has("CreateInstantInvite"),
             );
 
             const randomChannel = textChannels.random();
@@ -164,7 +167,7 @@ module.exports = {
       console.error("Error in serverlist command:", error);
       if (error.code !== "INTERACTION_ALREADY_REPLIED") {
         await interaction.followUp({
-          content: "An error occurred while executing the command.",
+          content: `${client.config.emojis.no} An error occurred while executing the command.`,
           ephemeral: true,
         });
       }

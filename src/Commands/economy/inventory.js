@@ -51,7 +51,7 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching inventory:", error);
       await interaction.reply(
-        "An error occurred while fetching the inventory. \n" + error.message,
+        `${client.config.emojis.no} An error occurred while fetching the inventory. \n${error.message}`,
       );
     }
   },

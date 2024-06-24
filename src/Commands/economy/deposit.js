@@ -23,7 +23,7 @@ module.exports = {
 
     if (amount > walletBalance.raw) {
       return interaction.reply({
-        content: "You do not have enough money in your wallet.",
+        content: `${client.config.emojis.no} You do not have enough money in your wallet.`,
         ephemeral: true,
       });
     }
@@ -42,7 +42,7 @@ module.exports = {
     });
 
     await interaction.reply({
-      content: `Deposited ${economyManager.formatMoney(amount)} into your bank.`,
+      content: `${client.config.emojis.yes} Deposited ${economyManager.formatMoney(amount)} into your bank.`,
     });
   },
 };

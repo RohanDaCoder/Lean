@@ -40,7 +40,7 @@ module.exports = {
     } catch (error) {
       console.error("Error creating Pooh meme:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to create the Pooh meme.",
+        content: `${client.config.emojis.no} An error occurred while trying to create the Pooh meme. \n${error.message}`,
         ephemeral: true,
       });
     }

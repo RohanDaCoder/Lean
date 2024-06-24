@@ -41,7 +41,7 @@ module.exports = {
     } catch (error) {
       console.error("Error generating Drake meme:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to generate the Drake meme.",
+        content: `${client.config.emojis.no} An error occurred while trying to generate the Drake meme. \n${error.message}`,
         ephemeral: true,
       });
     }

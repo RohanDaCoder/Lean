@@ -18,7 +18,7 @@ module.exports = {
       const lastClaimTime = db.get("daily");
       if (lastClaimTime) {
         await interaction.reply({
-          content: "You have already claimed your daily prize.",
+          content: `${client.config.emojis.no} You have already claimed your daily prize.`,
           ephemeral: true,
         });
         return;
@@ -29,7 +29,7 @@ module.exports = {
           balance: "wallet",
         });
         await interaction.reply({
-          content: `Congratulations! You claimed ${eco.formatMoney(reward)} as your daily reward.`,
+          content: `${client.config.emojis.yes} Congratulations! You claimed ${eco.formatMoney(reward)} as your daily reward.`,
         });
         db.set("wallet", currentBalance.raw + reward);
         db.set("daily", Date.now());
@@ -37,7 +37,7 @@ module.exports = {
     } catch (error) {
       console.error("Error claiming daily reward:", error);
       await interaction.reply({
-        content: "An error occurred while claiming your daily reward.",
+        content: `${client.config.emojis.no} An error occurred while claiming your daily reward. \n${error.message}`,
         ephemeral: true,
       });
     }

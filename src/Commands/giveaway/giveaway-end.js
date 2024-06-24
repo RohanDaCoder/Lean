@@ -20,8 +20,7 @@ module.exports = {
       !interaction.member.roles.cache.some((r) => r.name === "Giveaways")
     ) {
       return interaction.reply({
-        content:
-          ":x: You need to have the manage messages permissions to end giveaways.",
+        content: `${client.config.emojis.no} You need to have the manage messages permissions to end giveaways.`,
         ephemeral: true,
       });
     }
@@ -42,14 +41,18 @@ module.exports = {
     // If no giveaway was found with the corresponding input
     if (!giveaway) {
       return interaction.reply({
-        content: "Unable to find a giveaway for `" + query + "`.",
+        content:
+          client.config.emojis.no +
+          " Unable to find a giveaway for `" +
+          query +
+          "`.",
         ephemeral: true,
       });
     }
 
     if (giveaway.ended) {
       return interaction.reply({
-        content: "This giveaway has already ended!",
+        content: `${client.config.emojis.no} This giveaway has already ended!`,
         ephemeral: true,
       });
     }
@@ -61,7 +64,7 @@ module.exports = {
       .then(() => {
         // Success message
         interaction.reply(
-          `**[This Giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId})** Has Now Ended!`,
+          `${client.config.emojis.yes} **[This Giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId})** Has Now Ended!`,
         );
       })
       .catch((e) => {

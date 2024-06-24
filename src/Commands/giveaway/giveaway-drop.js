@@ -34,8 +34,7 @@ module.exports = {
       !interaction.member.roles.cache.some((r) => r.name === "Giveaways")
     ) {
       return interaction.reply({
-        content:
-          ":x: You need to have the manage messages permissions to start giveaways.",
+        content: `${client.config.emojis.no} You need to have the manage messages permissions to start giveaways.`,
         ephemeral: true,
       });
     }
@@ -46,14 +45,13 @@ module.exports = {
 
     if (!giveawayChannel.isTextBased()) {
       return interaction.reply({
-        content: ":x: Please select a text channel!",
+        content: `${client.config.emojis.no}  Please select a text channel!`,
         ephemeral: true,
       });
     }
     if (giveawayWinnerCount < 1) {
       return interaction.reply({
-        content:
-          ":x: Please select a valid winner count! greater or equal to one.",
+        content: `${client.config.emojis.no} Please select a valid winner count! greater or equal to one.`,
       });
     }
 
@@ -71,6 +69,8 @@ module.exports = {
       messages,
     });
 
-    interaction.reply(`Giveaway started in ${giveawayChannel}!`);
+    interaction.reply(
+      `${client.config.emojis.yes} Giveaway started in ${giveawayChannel}!`,
+    );
   },
 };

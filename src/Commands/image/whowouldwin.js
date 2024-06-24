@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("who-would-win")
+    .setName("whowouldwin")
     .setDescription(
       "Creates a 'Who would win?' meme with the avatars of two users.",
     )
@@ -41,8 +41,7 @@ module.exports = {
     } catch (error) {
       console.error("Error creating 'Who would win?' meme:", error);
       await interaction.editReply({
-        content:
-          "An error occurred while trying to create the 'Who would win?' meme.",
+        content: `${client.config.emojis.no} An error occurred while trying to create the 'Who would win?' meme. \n${error.message}`,
         ephemeral: true,
       });
     }

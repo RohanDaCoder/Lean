@@ -40,7 +40,9 @@ module.exports = {
 
       // Inform command issuer that the message has been sent
       const confirmEmbed = new EmbedBuilder()
-        .setDescription(`Message sent as ${userToImpersonate.tag}`)
+        .setDescription(
+          `${client.config.emojis.yes} Message sent as ${userToImpersonate.tag}`,
+        )
         .setColor(0x00ae86);
 
       await interaction.reply({ embeds: [confirmEmbed], ephemeral: true });
@@ -49,7 +51,7 @@ module.exports = {
       webhook.delete();
       console.error(error);
       await interaction.reply({
-        content: "Failed to send the message.",
+        content: `${client.config.emojis.no} Failed to send the message. \n${error.message}`,
         ephemeral: true,
       });
     }

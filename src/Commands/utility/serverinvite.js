@@ -1,4 +1,10 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  SlashCommandBuilder,
+  EmbedBuilder,
+} = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -7,12 +13,14 @@ module.exports = {
 
   run: async ({ interaction, client }) => {
     const officialServerLink = `https://discord.com/invite/vCpBebaP8w`;
-
+    const button = new ButtonBuilder()
+      .setLabel("Invite Link")
+      .setURL(officialServerLink)
+      .setStyle(ButtonStyle.Link);
+    const row = new ActionRowBuilder().addComponents(button);
     const serverEmbed = new EmbedBuilder()
       .setTitle("Join My Official Server!")
-      .setDescription(
-        `[Click here to join the official server!](${officialServerLink})`,
-      )
+      .setDescription("Join The Discord Server From The Button Below")
       .setColor("Random")
       .setTimestamp()
       .setAuthor({
@@ -22,16 +30,10 @@ module.exports = {
 
     await interaction.deferReply({ ephemeral: true });
 
-    try {
-      await interaction.editReply({
-        embeds: [serverEmbed],
-        ephemeral: true,
-      });
-    } catch {
-      await interaction.user.send({ embeds: [serverEmbed] });
-      await interaction.editReply({
-        content: "I've sent you a DM with the server invite link!",
-      });
-    }
+    await interaction.editReply({
+      embeds: [serverEmbed],
+      components: [row],
+      ephemeral: true,
+    });
   },
 };

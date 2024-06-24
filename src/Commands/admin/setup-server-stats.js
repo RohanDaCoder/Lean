@@ -37,7 +37,7 @@ module.exports = {
     } catch (error) {
       console.error("Error setting up server stats:", error);
       await interaction.reply({
-        content: `An error occurred while setting up server stats. \n${error.message}`,
+        content: `${client.config.emojis.no} An error occurred while setting up server stats. \n${error.message}`,
         ephemeral: true,
       });
     }

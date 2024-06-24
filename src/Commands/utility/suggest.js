@@ -58,13 +58,13 @@ module.exports = {
       await suggestionsChannel.send({ embeds: [embed] });
 
       await interaction.editReply({
-        content: "Suggestion submitted successfully.",
+        content: `${client.config.emojis.yes} Suggestion submitted successfully.`,
         ephemeral: true,
       });
     } catch (error) {
       console.error("Error in suggest command:", error);
       await interaction.editReply({
-        content: "An error occurred while executing the command.",
+        content: `${client.config.emojis.no} An error occurred while executing the command. \n${error.message}`,
         ephemeral: true,
       });
     }

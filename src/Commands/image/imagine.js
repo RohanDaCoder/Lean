@@ -47,7 +47,9 @@ module.exports = {
     ),
   run: async ({ interaction }) => {
     if (!process.env.REPLICATE_API_KEY)
-      return interaction.reply(`**The Imagine Command Was Not Setuped.**`);
+      return interaction.reply(
+        `${client.config.emojis.no} **This Command Is Currently Disabled.**`,
+      );
     try {
       const prompt = interaction.options.getString("prompt");
       const model = interaction.options.getString("model") || models[0].value;
@@ -79,19 +81,12 @@ module.exports = {
         );
       const tookTime = ms(Date.now() - interaction.createdTimestamp);
       await interaction.editReply({
-        content: `Took ${tookTime}`,
+        content: `${client.config.emojis.yes} Took ${tookTime}`,
         embeds: [embed],
       });
     } catch (error) {
-      const errEmbed = {
-        title: "An error occurred",
-        description: `\`\`\`${error}\`\`\``,
-        color: 0xe32424,
-      };
-
       await interaction.editReply({
-        content: "An error occurred",
-        embeds: [errEmbed],
+        content: `${client.config.emojis.no} An error occurred \n${error.message}`,
       });
       console.error(error);
     }

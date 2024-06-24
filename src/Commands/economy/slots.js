@@ -10,7 +10,8 @@ module.exports = {
       option
         .setName("bet")
         .setDescription("The amount of money to bet")
-        .setRequired(true),
+        .setRequired(true)
+        .setMinValue(1),
     ),
 
   async run({ client, interaction }) {
@@ -23,7 +24,7 @@ module.exports = {
 
     if (bet > walletBalance.raw) {
       return interaction.reply({
-        content: "You cannot afford this bet.",
+        content: `${client.config.emojis.no} You cannot afford this bet.`,
         ephemeral: true,
       });
     }

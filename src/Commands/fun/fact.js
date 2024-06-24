@@ -28,7 +28,7 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching fact:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to fetch a fact.",
+        content: `${client.config.emojis.no} An error occurred while trying to fetch a fact. \n${error.message}`,
         ephemeral: true,
       });
     }

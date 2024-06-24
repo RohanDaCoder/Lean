@@ -45,7 +45,7 @@ module.exports = {
     const flip = Math.random() < 0.5 ? "heads" : "tails";
     let winnings = 0;
     if (choice === flip) {
-      winnings = bet * 2; // Double the bet if the user wins
+      winnings = bet * 2;
     }
 
     await economyManager.SetMoney({

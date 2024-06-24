@@ -59,7 +59,7 @@ module.exports = {
 
       if (!data.online) {
         await interaction.editReply({
-          content: "The server is currently offline or unreachable.",
+          content: `${client.config.emojis.no} The server is currently offline or unreachable.`,
           ephemeral: true,
         });
         return;
@@ -102,8 +102,7 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching Minecraft server info:", error);
       await interaction.editReply({
-        content:
-          "An error occurred while trying to fetch the server information.",
+        content: `${client.config.emojis.no} An error occurred while trying to fetch the server information. \n${error.message}`,
         ephemeral: true,
       });
     }

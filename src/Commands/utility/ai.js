@@ -12,11 +12,19 @@ module.exports = {
     ),
 
   run: async ({ client, interaction }) => {
-    const msg = interaction.options.getString("message");
-    const axios = require("axios");
-    const res = await axios.get(
-      `http://api.brainshop.ai/get?bid=165755&key=ZGb2lzrZc9dChJ3l&uid=${interaction.user.id}&msg=${encodeURIComponent(msg)}`,
-    );
-    await interaction.reply(`${res.data.cnt}`);
+    try {
+      await interaction.deferReply();
+      const msg = interaction.options.getString("message");
+      const axios = require("axios");
+      const res = await axios.get(
+        `http://api.brainshop.ai/get?bid=165755&key=ZGb2lzrZc9dChJ3l&uid=${interaction.user.id}&msg=${encodeURIComponent(msg)}`,
+      );
+      await interaction.editReply(`${res.data.cnt}`);
+    } catch {
+      console.error(`Error While Ai Command: ${error}`);
+      interaction.editReply(
+        `${client.config.emojis.no} An Error Occured While Running The Command. \n${error.message}`,
+      );
+    }
   },
 };

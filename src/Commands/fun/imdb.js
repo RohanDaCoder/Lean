@@ -26,7 +26,7 @@ module.exports = {
 
       if (!data.title) {
         return await interaction.editReply({
-          content: "No movie found with that title.",
+          content: `${client.config.emojis.no} No movie found with that title.`,
           ephemeral: true,
         });
       }
@@ -67,8 +67,7 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching movie information:", error);
       await interaction.editReply({
-        content:
-          "An error occurred while trying to fetch the movie information.",
+        content: `${client.config.emojis.no} An error occurred while trying to fetch the movie information. \n${error.message}`,
         ephemeral: true,
       });
     }

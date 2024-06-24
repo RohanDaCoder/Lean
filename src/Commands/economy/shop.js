@@ -41,7 +41,7 @@ module.exports = {
 
       if (!item) {
         return interaction.reply({
-          content: "Item not found.",
+          content: `${client.config.emojis.no} Item not found.`,
           ephemeral: false,
         });
       }
@@ -91,7 +91,7 @@ module.exports = {
 
                 if (balance.raw < item.value * amount) {
                   return await i.reply({
-                    content: "You do not have enough coins to buy this item.",
+                    content: `${client.config.emojis.no} You do not have enough coins to buy this item. \n${error.message}`,
                     ephemeral: false,
                   });
                 }
@@ -106,7 +106,7 @@ module.exports = {
                 await InventoryManager.AddItem(userID, item.id, amount);
 
                 await interaction.editReply({
-                  content: `You have successfully bought **${amount} ${item.name}**!`,
+                  content: `${client.config.emojis.yes} You have successfully bought **${amount} ${item.name}**!`,
                   components: [],
                 });
               } else if (action === "sell") {
@@ -115,7 +115,7 @@ module.exports = {
 
                 if (!inventoryItem || inventoryItem.quantity < amount) {
                   return await i.reply({
-                    content: "You do not have enough of this item to sell.",
+                    content: `${client.config.emojis.no} You do not have enough of this item to sell.`,
                     ephemeral: false,
                   });
                 }
@@ -135,7 +135,7 @@ module.exports = {
                 await InventoryManager.RemoveItem(userID, item.id, amount);
 
                 await interaction.editReply({
-                  content: `You have successfully sold **${amount} ${item.name}** for **${saleValue} coins**!`,
+                  content: `${client.config.emojis.yes} You have successfully sold **${amount} ${item.name}** for **${saleValue} coins**!`,
                   components: [],
                 });
               }
@@ -148,7 +148,7 @@ module.exports = {
           } catch (error) {
             console.error("Error during button interaction:", error);
             await i.reply({
-              content: "An error occurred while processing your request.",
+              content: `${client.config.emojis.no} An error occurred while processing your request. \n${error.message}`,
               ephemeral: false,
             });
           }
@@ -164,7 +164,7 @@ module.exports = {
     } catch (error) {
       console.error("Error executing shop command:", error);
       await interaction.reply({
-        content: "An error occurred while executing the shop command.",
+        content: `${client.config.emojis.no} An error occurred while executing the shop command. \n${error.message}`,
         ephemeral: false,
       });
     }

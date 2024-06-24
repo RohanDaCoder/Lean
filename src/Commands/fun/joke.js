@@ -25,8 +25,7 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching joke:", error);
       await interaction.editReply({
-        content:
-          "An error occurred while fetching a joke. Please try again later.",
+        content: `${client.config.emojis.no} An error occurred while fetching a joke. Please try again later. \n${error.message}`,
         ephemeral: true,
       });
     }

@@ -19,8 +19,7 @@ module.exports = {
       !interaction.member.roles.cache.some((r) => r.name === "Giveaways")
     ) {
       return interaction.reply({
-        content:
-          ":x: You need to have the manage messages permissions to pause giveaways.",
+        content: `${client.config.emojis.no} You need to have the manage messages permissions to pause giveaways.`,
         ephemeral: true,
       });
     }
@@ -41,14 +40,18 @@ module.exports = {
     // If no giveaway was found
     if (!giveaway) {
       return interaction.reply({
-        content: "Unable to find a giveaway for `" + query + "`.",
+        content:
+          client.config.emojis.no +
+          " Unable to find a giveaway for `" +
+          query +
+          "`.",
         ephemeral: true,
       });
     }
 
     if (giveaway.pauseOptions.isPaused) {
       return interaction.reply({
-        content: `**[This giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId})**  is already paused.`,
+        content: `${client.config.emojis.no} **[This giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId})**  is already paused.`,
         ephemeral: true,
       });
     }
@@ -60,7 +63,7 @@ module.exports = {
       .then(() => {
         // Success message
         interaction.reply(
-          `**[This giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId})** has now been paused!`,
+          `${client.config.emojis.yes} **[This giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId})** has now been paused!`,
         );
       })
       .catch((e) => {

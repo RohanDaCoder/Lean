@@ -23,7 +23,9 @@ module.exports = {
       (g) => g.guildId === `${interaction.guild.id}` && !g.ended,
     );
     if (!giveaways.some((e) => e.messageId)) {
-      return interaction.reply("💥 No Giveaways To Be Displayed");
+      return interaction.reply(
+        `${client.config.emojis.no} No Giveaways To Be Displayed`,
+      );
     }
     const msg = await interaction.channel.send({
       embeds: [
@@ -66,7 +68,7 @@ module.exports = {
     collector.on("end", (collected, reason) => {
       if (reason == "time") {
         interaction.editReply({
-          content: "Collector Destroyed, Try Again!",
+          content: `${client.config.emojis.no} Collector Destroyed, Try Again!`,
           components: [],
         });
       }

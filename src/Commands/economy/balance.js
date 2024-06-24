@@ -60,7 +60,9 @@ module.exports = {
       await interaction.editReply({ embeds: [balanceEmbed] });
     } catch (error) {
       console.error("Error fetching balance:", error);
-      await interaction.editReply("An error occurred while fetching balance.");
+      await interaction.editReply(
+        `${client.config.emojis.no} An error occurred while fetching balance. \n${error.message}`,
+      );
     }
   },
   options: { cooldown: "5s", botPermissions: ["EmbedLinks"] },

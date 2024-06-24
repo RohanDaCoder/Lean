@@ -17,7 +17,7 @@ module.exports = {
       const check = db.get("weekly");
       if (check) {
         await interaction.reply({
-          content: "You have already claimed your weekly prize.",
+          content: `${client.config.emojis.no} You have already claimed your weekly prize.`,
           ephemeral: true,
         });
         return;
@@ -28,7 +28,7 @@ module.exports = {
           balance: "wallet",
         });
         await interaction.reply({
-          content: `Congratulations! You claimed ${eco.formatMoney(reward)} as your weekly reward.`,
+          content: `${client.config.emojis.yes} Congratulations! You claimed ${eco.formatMoney(reward)} as your weekly reward.`,
         });
         db.set("wallet", currentBalance.raw + reward);
         // No need to set "weekly" to true since we're using the cooldown system
@@ -36,7 +36,7 @@ module.exports = {
     } catch (error) {
       console.error("Error claiming weekly reward:", error);
       await interaction.reply({
-        content: "An error occurred while claiming your weekly reward.",
+        content: `${client.config.emojis.no} An error occurred while claiming your weekly reward. \n${error.message}`,
         ephemeral: true,
       });
     }

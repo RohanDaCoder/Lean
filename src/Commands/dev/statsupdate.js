@@ -18,7 +18,7 @@ module.exports = {
       await msg.edit(`Done. Took ${time}`);
     } catch (err) {
       await msg.edit({
-        content: `An Error Occured. \n${err.message}`,
+        content: `${client.config.emojis.no} An Error Occured. \n${err.message}`,
         ephemeral: true,
       });
       console.error(err);

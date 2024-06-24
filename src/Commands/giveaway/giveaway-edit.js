@@ -40,8 +40,7 @@ module.exports = {
       !interaction.member.roles.cache.some((r) => r.name === "Giveaways")
     ) {
       return interaction.reply({
-        content:
-          ":x: You need to have the manage messages permissions to start giveaways.",
+        content: `${client.config.emojis.no} You need to have the manage messages permissions to start giveaways.`,
         ephemeral: true,
       });
     }
@@ -58,7 +57,7 @@ module.exports = {
 
     if (isNaN(duration)) {
       return interaction.reply({
-        content: ":x: Please select a valid duration!",
+        content: `${client.config.emojis.no} Please select a valid duration!`,
         ephemeral: true,
       });
     }
@@ -74,12 +73,12 @@ module.exports = {
       });
     } catch (e) {
       return interaction.editReply({
-        content: `No giveaway found with the given message ID: \`${gid}\``,
+        content: `${client.config.emojis.no} No giveaway found with the given message ID: \`${gid}\``,
         ephemeral: true,
       });
     }
     interaction.editReply({
-      content: `This giveaway has now been edited!`,
+      content: `${client.config.emojis.yes} This giveaway has now been edited!`,
       ephemeral: true,
     });
   },

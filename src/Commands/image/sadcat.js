@@ -33,7 +33,7 @@ module.exports = {
     } catch (error) {
       console.error("Error creating sad cat meme:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to create the sad cat meme.",
+        content: `${client.config.emojis.no} An error occurred while trying to create the sad cat meme. \n${error.message}`,
         ephemeral: true,
       });
     }

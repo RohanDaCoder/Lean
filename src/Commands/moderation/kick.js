@@ -24,7 +24,7 @@ module.exports = {
 
     if (!userToKick.kickable) {
       return interaction.reply({
-        content: "I cannot kick this user.",
+        content: `${client.config.emojis.no} I cannot kick this user.`,
         ephemeral: true,
       });
     }
@@ -50,7 +50,7 @@ module.exports = {
     } catch (error) {
       console.error(error);
       await interaction.reply({
-        content: `Failed to kick: ${error.message}`,
+        content: `${client.config.emojis.no} An Error Occured When Kicking ${userToKick.user.tag}  \n${error.message}`,
         ephemeral: true,
       });
     }

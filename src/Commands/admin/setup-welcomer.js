@@ -37,7 +37,7 @@ module.exports = {
     if (!welcomeID || replaceID === true) {
       config.set("welcomeChannel", channel.id);
       await interaction.editReply({
-        content: `You Have Successfully Set The Welcome Channel To <#${channel.id}>`,
+        content: `${client.config.emojis.yes} You Have Successfully Set The Welcome Channel To ${channel}`,
       });
       return;
     }
@@ -46,7 +46,7 @@ module.exports = {
     if (welcomeID && replaceID === false) {
       const welcomeChannel = await client.channels.fetch(welcomeID);
       await interaction.editReply({
-        content: `The Welcome Channel Is Already Set To <#${welcomeID}>, \nIf You Want To Change The Welcome Channel, You Need To Set Replace Channel To True.`,
+        content: `${client.config.emojis.no} The Welcome Channel Is Already Set To <#${welcomeID}>, \nIf You Want To Change The Welcome Channel, You Need To Set Replace Channel To True.`,
       });
       return;
     }

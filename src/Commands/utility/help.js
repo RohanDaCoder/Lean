@@ -103,7 +103,7 @@ module.exports = {
       collector.on("collect", async (i) => {
         const category = i.values[0];
         const categoryCommands = categories[category];
-
+        await i.deferUpdate();
         const embed = new EmbedBuilder()
           .setTitle(`Commands in ${category} category`)
           .setDescription(
@@ -113,7 +113,7 @@ module.exports = {
           )
           .setColor("#0099ff");
 
-        await i.update({
+        await i.editReply({
           embeds: [embed],
           ephemeral: false,
         });
@@ -125,7 +125,7 @@ module.exports = {
     } catch (error) {
       console.error("Error in help command:", error);
       await interaction.reply({
-        content: "An error occurred while executing the command.",
+        content: `${client.config.emojis.no} An error occurred while executing the command. \n${error.message}`,
         ephemeral: false,
       });
     }

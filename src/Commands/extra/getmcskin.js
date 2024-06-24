@@ -25,7 +25,7 @@ module.exports = {
         ),
     ),
 
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     try {
       const username = interaction.options.getString("username");
       const version = interaction.options.getString("version");
@@ -33,11 +33,13 @@ module.exports = {
 
       let skinUrl;
       if (version === "bedrock") {
-        skinUrl = await getBedrockSkinUrl(username);
+        skinUrl = await getBedrockSkinUrl(username, client, interaction);
       } else if (version === "java") {
-        skinUrl = await getJavaSkinUrl(username);
+        skinUrl = await getJavaSkinUrl(username, client, interaction);
       } else {
-        throw new Error("Invalid version specified.");
+        return interaction.editReply(
+          `${client.config.emojis.no} Invalid version specified.`,
+        );
       }
 
       const embed = createSkinEmbed(username, skinUrl);
@@ -45,36 +47,44 @@ module.exports = {
       await interaction.editReply({ embeds: [embed] });
     } catch (error) {
       await interaction.followUp({
-        content: `An error occurred: ${error.message}`,
+        content: `${client.config.emojis.no} An error occurred: ${error.message}`,
         ephemeral: true,
       });
     }
   },
 };
 
-async function getBedrockSkinUrl(username) {
+async function getBedrockSkinUrl(username, client, interaction) {
   const xuidResponse = await axios.get(
     `https://api.geysermc.org/v2/xbox/xuid/${username}`,
   );
   const xuid = xuidResponse.data.xuid;
-  if (!xuid) throw new Error(`Could not fetch the XUID for ${username}`);
+  if (!xuid)
+    return interaction.editReply(
+      `${client.config.emojis.no} Could not fetch the XUID for ${username}`,
+    );
 
   const skinResponse = await axios.get(
     `https://api.geysermc.org/v2/skin/${xuid}`,
   );
   const skinTextureID = skinResponse.data.texture_id;
   if (!skinTextureID)
-    throw new Error(`Skin Texture ID not found for ${username}`);
+    return interaction.editReply(
+      `${client.config.emojis.no} Skin Texture ID not found for ${username}`,
+    );
 
   return `http://textures.minecraft.net/texture/${skinTextureID}`;
 }
 
-async function getJavaSkinUrl(username) {
+async function getJavaSkinUrl(username, client, interaction) {
   const uuidResponse = await axios.get(
     `https://api.mojang.com/users/profiles/minecraft/${username}`,
   );
   const uuid = uuidResponse.data.id;
-  if (!uuid) throw new Error(`Could not fetch the UUID for ${username}`);
+  if (!uuid)
+    return interaction.editReply(
+      `${client.config.emojis.no} Could not fetch the UUID for ${username}`,
+    );
 
   const profileResponse = await axios.get(
     `https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`,
@@ -82,7 +92,9 @@ async function getJavaSkinUrl(username) {
   const properties = profileResponse.data.properties;
   const texturesProperty = properties.find((prop) => prop.name === "textures");
   if (!texturesProperty)
-    throw new Error(`Could not fetch textures for UUID ${uuid}`);
+    return interaction.editReply(
+      `${client.config.emojis.no} Could not fetch textures for UUID ${uuid}`,
+    );
 
   const textureData = JSON.parse(
     Buffer.from(texturesProperty.value, "base64").toString(),

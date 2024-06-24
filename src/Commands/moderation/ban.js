@@ -24,7 +24,7 @@ module.exports = {
 
     if (!userToBan.bannable) {
       return interaction.reply({
-        content: "I cannot ban this user.",
+        content: `${client.config.emojis.no} I cannot ban this user.`,
         ephemeral: true,
       });
     }
@@ -50,7 +50,7 @@ module.exports = {
     } catch (error) {
       console.error(error);
       await interaction.reply({
-        content: `Failed to ban: ${error.message}`,
+        content: `${client.config.emojis.no} An Error Occured When Banning ${userToBan.user.tag} \n${error.message}`,
         ephemeral: true,
       });
     }

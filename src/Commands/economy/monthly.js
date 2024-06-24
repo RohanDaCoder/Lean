@@ -17,7 +17,7 @@ module.exports = {
       const check = db.get("monthly");
       if (check) {
         await interaction.reply({
-          content: "You have already claimed your monthly prize.",
+          content: `${client.config.emojis.no} You have already claimed your monthly prize.`,
           ephemeral: true,
         });
         return;
@@ -28,14 +28,14 @@ module.exports = {
           balance: "wallet",
         });
         await interaction.reply({
-          content: `Congratulations! You claimed ${eco.formatMoney(reward)} as your monthly reward.`,
+          content: `${client.config.emojis.yes} Congratulations! You claimed ${eco.formatMoney(reward)} as your monthly reward.`,
         });
         db.set("wallet", currentBalance.raw + reward);
       }
     } catch (error) {
       console.error("Error claiming monthly reward:", error);
       await interaction.reply({
-        content: "An error occurred while claiming your monthly reward.",
+        content: `${client.config.emojis.no} An error occurred while claiming your monthly reward.  \n${error.message}`,
         ephemeral: true,
       });
     }

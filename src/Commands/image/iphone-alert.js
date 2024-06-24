@@ -32,8 +32,7 @@ module.exports = {
     } catch (error) {
       console.error("Error creating iPhone alert meme:", error);
       await interaction.editReply({
-        content:
-          "An error occurred while trying to create the iPhone alert meme.",
+        content: `${client.config.emojis.no} An error occurred while trying to create the iPhone alert meme. \n${error.message}`,
         ephemeral: true,
       });
     }

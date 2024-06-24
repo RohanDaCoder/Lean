@@ -34,7 +34,7 @@ module.exports = {
     } catch (error) {
       console.error("Error creating jail image:", error);
       await interaction.editReply({
-        content: "An error occurred while trying to put the user in jail.",
+        content: `${client.config.emojis.no} An error occurred while trying to put the user in jail. \n${error.message}`,
         ephemeral: true,
       });
     }

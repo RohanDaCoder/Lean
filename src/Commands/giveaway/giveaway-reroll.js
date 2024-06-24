@@ -19,8 +19,7 @@ module.exports = {
       !interaction.member.roles.cache.some((r) => r.name === "Giveaways")
     ) {
       return interaction.reply({
-        content:
-          ":x: You need to have the manage messages permission to reroll giveaways.",
+        content: `${client.config.emojis.no} You need to have the manage messages permission to reroll giveaways.`,
         ephemeral: true,
       });
     }
@@ -41,14 +40,18 @@ module.exports = {
     // If no giveaway was found
     if (!giveaway) {
       return interaction.reply({
-        content: "Unable to find a giveaway for `" + query + "`.",
+        content:
+          client.config.emojis.no +
+          " Unable to find a giveaway for `" +
+          query +
+          "`.",
         ephemeral: true,
       });
     }
 
     if (!giveaway.ended) {
       return interaction.reply({
-        content: `[This Giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId}) has not been ended yet`,
+        content: `${client.config.emojis.no} [This Giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId}) has not been ended yet`,
         ephemeral: true,
       });
     }
@@ -59,7 +62,7 @@ module.exports = {
       .then(() => {
         // Success message
         interaction.reply(
-          `Rerolled **[this giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId})!**`,
+          `${client.config.emojis.yes} Rerolled **[this giveaway](https://discord.com/channels/${giveaway.guildId}/${giveaway.channelId}/${giveaway.messageId})!**`,
         );
       })
       .catch((e) => {

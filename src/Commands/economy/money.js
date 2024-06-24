@@ -36,7 +36,8 @@ module.exports = {
       option
         .setName("amount")
         .setDescription("Amount of Money")
-        .setRequired(true),
+        .setRequired(true)
+        .setMinValue(0),
     )
     .addStringOption((option) =>
       option
@@ -70,11 +71,11 @@ module.exports = {
 
     if (!amount || amount <= 0)
       return await interaction.reply({
-        content: "Please provide a valid amount.",
+        content: `${client.config.emojis.no} Please provide a valid amount.`,
       });
     if (!["add", "reduce", "set"].includes(action))
       return await interaction.reply({
-        content: "Please provide a valid action (add, reduce, or set).",
+        content: `${client.config.emojis.no} Please provide a valid action (add, reduce, or set).`,
       });
 
     await interaction.deferReply();
@@ -119,7 +120,8 @@ module.exports = {
     } catch (error) {
       console.error("Error modifying money:", error);
       await interaction.editReply(
-        "An error occurred while modifying money. \n" + error.message,
+        `${client.config.emojis.no} An error occurred while modifying money. \n` +
+          error.message,
       );
     }
   },

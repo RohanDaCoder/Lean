@@ -91,7 +91,8 @@ module.exports = {
     } catch (error) {
       console.error("Error modifying inventory:", error);
       await interaction.editReply(
-        "An error occurred while modifying the inventory. \n" + error.message,
+        `${client.config.emojis.no} An error occurred while modifying the inventory. \n` +
+          error.message,
       );
     }
   },

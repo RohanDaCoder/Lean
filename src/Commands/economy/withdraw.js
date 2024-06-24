@@ -25,7 +25,7 @@ module.exports = {
 
     if (amount > bankBalance.raw) {
       return interaction.reply({
-        content: "You do not have enough money in your bank.",
+        content: `${client.config.emojis.no} You do not have enough money in your bank.`,
         ephemeral: true,
       });
     }
@@ -44,7 +44,7 @@ module.exports = {
     });
 
     await interaction.reply({
-      content: `Withdrew ${economyManager.formatMoney(amount)} from your bank.`,
+      content: `${client.config.emojis.yes} Withdrew ${economyManager.formatMoney(amount)} from your bank.`,
     });
   },
 };

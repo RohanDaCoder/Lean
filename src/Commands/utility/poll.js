@@ -86,7 +86,7 @@ module.exports = {
     } catch (error) {
       console.error("Error creating poll:", error);
       await interaction.editReply({
-        content: `${client.config.emojis.no} An error occurred while trying to create the poll.`,
+        content: `${client.config.emojis.no} An error occurred while trying to create the poll. \n${error.message}`,
         ephemeral: true,
       });
     }

@@ -45,7 +45,7 @@ module.exports = {
 
       if (senderWallet.raw < amount) {
         return await interaction.editReply(
-          `You don't have enough coins in your wallet. You need ${amount - senderWallet.raw} more coins to make this transfer.`,
+          `${client.config.emojis.no} You don't have enough coins in your wallet. You need ${amount - senderWallet.raw} more coins to make this transfer.`,
         );
       }
 
@@ -85,7 +85,7 @@ module.exports = {
     } catch (error) {
       console.error("Error transferring coins:", error);
       await interaction.editReply(
-        `An error occurred while transferring coins: ${error.message}`,
+        `${client.config.emojis.no} An error occurred while transferring coins: ${error.message}`,
       );
     }
   },

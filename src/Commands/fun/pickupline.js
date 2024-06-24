@@ -20,7 +20,7 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching pickup line:", error);
       await interaction.editReply({
-        content: "An error occurred while fetching a pickup line.",
+        content: `${client.config.emojis.no} An error occurred while fetching a pickup line. \n${error.message}`,
         ephemeral: true,
       });
     }

@@ -33,8 +33,7 @@ module.exports = {
     } catch (error) {
       console.error("Error creating Biden Twitter post meme:", error);
       await interaction.editReply({
-        content:
-          "An error occurred while trying to create the Biden Twitter post meme.",
+        content: `${client.config.emojis.no} An error occurred while trying to create the Biden Twitter post meme. \n${error.message}`,
         ephemeral: true,
       });
     }

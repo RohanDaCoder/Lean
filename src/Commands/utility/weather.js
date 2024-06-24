@@ -74,7 +74,7 @@ module.exports = {
     } catch (error) {
       console.error("Error fetching weather data:", error);
       await interaction.editReply({
-        content: "An error occurred while fetching the weather data.",
+        content: `${client.config.emojis.no} An error occurred while fetching the weather data. \n${error.message}`,
         ephemeral: true,
       });
     }
