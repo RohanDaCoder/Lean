@@ -14,6 +14,4 @@ package-lock.json
 config.js
 
 # Ignore specific folders in src/Database
-src/Database/Guilds/*
-src/Database/Profiles/*
-src/Database/cooldowns.json
+src/Database/
