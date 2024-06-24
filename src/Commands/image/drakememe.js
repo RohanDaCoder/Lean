@@ -21,7 +21,7 @@ module.exports = {
         .setRequired(true),
     ),
 
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     const disagree = interaction.options.getString("disagree");
     const agree = interaction.options.getString("agree");
 

@@ -6,7 +6,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("beg")
     .setDescription("Beg for money"),
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     const userId = interaction.user.id;
     const beggingResult = Math.random() < 0.75; // 75% chance to receive money
     const earnings = beggingResult ? Math.floor(Math.random() * 200) + 20 : 0; // Earns between $20 and $220 if successful

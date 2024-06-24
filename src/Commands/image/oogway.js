@@ -15,7 +15,7 @@ module.exports = {
         .setRequired(true),
     ),
 
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     try {
       const text = encodeURIComponent(interaction.options.getString("text"));
       const apiUrl = `https://api.popcat.xyz/oogway?text=${text}`;

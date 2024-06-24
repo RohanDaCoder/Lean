@@ -15,7 +15,7 @@ module.exports = {
         .setRequired(true),
     ),
 
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     const location = interaction.options.getString("location");
 
     try {

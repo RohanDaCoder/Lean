@@ -6,7 +6,7 @@ module.exports = {
     .setName("pickup-line")
     .setDescription("Get a random pickup line."),
 
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     try {
       await interaction.deferReply();
 

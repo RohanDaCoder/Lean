@@ -9,7 +9,7 @@ module.exports = {
     .setName("wouldyourather")
     .setDescription("Fetches a 'Would You Rather' question."),
 
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     try {
       await interaction.deferReply();
 

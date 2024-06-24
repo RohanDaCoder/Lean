@@ -14,7 +14,7 @@ module.exports = {
         .setRequired(true),
     ),
 
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     try {
       await interaction.deferReply();
 

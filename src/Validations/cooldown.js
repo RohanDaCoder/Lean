@@ -3,7 +3,6 @@ const Database = require("../Util/Database");
 
 const cooldownsDBPath = path.join(__dirname, "../Database/cooldowns.json");
 const cooldowns = new Database(cooldownsDBPath);
-const config = require("../config.js");
 
 function parseCooldown(cooldownString) {
   const regex = /(\d+)([smhdw])/;

@@ -9,7 +9,7 @@ module.exports = {
     .setName("fact")
     .setDescription("Get a random fact."),
 
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     try {
       await interaction.deferReply();
 

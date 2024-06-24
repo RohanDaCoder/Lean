@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const { ApplicationCommandOptionType } = require("discord.js");
+
 const messages = process.config.giveaway;
 const ms = require("ms");
 const { SlashCommandBuilder } = require("discord.js");

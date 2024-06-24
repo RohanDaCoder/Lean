@@ -6,7 +6,7 @@ module.exports = {
     .setName("joke")
     .setDescription("Fetches a random joke from the PopCat API."),
 
-  async run({ interaction }) {
+  async run({ interaction, client }) {
     try {
       await interaction.deferReply();
 
