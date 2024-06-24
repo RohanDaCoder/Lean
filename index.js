@@ -1,4 +1,4 @@
-require("dotenv/config");
+require("dotenv").config();
 const colors = require("colors");
 console.clear();
 const {
