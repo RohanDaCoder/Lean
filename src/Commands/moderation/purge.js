@@ -13,7 +13,7 @@ module.exports = {
         .setMaxValue(300),
     ),
 
-  run: async ({ interaction }) => {
+  run: async ({ interaction, client }) => {
     await interaction.deferReply();
 
     const amount = interaction.options.getInteger("amount");
