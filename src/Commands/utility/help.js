@@ -32,6 +32,7 @@ module.exports = {
         giveaway: [],
         image: [],
         extra: [],
+        games: [],
       };
 
       for (const command in commands) {
@@ -56,6 +57,7 @@ module.exports = {
         giveaway: "🎁 Giveaway",
         image: "📷 Image Manipulation",
         extra: "📭 Extra",
+        games: "🎮 Games",
       };
 
       // Check if the user is a developer
