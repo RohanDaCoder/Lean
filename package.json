@@ -28,7 +28,7 @@
     "lean"
   ],
   "author": "RohanDaCoder",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/RohanDaCoder/Lean/issues"
   },
@@ -39,10 +39,8 @@
     "discord-gamecord": "^4.4.2",
     "discord-giveaways": "^6.0.1",
     "path": "^0.12.7",
-    "popcat-wrapper": "^1.5.6",
     "pretty-ms": "^9.0.0",
     "replicate": "^0.29.4",
-    "simple-json-db": "^2.0.0",
     "uuid": "^9.0.1"
   }
 }
