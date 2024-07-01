@@ -1,59 +1,49 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { Trivia } = require('discord-gamecord');
+const { SlashCommandBuilder } = require("discord.js");
+const { Trivia } = require("discord-gamecord");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('trivia')
-    .setDescription('Play the Trivia game.')
-    .addStringOption(option =>
+    .setName("trivia")
+    .setDescription("Play the Trivia game.")
+    .addStringOption((option) =>
       option
-        .setName('difficulty')
-        .setDescription('Select the difficulty level.')
+        .setName("difficulty")
+        .setDescription("Select the difficulty level.")
         .setRequired(true)
         .addChoices([
-          { name: 'Easy', value: 'easy' },
-          { name: 'Medium', value: 'medium' },
-          { name: 'Hard', value: 'hard' }
+          { name: "Easy", value: "easy" },
+          { name: "Medium", value: "medium" },
+          { name: "Hard", value: "hard" },
         ]),
     )
-    .addStringOption(option =>
+    .addStringOption((option) =>
       option
-        .setName('mode')
-        .setDescription('Select the game mode.')
+        .setName("mode")
+        .setDescription("Select the game mode.")
         .setRequired(true)
         .addChoices([
-          { name: 'Multiple Choice', value: 'multiple' },
-          { name: 'True/False', value: 'single' }
+          { name: "Multiple Choice", value: "multiple" },
+          { name: "True/False", value: "single" },
         ]),
     ),
-  run: async ({ interaction }) => {
+  run: async ({ client, interaction }) => {
     try {
-      const difficulty = interaction.options.getString('difficulty');
-      const mode = interaction.options.getString('mode');
+      const difficulty = interaction.options.getString("difficulty");
+      const mode = interaction.options.getString("mode");
 
       const game = new Trivia({
         message: interaction,
         isSlashGame: true,
-        embed: {
-          title: 'Trivia',
-          color: '#5865F2',
-          description: 'You have 60 seconds to guess the answer.'
-        },
-        mode: mode === 'single' ? 'single' : 'multiple',
-        timeoutTime: 60000,
-        buttonStyle: 'PRIMARY',
-        trueButtonStyle: 'SUCCESS',
-        falseButtonStyle: 'DANGER',
+        mode: mode === "single" ? "single" : "multiple",
         difficulty: difficulty,
-        winMessage: 'You won! The correct answer is {answer}.',
-        loseMessage: 'You lost! The correct answer is {answer}.',
-        errMessage: 'Unable to fetch question data! Please try again.'
       });
 
       game.startGame();
     } catch (error) {
-      console.error('Error starting Trivia game:', error);
-      await interaction.reply('Failed to start Trivia game.');
+      console.error("Error starting Trivia game:", error);
+      await interaction.reply(
+        `${client.config.emojis.no} Failed to start Trivia game: ${error.message}`,
+      );
     }
   },
 };

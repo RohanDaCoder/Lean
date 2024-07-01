@@ -24,14 +24,14 @@ async function welcomeUser(member, client) {
   try {
     const welcomeChannel = await client.channels.fetch(welcomeChannelID);
     if (!welcomeChannel) {
-		if(logger) {
-      await logger.warn({
-      	message: "Could Not Fetch Welcome Channel. Does It Still Exist?",
-      	user: `Welcome Module`,
-      });
-      };
+      if (logger) {
+        await logger.warn({
+          message: "Could Not Fetch Welcome Channel. Does It Still Exist?",
+          user: `Welcome Module`,
+        });
+      }
       return;
-	}
+    }
     const guild = await member.guild.fetch(guildId);
     const memberCount = guild.memberCount;
     const avatarURL = member.user.displayAvatarURL({
@@ -51,13 +51,13 @@ async function welcomeUser(member, client) {
     await welcomeChannel.send({ embeds: [embed] });
   } catch (err) {
     if (err.code === 50013) {
-    	if(logger) {
-    		await logger.warn({
-    			message: `I Don't Have Enough Permissions On ${welcomeChannel} (Welcome Channel)`,
-    			user: `Welcome Module`,
-    		})
-    	};
-    	return;
+      if (logger) {
+        await logger.warn({
+          message: `I Don't Have Enough Permissions On ${welcomeChannel} (Welcome Channel)`,
+          user: `Welcome Module`,
+        });
+      }
+      return;
     }
     console.error(`Error In Welcome Event: ${err}`);
   }

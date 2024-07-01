@@ -1,29 +1,24 @@
-const { TwoZeroFourEight } = require('discord-gamecord');
+const { SlashCommandBuilder } = require("discord.js");
+const { TwoZeroFourEight } = require("discord-gamecord");
 
 module.exports = {
-  data: {
-    name: '2048',
-    description: 'Play a game of 2048!',
-  },
-  run: async ({ interaction, client, handler }) => {
-    const game = new TwoZeroFourEight({
-      message: interaction,
-      isSlashGame: true,
-      embed: {
-        title: '2048',
-        color: '#5865F2'
-      },
-      emojis: {
-        up: '⬆️',
-        down: '⬇️',
-        left: '⬅️',
-        right: '➡️',
-      },
-      timeoutTime: 60000,
-      buttonStyle: 'PRIMARY',
-      playerOnlyMessage: 'Only {player} can use these buttons.'
-    });
+  data: new SlashCommandBuilder()
+    .setName("2048")
+    .setDescription("Play a game of 2048!"),
 
-    game.startGame();
+  async run({ client, interaction }) {
+    try {
+      const game = new TwoZeroFourEight({
+        message: interaction,
+        isSlashGame: true,
+      });
+
+      game.startGame();
+    } catch (error) {
+      console.error("Error starting 2048 game:", error);
+      await interaction.reply(
+        `${client.config.emojis.no} Failed to start 2048 game.`,
+      );
+    }
   },
 };

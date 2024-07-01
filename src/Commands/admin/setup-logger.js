@@ -24,8 +24,8 @@ module.exports = {
         ephemeral: true,
       });
       return;
-    };
-    
+    }
+
     try {
       const before = interaction.createdAt;
       await interaction.followUp(`Starting Setup...`);

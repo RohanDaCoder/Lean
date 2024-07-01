@@ -9,7 +9,7 @@ module.exports = async (c, client, handler) => {
   client.loggers = new Collection();
   const loggers = await loggersDB.toJSON();
   for (const guildId in loggers) {
-    const logger = new GuildLogger(guildId)
+    const logger = new GuildLogger(guildId);
     await client.loggers.set(guildId, logger);
   }
 };

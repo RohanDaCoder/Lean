@@ -184,12 +184,12 @@ async function updateServerStats(guild, guildConfig) {
     );
   } catch (error) {
     if (error.code === 50001) {
-    	if(logger) {
-    		await logger.warn({
-    			message: `I Don't Have Enough Permissions To Update Server Stats.`,
-    			user: `Server Stats Auto Updater`,
-    		})
-    	}
+      if (logger) {
+        await logger.warn({
+          message: `I Don't Have Enough Permissions To Update Server Stats.`,
+          user: `Server Stats Auto Updater`,
+        });
+      }
     }
     console.error("Error updating server stats:", error);
   }
@@ -254,8 +254,8 @@ async function updateAllGuildStats(interaction) {
 
       const guildId = path.basename(file, ".json");
       const guild = await process.client.guilds.fetch(guildId);
-	  const logger = await process.client.loggers.get(guildId);
-	  
+      const logger = await process.client.loggers.get(guildId);
+
       if (!guild) {
         console.log(colors.red(`Guild not found: ${guildId}`));
         if (interaction) {
@@ -272,12 +272,12 @@ async function updateAllGuildStats(interaction) {
           PermissionsBitField.Flags.ManageChannels,
         )
       ) {
-      if(logger) {
-      	await logger.warn({
-      		message: `I don't have enough permissions to update server stats`,
-      		user: `Server Stats Auto Updater`
-      	})
-      }
+        if (logger) {
+          await logger.warn({
+            message: `I don't have enough permissions to update server stats`,
+            user: `Server Stats Auto Updater`,
+          });
+        }
         if (interaction) {
           await interaction.followUp({
             content: `I don't have enough permissions to update the channels of ${guild.name}`,

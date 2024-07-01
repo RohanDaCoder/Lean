@@ -10,7 +10,7 @@ async function goodbyeUser(member, client) {
   if (!member) return console.error("No User Provided When goodbyeing User");
   if (!client) return console.error("No Client Provided When goodbyeing User");
   const guildId = member.guild.id;
-  const logger = await client.loggers.get(guildId)
+  const logger = await client.loggers.get(guildId);
   const filePath = path.join(
     __dirname,
     `../../Database/Guilds/${guildId}.json`,
@@ -23,14 +23,14 @@ async function goodbyeUser(member, client) {
 
   try {
     const welcomeChannel = await client.channels.fetch(welcomeChannelID);
-    if (!welcomeChannel){
-    	if(logger) {
-    	  await logger.warn({
-    	  	message: `Could Not Fetch Welcome Channel, Does It Still Exist?`,
-    	  	user: `Welcome Module`
-    	  })
-    	}
-    	return;
+    if (!welcomeChannel) {
+      if (logger) {
+        await logger.warn({
+          message: `Could Not Fetch Welcome Channel, Does It Still Exist?`,
+          user: `Welcome Module`,
+        });
+      }
+      return;
     }
 
     const guild = await member.guild.fetch(guildId);
@@ -52,12 +52,12 @@ async function goodbyeUser(member, client) {
     await welcomeChannel.send({ embeds: [embed] });
   } catch (err) {
     if (err.code === 50013) {
-    	if(logger) {
-    		await loggers.warn({
-    			message: `I Don't Have Enough Permissions On ${welcomeChannel} (Welcome Channel)`,
-    			user: `Welcome Module`
-    		})
-    	}
+      if (logger) {
+        await loggers.warn({
+          message: `I Don't Have Enough Permissions On ${welcomeChannel} (Welcome Channel)`,
+          user: `Welcome Module`,
+        });
+      }
     }
     console.error(`Error In Welcome Event: ${err}`);
   }

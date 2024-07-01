@@ -33,7 +33,10 @@ class GuildLogger {
       )
       .setColor("#00FF00") // Green color for log messages
       .setTimestamp()
-      .setFooter({ text: "Lean Logger V1", iconURL: process.client.user.displayAvatarURL({ dynamic: false }) });
+      .setFooter({
+        text: "Lean Logger V1",
+        iconURL: process.client.user.displayAvatarURL({ dynamic: false }),
+      });
 
     const webhook = new WebhookClient({ url: webhookUrl });
     await webhook.send({ embeds: [embed] });
@@ -59,7 +62,10 @@ class GuildLogger {
       )
       .setColor("#FFA500") // Orange color for warnings
       .setTimestamp()
-      .setFooter({ text: "Lean Logger V1", iconURL: process.client.user.displayAvatarURL({ dynamic: false }) });
+      .setFooter({
+        text: "Lean Logger V1",
+        iconURL: process.client.user.displayAvatarURL({ dynamic: false }),
+      });
 
     const webhook = new WebhookClient({ url: webhookUrl });
     await webhook.send({ embeds: [embed] });
@@ -85,7 +91,10 @@ class GuildLogger {
       )
       .setColor("#FF0000") // Red color for errors
       .setTimestamp()
-      .setFooter({ text: "Lean Logger V1", iconURL: process.client.user.displayAvatarURL({ dynamic: false }) });
+      .setFooter({
+        text: "Lean Logger V1",
+        iconURL: process.client.user.displayAvatarURL({ dynamic: false }),
+      });
 
     const webhook = new WebhookClient({ url: webhookUrl });
     await webhook.send({ embeds: [embed] });
