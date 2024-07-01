@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/RohanDaCoder/Lean#readme",
   "dependencies": {
+    "@m3rcena/weky": "^7.0.0-beta.1.3",
     "axios": "^1.6.8",
     "colors": "^1.4.0",
     "discord-gamecord": "^4.4.2",
