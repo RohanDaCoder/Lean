@@ -89,7 +89,7 @@ class GuildLogger {
           value: additionalInfo || "None",
         },
       )
-      .setColor("#FF0000") // Red color for errors
+      .setColor("#FF0000")
       .setTimestamp()
       .setFooter({
         text: "Lean Logger V1",
