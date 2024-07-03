@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 
 exports.DEFAULT_CHECK_INTERVAL = 15_000;
 exports.DELETE_DROP_DATA_AFTER = 6.048e8; // 1 week
@@ -21,19 +21,19 @@ exports.DELETE_DROP_DATA_AFTER = 6.048e8; // 1 week
  * @property {string} [hostedBy='Hosted by: {this.hostedBy}'] Below the "inviteToParticipate" message, in the description of the embed.
  */
 exports.GiveawayMessages = {
-	giveaway: '🎉🎉 **GIVEAWAY** 🎉🎉',
-	giveawayEnded: '🎉🎉 **GIVEAWAY ENDED** 🎉🎉',
-	title: '{this.prize}',
-	inviteToParticipate: 'React with 🎉 to participate!',
-	winMessage:
-    'Congratulations, {winners}! You won **{this.prize}**!\n{this.messageURL}',
-	drawing: 'Drawing: {timestamp}',
-	dropMessage: 'Be the first to react with 🎉 !',
-	embedFooter: '{this.winnerCount} winner(s)',
-	noWinner: 'Giveaway cancelled, no valid participations.',
-	winners: 'Winner(s):',
-	endedAt: 'Ended at',
-	hostedBy: 'Hosted by: {this.hostedBy}',
+  giveaway: "🎉🎉 **GIVEAWAY** 🎉🎉",
+  giveawayEnded: "🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+  title: "{this.prize}",
+  inviteToParticipate: "React with 🎉 to participate!",
+  winMessage:
+    "Congratulations, {winners}! You won **{this.prize}**!\n{this.messageURL}",
+  drawing: "Drawing: {timestamp}",
+  dropMessage: "Be the first to react with 🎉 !",
+  embedFooter: "{this.winnerCount} winner(s)",
+  noWinner: "Giveaway cancelled, no valid participations.",
+  winners: "Winner(s):",
+  endedAt: "Ended at",
+  hostedBy: "Hosted by: {this.hostedBy}",
 };
 
 /**
@@ -115,10 +115,10 @@ exports.BonusEntry = {};
  * @property {Discord.ColorResolvable} [embedColor='#FF0000'] The color of the embed when last chance is enabled.
  */
 exports.LastChanceOptions = {
-	enabled: false,
-	content: '⚠️ **LAST CHANCE TO ENTER !** ⚠️',
-	threshold: 10_000,
-	embedColor: '#FF0000',
+  enabled: false,
+  content: "⚠️ **LAST CHANCE TO ENTER !** ⚠️",
+  threshold: 10_000,
+  embedColor: "#FF0000",
 };
 
 /**
@@ -133,12 +133,12 @@ exports.LastChanceOptions = {
  * @property {string} [infiniteDurationText='`NEVER`'] The text that gets displayed next to "GiveawayMessages#drawing" in the paused embed, when there is no "unpauseAfter".
  */
 exports.PauseOptions = {
-	isPaused: false,
-	content: '⚠️ **THIS GIVEAWAY IS PAUSED !** ⚠️',
-	unpauseAfter: null,
-	embedColor: '#FFFF00',
-	durationAfterPause: null,
-	infiniteDurationText: '`NEVER`',
+  isPaused: false,
+  content: "⚠️ **THIS GIVEAWAY IS PAUSED !** ⚠️",
+  unpauseAfter: null,
+  embedColor: "#FFFF00",
+  durationAfterPause: null,
+  infiniteDurationText: "`NEVER`",
 };
 
 /**
@@ -158,23 +158,23 @@ exports.PauseOptions = {
  * @property {LastChanceOptions} [default.lastChance] The options for the last chance system.
  */
 exports.GiveawaysManagerOptions = {
-	storage: './giveaways.json',
-	forceUpdateEvery: null,
-	endedGiveawaysLifetime: null,
-	default: {
-		botsCanWin: false,
-		exemptPermissions: [],
-		exemptMembers: () => false,
-		embedColor: '#FF0000',
-		embedColorEnd: '#000000',
-		reaction: '🎉',
-		lastChance: {
-			enabled: false,
-			content: '⚠️ **LAST CHANCE TO ENTER !** ⚠️',
-			threshold: 5000,
-			embedColor: '#FF0000',
-		},
-	},
+  storage: "./giveaways.json",
+  forceUpdateEvery: null,
+  endedGiveawaysLifetime: null,
+  default: {
+    botsCanWin: false,
+    exemptPermissions: [],
+    exemptMembers: () => false,
+    embedColor: "#FF0000",
+    embedColorEnd: "#000000",
+    reaction: "🎉",
+    lastChance: {
+      enabled: false,
+      content: "⚠️ **LAST CHANCE TO ENTER !** ⚠️",
+      threshold: 5000,
+      embedColor: "#FF0000",
+    },
+  },
 };
 
 /**
@@ -188,13 +188,13 @@ exports.GiveawaysManagerOptions = {
  * @property {boolean} [messages.replyWhenNoWinner=true] Whether or not to send the "error" message when there is no winner.
  */
 exports.GiveawayRerollOptions = {
-	winnerCount: null,
-	messages: {
-		congrat:
-      ':tada: New winner(s): {winners}! Congratulations, you won **{this.prize}**!\n{this.messageURL}',
-		error: 'No valid participations, no new winner(s) can be chosen!',
-		replyWhenNoWinner: true,
-	},
+  winnerCount: null,
+  messages: {
+    congrat:
+      ":tada: New winner(s): {winners}! Congratulations, you won **{this.prize}**!\n{this.messageURL}",
+    error: "No valid participations, no new winner(s) can be chosen!",
+    replyWhenNoWinner: true,
+  },
 };
 
 /**

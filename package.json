@@ -4,13 +4,10 @@
   "description": "A Discord Bot Made With NodeJS",
   "main": "index.js",
   "devDependencies": {
-    "@eslint/js": "^9.6.0",
     "commandkit": "^0.1.10",
     "discord.js": "^14.15.2",
-    "eslint": "^9.6.0",
     "files-folder": "^1.2.4",
     "glob": "^10.3.14",
-    "globals": "^15.8.0",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5"
   },
