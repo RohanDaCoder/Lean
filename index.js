@@ -1,6 +1,4 @@
 require("dotenv").config();
-const colors = require("colors");
-console.clear();
 const {
   Client,
   IntentsBitField,
@@ -8,12 +6,13 @@ const {
   EmbedBuilder,
   Partials,
 } = require("discord.js");
-const Discord = require("discord.js");
 
 const { CommandKit } = require("commandkit");
 
 const config = require("./src/config.js");
 const path = require("path");
+
+const BotLogger = require("./src/Util/BotLogger");
 
 const client = new Client({
   intents: [
@@ -49,6 +48,19 @@ client.giveawaysManager = new GiveawaysManager(client, {
 client.config = config;
 process.client = client;
 process.config = config;
-process.discord = Discord;
+
+process.on("uncaughtException", (err) => {
+  BotLogger.error({
+    message: `Uncaught Exception: \n\`\`\`${err.message}\n\`\`\``,
+    additionalInfo: `Stack Trace: \n\`\`\`${err.stack}\n\`\`\``,
+  });
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  BotLogger.error({
+    message: `Unhandled Rejection: \n\`\`\`${reason}\n\`\`\``,
+    additionalInfo: `Promise: \n\`\`\`${promise}\n\`\`\``,
+  });
+});
 
 client.login(process.env.TOKEN);
