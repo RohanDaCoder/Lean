@@ -1,4 +1,4 @@
-const Database = require("../../Util/Database");
+const Database = require("calm.db");
 const path = require("path");
 const { Collection, WebhookClient } = require("discord.js");
 const GuildLogger = require("../../Util/GuildLogger");

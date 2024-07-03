@@ -1,5 +1,5 @@
 const path = require("path");
-const Database = require("../../Util/Database");
+const Database = require("calm.db");
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = async (member, client, handler) => {

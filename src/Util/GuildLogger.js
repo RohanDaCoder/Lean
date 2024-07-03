@@ -1,6 +1,6 @@
 const { WebhookClient, EmbedBuilder } = require("discord.js");
 const path = require("path");
-const Database = require("./Database");
+const Database = require("calm.db");
 
 class GuildLogger {
   constructor(guildId) {

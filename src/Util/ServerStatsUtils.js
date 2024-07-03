@@ -1,6 +1,6 @@
 const { ChannelType, PermissionsBitField } = require("discord.js");
 const color = require("colors");
-const Database = require("./Database");
+const Database = require("calm.db");
 const path = require("path");
 const fs = require("fs");
 

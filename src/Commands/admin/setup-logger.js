@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ChannelType } = require("discord.js");
-const Database = require("../../Util/Database");
+const Database = require("calm.db");
 const ms = require("ms");
 const path = require("path");
 const { WebhookClient } = require("discord.js");

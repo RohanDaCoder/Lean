@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const Database = require("./Database"); // Import the Database class
+const Database = require("calm.db"); 
 const { emojis } = require("../config.js");
 
 // Default profile template
