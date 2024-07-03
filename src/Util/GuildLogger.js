@@ -5,12 +5,12 @@ const Database = require("calm.db");
 class GuildLogger {
   constructor(guildId) {
     this.guildId = guildId;
-    this.dbFilePath = path.join(__dirname, "../Database/loggers.json");
+    this.dbFilePath = path.join(__dirname, `../Database/Guilds/${guildId}.json`);
     this.database = new Database(this.dbFilePath);
   }
 
   async getWebhook() {
-    return await this.database.get(this.guildId);
+    return await this.database.get("guildlogger");
   }
 
   async log({ message, user, additionalInfo }) {
@@ -31,7 +31,7 @@ class GuildLogger {
           value: additionalInfo || "None",
         },
       )
-      .setColor("#00FF00") // Green color for log messages
+      .setColor("#00FF00")
       .setTimestamp()
       .setFooter({
         text: "Lean Logger V1",
@@ -60,7 +60,7 @@ class GuildLogger {
           value: additionalInfo || "None",
         },
       )
-      .setColor("#FFA500") // Orange color for warnings
+      .setColor("#FFA500")
       .setTimestamp()
       .setFooter({
         text: "Lean Logger V1",
