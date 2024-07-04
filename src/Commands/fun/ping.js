@@ -6,7 +6,7 @@ module.exports = {
     name: "ping",
     description: "Pong!",
   },
-  run: async ({ interaction, client, handler }) => {
+  run: async ({ interaction, client }) => {
     const msg = await interaction.reply("Pinging...");
     const before = interaction.createdAt;
 

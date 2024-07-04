@@ -1,6 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const EconomyManager = require("../../Util/EconomyManager");
-
 const eco = require("../../Util/EconomyManager.js");
 
 module.exports = {
@@ -23,14 +21,14 @@ module.exports = {
     try {
       await interaction.deferReply();
 
-      let userId =
+      const userId =
         interaction.options.getUser("user")?.id ||
         interaction.options.getString("user_id") ||
         interaction.user.id;
 
       const user = await client.users.fetch(userId);
       if (!user)
-        return await interaction.editReply(":x: Could not find that user.");
+        {return await interaction.editReply(":x: Could not find that user.");}
 
       const walletInfo = await eco.GetMoney({
         userID: userId,

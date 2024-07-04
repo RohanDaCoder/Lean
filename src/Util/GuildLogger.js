@@ -5,7 +5,10 @@ const Database = require("calm.db");
 class GuildLogger {
   constructor(guildId) {
     this.guildId = guildId;
-    this.dbFilePath = path.join(__dirname, `../Database/Guilds/${guildId}.json`);
+    this.dbFilePath = path.join(
+      __dirname,
+      `../Database/Guilds/${guildId}.json`,
+    );
     this.database = new Database(this.dbFilePath);
   }
 
@@ -15,8 +18,7 @@ class GuildLogger {
 
   async log({ message, user, additionalInfo }) {
     const webhookUrl = await this.getWebhook();
-    if (!webhookUrl)
-      return console.log(`No webhook URL set for guild ${this.guildId}`);
+    if (!webhookUrl) {return;}
 
     const embed = new EmbedBuilder()
       .setTitle("Log")
@@ -44,8 +46,7 @@ class GuildLogger {
 
   async warn({ message, user, additionalInfo }) {
     const webhookUrl = await this.getWebhook();
-    if (!webhookUrl)
-      return console.log(`No webhook URL set for guild ${this.guildId}`);
+    if (!webhookUrl) {return;}
 
     const embed = new EmbedBuilder()
       .setTitle("Warning")
@@ -73,8 +74,7 @@ class GuildLogger {
 
   async error({ message, user, additionalInfo }) {
     const webhookUrl = await this.getWebhook();
-    if (!webhookUrl)
-      return console.log(`No webhook URL set for guild ${this.guildId}`);
+    if (!webhookUrl) {return;}
 
     const embed = new EmbedBuilder()
       .setTitle("Error")

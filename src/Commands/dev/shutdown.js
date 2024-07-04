@@ -5,7 +5,7 @@ module.exports = {
     .setName("shutdown")
     .setDescription("Shut Me Down."),
 
-  async run({ interaction, client }) {
+  async run({ interaction }) {
     if (interaction.user.id === "922419431508938773") {
       await interaction.reply("Aight Bet, 🤫🧏");
 

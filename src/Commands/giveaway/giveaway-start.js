@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape, no-eq-null, eqeqeq */
 const Discord = require("discord.js");
 
 const messages = process.config.giveaway;
@@ -99,8 +100,8 @@ module.exports = {
 
     const bonusRole = interaction.options.getRole("bonusrole");
     const bonusEntries = interaction.options.getInteger("bonusamount");
-    let rolereq = interaction.options.getRole("role");
-    let invite = interaction.options.getString("invite");
+    const rolereq = interaction.options.getRole("role");
+    const invite = interaction.options.getString("invite");
 
     if (bonusRole) {
       if (!bonusEntries) {
@@ -114,8 +115,8 @@ module.exports = {
     await interaction.deferReply({ ephemeral: true });
     let reqinvite;
     if (invite) {
-      let invitex = await client.fetchInvite(invite);
-      let client_is_in_server = client.guilds.cache.get(invitex.guild.id);
+      const invitex = await client.fetchInvite(invite);
+      const client_is_in_server = client.guilds.cache.get(invitex.guild.id);
       reqinvite = invitex;
       if (!client_is_in_server) {
         const gaEmbed = {
@@ -181,7 +182,7 @@ module.exports = {
     });
 
     if (bonusRole) {
-      let giveaway = new Discord.EmbedBuilder()
+      const giveaway = new Discord.EmbedBuilder()
         .setAuthor({ name: `Bonus Entries Alert!` })
         .setDescription(
           `**${bonusRole}** Has **${bonusEntries}** Extra Entries in this giveaway!`,

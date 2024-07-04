@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const Database = require("calm.db");
 const path = require("path");
 module.exports = {
@@ -32,7 +32,7 @@ module.exports = {
     const welcomeID = await config.get("welcomeChannel");
     const replaceID =
       interaction.options.getBoolean("replace-channel") || false;
-    //If Welcome Channel is Not Set
+    // If Welcome Channel is Not Set
 
     if (!welcomeID || replaceID === true) {
       config.set("welcomeChannel", channel.id);
@@ -42,9 +42,8 @@ module.exports = {
       return;
     }
 
-    //If There Is a Saved Channel ID But Replace Channel ID Isnt True
+    // If There Is a Saved Channel ID But Replace Channel ID Isnt True
     if (welcomeID && replaceID === false) {
-      const welcomeChannel = await client.channels.fetch(welcomeID);
       await interaction.editReply({
         content: `${client.config.emojis.no} The Welcome Channel Is Already Set To <#${welcomeID}>, \nIf You Want To Change The Welcome Channel, You Need To Set Replace Channel To True.`,
       });

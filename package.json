@@ -4,6 +4,7 @@
   "description": "A Discord Bot Made With NodeJS",
   "main": "index.js",
   "devDependencies": {
+    "@stylistic/eslint-plugin-js": "^2.3.0",
     "commandkit": "^0.1.10",
     "discord.js": "^14.15.2",
     "files-folder": "^1.2.4",
@@ -40,6 +41,7 @@
     "colors": "^1.4.0",
     "discord-gamecord": "^4.4.2",
     "discord-giveaways": "^6.0.1",
+    "globals": "^15.8.0",
     "path": "^0.12.7",
     "pretty-ms": "^9.0.0",
     "replicate": "^0.29.4",

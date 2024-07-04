@@ -1,4 +1,4 @@
 const { updateAllGuildStats } = require("../../Util/ServerStatsUtils");
-module.exports = async (member, client, handler) => {
+module.exports = async () => {
   await updateAllGuildStats();
 };

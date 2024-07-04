@@ -1,17 +1,9 @@
 require("dotenv").config();
-const {
-  Client,
-  IntentsBitField,
-  WebhookClient,
-  EmbedBuilder,
-  Partials,
-} = require("discord.js");
+const { Client, IntentsBitField } = require("discord.js");
 
 const { CommandKit } = require("commandkit");
 
 const config = require("./src/config.js");
-const path = require("path");
-
 const BotLogger = require("./src/Util/BotLogger");
 
 const client = new Client({
@@ -48,6 +40,7 @@ client.giveawaysManager = new GiveawaysManager(client, {
 client.config = config;
 process.client = client;
 process.config = config;
+process.logger = BotLogger;
 
 process.on("uncaughtException", (err) => {
   BotLogger.error({

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Discord = require("discord.js");
 
 exports.DEFAULT_CHECK_INTERVAL = 15_000;

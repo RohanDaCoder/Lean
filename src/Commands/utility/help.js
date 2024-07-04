@@ -12,14 +12,9 @@ module.exports = {
     .setDescription(
       "Displays a list of commands categorized by their function.",
     ),
-  options: {
-    devOnly: false,
-  },
   async run({ interaction, client, handler }) {
     try {
       const commands = handler.commands;
-      const devUserIds = handler.devUserIds;
-      const userId = interaction.user.id;
 
       // Categorize commands
       const categories = {
@@ -40,7 +35,7 @@ module.exports = {
         if (categories[category]) {
           categories[category].push(commands[command]);
         } else {
-          if (!categories["Uncategorized"]) categories["Uncategorized"] = [];
+          if (!categories["Uncategorized"]) {categories["Uncategorized"] = [];}
           categories["Uncategorized"].push(commands[command]);
         }
       }
@@ -59,9 +54,6 @@ module.exports = {
         extra: "📭 Extra",
         games: "🎮 Games",
       };
-
-      // Check if the user is a developer
-      const isDev = devUserIds.includes(userId);
 
       const categoryNames = Object.keys(categories);
       const selectOptions = [];
@@ -119,10 +111,6 @@ module.exports = {
           embeds: [embed],
           ephemeral: false,
         });
-      });
-
-      collector.on("end", (collected) => {
-        console.log(`Collected ${collected.size} interactions.`);
       });
     } catch (error) {
       console.error("Error in help command:", error);

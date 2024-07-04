@@ -61,7 +61,7 @@ module.exports = {
 
       // Create the poll description with the options
       const reactions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"];
-      let description = options
+      const description = options
         .map((option, index) => `${reactions[index]} ${option}`)
         .join("\n");
 

@@ -1,5 +1,4 @@
 const { ChannelType, PermissionsBitField } = require("discord.js");
-const color = require("colors");
 const Database = require("calm.db");
 const path = require("path");
 const fs = require("fs");
@@ -142,7 +141,10 @@ async function setupServerStats({ interaction }) {
       ephemeral: true,
     });
   } catch (error) {
-    console.error("Error setting up server stats:", error);
+    process.logger.error({
+      user: "Server Stats",
+      message: `Error setting up server stats: \n${error.message}`,
+    });
     try {
       await interaction.followUp({
         content:
@@ -150,7 +152,10 @@ async function setupServerStats({ interaction }) {
         ephemeral: true,
       });
     } catch (followUpError) {
-      console.error("Error sending follow-up message:", followUpError);
+      process.logger.error({
+        user: "Server Stats",
+        message: `Error sending follow-up message: \n ${followUpError}`,
+      });
     }
   }
 }
@@ -158,6 +163,7 @@ async function setupServerStats({ interaction }) {
 async function updateServerStats(guild, guildConfig) {
   try {
     const fetchedGuild = await guild.fetch();
+    // eslint-disable-next-line no-unused-vars
     const logger = await process.client.loggers.get(guild.id);
     const totalMembersCount = fetchedGuild.memberCount;
     const totalHumanMembersCount = await guild.members
@@ -184,14 +190,19 @@ async function updateServerStats(guild, guildConfig) {
     );
   } catch (error) {
     if (error.code === 50001) {
+      // eslint-disable-next-line no-undef
       if (logger) {
+        // eslint-disable-next-line no-undef
         await logger.warn({
           message: `I Don't Have Enough Permissions To Update Server Stats.`,
           user: `Server Stats Auto Updater`,
         });
       }
     }
-    console.error("Error updating server stats:", error);
+    process.logger.error({
+      user: "Server Stats",
+      message: `Error updating server stats: \n${error.message}`,
+    });
   }
 }
 
@@ -218,7 +229,10 @@ async function createOrUpdateChannel(
     });
     return newChannel;
   } catch (error) {
-    console.error("Error creating or updating channel:", error);
+    process.logger.error({
+      user: "Server Stats",
+      message: `Error creating or updating channel: ${error.message}`,
+    });
   }
 }
 
@@ -229,8 +243,11 @@ async function updateChannelName(guild, channelId, name) {
       await channel.edit({ name });
     }
   } catch (error) {
-    if (error.code === 50001) return;
-    console.error("Error updating channel name: " + error);
+    if (error.code === 50001) {return;}
+    process.logger.error({
+      user: "Server Stats",
+      message: `Error updating channel name: \n${error.message}`,
+    });
   }
 }
 
@@ -238,7 +255,7 @@ async function channelExists(guild, channelId) {
   try {
     const channel = await guild.channels.fetch(channelId);
     return !!channel;
-  } catch (error) {
+  } catch {
     return false;
   }
 }
@@ -246,8 +263,7 @@ async function channelExists(guild, channelId) {
 async function updateAllGuildStats(interaction) {
   try {
     const guildsDir = path.join(__dirname, "../Database/Guilds/");
-    const files = await fs.promises.readdir(guildsDir); // Use fs.promises.readdir for async/await
-
+    const files = await fs.promises.readdir(guildsDir);
     for (const file of files) {
       const guildConfigPath = path.join(guildsDir, file);
       const guildConfig = require(guildConfigPath);
@@ -257,14 +273,13 @@ async function updateAllGuildStats(interaction) {
       const logger = await process.client.loggers.get(guildId);
 
       if (!guild) {
-        console.log(colors.red(`Guild not found: ${guildId}`));
         if (interaction) {
           await interaction.followUp({
             content: `Guild not found: ${guildId}`,
             ephemeral: true,
           });
         }
-        continue; // Skip to the next guild if guild is not found
+        continue;
       }
 
       if (
@@ -284,7 +299,7 @@ async function updateAllGuildStats(interaction) {
             ephemeral: true,
           });
         }
-        continue; // Skip to the next guild if bot doesn't have manage channels permission
+        continue;
       }
 
       const allChannelsExist =
@@ -322,7 +337,10 @@ async function updateAllGuildStats(interaction) {
       }
     }
   } catch (error) {
-    console.error("Error updating server stats for all guilds: ", error);
+    process.logger.error({
+      user: "Server Stats",
+      message: `Error updating server stats for all guilds: \n${error.message}`,
+    });
     if (interaction) {
       await interaction.followUp({
         content: `Error updating server stats for all guilds: ${error.message}`,

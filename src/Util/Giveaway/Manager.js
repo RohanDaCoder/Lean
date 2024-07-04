@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { EventEmitter } = require("node:events");
 const { setTimeout, setInterval } = require("node:timers");
 const { writeFile, readFile, access } = require("node:fs/promises");
@@ -8,13 +9,7 @@ const { deepmerge } = require("deepmerge-ts");
 
 const {
   GiveawayMessages,
-  GiveawayEditOptions,
-  GiveawayData,
-  GiveawayRerollOptions,
   GiveawaysManagerOptions,
-  GiveawayStartOptions,
-  PauseOptions,
-  MessageObject,
   DEFAULT_CHECK_INTERVAL,
   DELETE_DROP_DATA_AFTER,
 } = require("./Constants.js");
@@ -478,6 +473,7 @@ class GiveawaysManager extends EventEmitter {
    * @param {Discord.Snowflake} messageId The message Id of the giveaway to delete
    * @returns {Promise<boolean>}
    */
+
   async deleteGiveaway(messageId) {
     await writeFile(
       this.options.storage,
@@ -515,7 +511,6 @@ class GiveawaysManager extends EventEmitter {
         !storageContent.trim().startsWith("[") ||
         !storageContent.trim().endsWith("]")
       ) {
-        console.log(storageContent);
         throw new SyntaxError(
           "The storage file is not properly formatted (does not contain an array).",
         );
@@ -544,6 +539,7 @@ class GiveawaysManager extends EventEmitter {
    * @param {Discord.Snowflake} messageId The message Id identifying the giveaway
    * @param {GiveawayData} giveawayData The giveaway data to save
    */
+
   async editGiveaway(messageId, giveawayData) {
     await writeFile(
       this.options.storage,
@@ -562,6 +558,7 @@ class GiveawaysManager extends EventEmitter {
    * @param {Discord.Snowflake} messageId The message Id identifying the giveaway
    * @param {GiveawayData} giveawayData The giveaway data to save
    */
+
   async saveGiveaway(messageId, giveawayData) {
     await writeFile(
       this.options.storage,

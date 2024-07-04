@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { EventEmitter } = require("node:events");
 const { setTimeout, clearTimeout } = require("node:timers");
 

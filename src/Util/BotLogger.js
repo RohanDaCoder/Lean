@@ -1,5 +1,4 @@
 const { WebhookClient, EmbedBuilder } = require("discord.js");
-const generateTimestamp = require("./Timestamp.js");
 
 class BotLogger {
   constructor() {
@@ -22,24 +21,24 @@ class BotLogger {
       .setFooter({ text: "Lean Logger V1" })
       .setTimestamp();
 
-    if (user) embed.addFields({ name: "User", value: user, inline: true });
-    if (guild) embed.addFields({ name: "Guild", value: guild, inline: true });
+    if (user) {embed.addFields({ name: "User", value: user, inline: true });}
+    if (guild) {embed.addFields({ name: "Guild", value: guild, inline: true });}
     if (command)
-      embed.addFields({ name: "Command", value: command, inline: true });
+      {embed.addFields({ name: "Command", value: command, inline: true });}
     if (causedByUser)
-      embed.addFields({
+      {embed.addFields({
         name: "Caused by User",
         value: causedByUser,
         inline: true,
-      });
+      });}
     if (causedByCommand)
-      embed.addFields({
+      {embed.addFields({
         name: "Caused by Command",
         value: causedByCommand,
         inline: true,
-      });
+      });}
     if (additionalInfo)
-      embed.addFields({ name: "Additional Info", value: additionalInfo });
+      {embed.addFields({ name: "Additional Info", value: additionalInfo });}
 
     this.webhookClient.send({ embeds: [embed] });
   }
@@ -60,24 +59,24 @@ class BotLogger {
       .setFooter({ text: "Lean Logger V1" })
       .setTimestamp();
 
-    if (user) embed.addFields({ name: "User", value: user, inline: true });
-    if (guild) embed.addFields({ name: "Guild", value: guild, inline: true });
+    if (user) {embed.addFields({ name: "User", value: user, inline: true });}
+    if (guild) {embed.addFields({ name: "Guild", value: guild, inline: true });}
     if (command)
-      embed.addFields({ name: "Command", value: command, inline: true });
+      {embed.addFields({ name: "Command", value: command, inline: true });}
     if (causedByUser)
-      embed.addFields({
+      {embed.addFields({
         name: "Caused by User",
         value: causedByUser,
         inline: true,
-      });
+      });}
     if (causedByCommand)
-      embed.addFields({
+      {embed.addFields({
         name: "Caused by Command",
         value: causedByCommand,
         inline: true,
-      });
+      });}
     if (additionalInfo)
-      embed.addFields({ name: "Additional Info", value: additionalInfo });
+      {embed.addFields({ name: "Additional Info", value: additionalInfo });}
 
     this.webhookClient.send({ embeds: [embed] });
   }
@@ -98,24 +97,24 @@ class BotLogger {
       .setFooter({ text: "Lean Logger V1" })
       .setTimestamp();
 
-    if (user) embed.addFields({ name: "User", value: user, inline: true });
-    if (guild) embed.addFields({ name: "Guild", value: guild, inline: true });
+    if (user) {embed.addFields({ name: "User", value: user, inline: true });}
+    if (guild) {embed.addFields({ name: "Guild", value: guild, inline: true });}
     if (command)
-      embed.addFields({ name: "Command", value: command, inline: true });
+      {embed.addFields({ name: "Command", value: command, inline: true });}
     if (causedByUser)
-      embed.addFields({
+      {embed.addFields({
         name: "Caused by User",
         value: causedByUser,
         inline: true,
-      });
+      });}
     if (causedByCommand)
-      embed.addFields({
+      {embed.addFields({
         name: "Caused by Command",
         value: causedByCommand,
         inline: true,
-      });
+      });}
     if (additionalInfo)
-      embed.addFields({ name: "Additional Info", value: additionalInfo });
+      {embed.addFields({ name: "Additional Info", value: additionalInfo });}
 
     this.webhookClient.send({ embeds: [embed] });
   }

@@ -20,9 +20,9 @@ module.exports = {
         `http://api.brainshop.ai/get?bid=165755&key=ZGb2lzrZc9dChJ3l&uid=${interaction.user.id}&msg=${encodeURIComponent(msg)}`,
       );
       await interaction.editReply(`${res.data.cnt}`);
-    } catch {
-      console.error(`Error While Ai Command: ${error}`);
-      interaction.editReply(
+    } catch (error) {
+      console.error(`Error While Running Ai Command: ${error.message}`);
+      await interaction.editReply(
         `${client.config.emojis.no} An Error Occured While Running The Command. \n${error.message}`,
       );
     }

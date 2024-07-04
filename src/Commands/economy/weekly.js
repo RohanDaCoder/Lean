@@ -1,6 +1,4 @@
 const { SlashCommandBuilder } = require("discord.js");
-const EconomyManager = require("../../Util/EconomyManager");
-
 const eco = require("../../Util/EconomyManager.js");
 
 module.exports = {
@@ -8,7 +6,7 @@ module.exports = {
     .setName("weekly")
     .setDescription("Claim Your Weekly Coins"),
   options: {
-    cooldown: "1w", // 1 week cooldown
+    cooldown: "1w",
   },
   run: async ({ client, interaction }) => {
     try {

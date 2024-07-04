@@ -1,8 +1,8 @@
 const Database = require("calm.db");
 const path = require("path");
-const { Collection, WebhookClient } = require("discord.js");
+const { Collection } = require("discord.js");
 const GuildLogger = require("../../Util/GuildLogger");
-module.exports = async (c, client, handler) => {
+module.exports = async (c, client) => {
   const loggersDB = new Database(
     path.join(__dirname, "../../Database/loggers.json"),
   );

@@ -20,7 +20,7 @@ module.exports = {
     ),
 
   async run({ interaction, client }) {
-    let userId =
+    const userId =
       interaction.options.getUser("user_mention")?.id ||
       interaction.options.getString("user_id") ||
       interaction.user.id;

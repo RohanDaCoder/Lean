@@ -1,8 +1,4 @@
-const {
-  SlashCommandBuilder,
-  EmbedBuilder,
-  PermissionsBitField,
-} = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 const lobbyQueue = [];
 const activeChats = new Map();
@@ -130,7 +126,7 @@ async function sendMessage(interaction, client) {
       return;
     }
 
-    const { partnerId, channelId } = activeChats.get(userId);
+    const { partnerId } = activeChats.get(userId);
     const message = interaction.options.getString("message");
 
     const partnerChannelId = activeChats.get(partnerId).channelId;
@@ -173,7 +169,7 @@ async function leaveChat(interaction, client) {
     const { partnerId, channelId } = activeChats.get(userId);
 
     // Notify both users that someone left the chat
-    const [user1, user2] = await Promise.all([
+    const [user1] = await Promise.all([
       client.users.fetch(userId),
       client.users.fetch(partnerId),
     ]);
@@ -221,8 +217,8 @@ async function leaveChat(interaction, client) {
 
 function resetChatTimeout(user1, user2, client) {
   try {
-    if (chatTimeouts.has(user1)) clearTimeout(chatTimeouts.get(user1));
-    if (chatTimeouts.has(user2)) clearTimeout(chatTimeouts.get(user2));
+    if (chatTimeouts.has(user1)) {clearTimeout(chatTimeouts.get(user1));}
+    if (chatTimeouts.has(user2)) {clearTimeout(chatTimeouts.get(user2));}
 
     const timeout = setTimeout(async () => {
       const [channel1, channel2] = await Promise.all([
@@ -236,8 +232,8 @@ function resetChatTimeout(user1, user2, client) {
         .setDescription("The chat has been closed due to inactivity.")
         .setTimestamp();
 
-      if (channel1) await channel1.send({ embeds: [embed] });
-      if (channel2) await channel2.send({ embeds: [embed] });
+      if (channel1) {await channel1.send({ embeds: [embed] });}
+      if (channel2) {await channel2.send({ embeds: [embed] });}
 
       activeChats.delete(user1);
       activeChats.delete(user2);

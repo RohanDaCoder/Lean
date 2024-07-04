@@ -1,5 +1,4 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const EconomyManager = require("../../Util/EconomyManager");
 const economyManager = require("../../Util/EconomyManager.js");
 
 module.exports = {
@@ -26,7 +25,7 @@ module.exports = {
         .setRequired(true),
     ),
 
-  async run({ client, interaction }) {
+  async run({ interaction }) {
     const userId = interaction.user.id;
     const choice = interaction.options.getString("choice");
     const bet = interaction.options.getNumber("bet");

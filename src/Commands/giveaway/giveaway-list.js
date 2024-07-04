@@ -1,5 +1,5 @@
+/* eslint-disable eqeqeq */
 const Discord = require("discord.js");
-const config = require("../../config.js");
 const { SlashCommandBuilder } = require("discord.js");
 
 const data = new SlashCommandBuilder()
@@ -19,7 +19,7 @@ module.exports = {
         },
       ]);
     const row = new Discord.ActionRowBuilder().addComponents([select]);
-    let giveaways = client.giveawaysManager.giveaways.filter(
+    const giveaways = client.giveawaysManager.giveaways.filter(
       (g) => g.guildId === `${interaction.guild.id}` && !g.ended,
     );
     if (!giveaways.some((e) => e.messageId)) {
@@ -36,7 +36,7 @@ module.exports = {
       ],
       components: [row],
     });
-    let embed = new Discord.EmbedBuilder()
+    const embed = new Discord.EmbedBuilder()
       .setTitle("Currently Active Giveaways")
       .setColor("#f58142")
       .setFooter({

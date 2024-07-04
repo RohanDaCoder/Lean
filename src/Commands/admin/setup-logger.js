@@ -2,7 +2,6 @@ const { SlashCommandBuilder, ChannelType } = require("discord.js");
 const Database = require("calm.db");
 const ms = require("ms");
 const path = require("path");
-const { WebhookClient } = require("discord.js");
 const data = new SlashCommandBuilder()
   .setName("setup-logger")
   .setDescription("Set up a log channel to listen for logs and warnings");
@@ -10,14 +9,14 @@ module.exports = {
   data,
   async run({ interaction, client }) {
     await interaction.deferReply();
-    //Define Variables
+    // Define Variables
     const guild = interaction.guild;
     let logChannel;
     let webhook;
     const loggersDB = new Database(
       path.join(__dirname, "../../Database/loggers.json"),
     );
-    //If Logger Is already setuped
+    // If Logger Is already setuped
     if (await loggersDB.has(guild.id)) {
       await interaction.editReply({
         content: `${client.config.emojis.no} ${guild.name}'s Log Channel Has Been Already Set!`,
@@ -30,7 +29,7 @@ module.exports = {
       const before = interaction.createdAt;
       await interaction.followUp(`Starting Setup...`);
       const lowerCaseUsername = client.user.username.toLowerCase();
-      //Create The Log Channel
+      // Create The Log Channel
       logChannel = await guild.channels.create({
         name: `${lowerCaseUsername}-logs`,
         type: ChannelType.GuildText,
@@ -39,7 +38,7 @@ module.exports = {
       await interaction.followUp(
         `${client.config.emojis.yes} Created Channel ${logChannel}, Creating Webhook...`,
       );
-      //Create The Log Webhook
+      // Create The Log Webhook
       webhook = await guild.channels.createWebhook({
         channel: logChannel.id,
         name: `${lowerCaseUsername} Logger`,

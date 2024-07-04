@@ -1,4 +1,9 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+} = require("discord.js");
 const GuildLogger = require("../../Util/GuildLogger");
 
 module.exports = {
@@ -22,17 +27,19 @@ module.exports = {
     let messagesToDelete = amount;
 
     const confirmButton = new ButtonBuilder()
-      .setCustomId('confirm-purge')
-      .setLabel('Confirm Purge')
+      .setCustomId("confirm-purge")
+      .setLabel("Confirm Purge")
       .setStyle(ButtonStyle.Danger);
 
     const cancelButton = new ButtonBuilder()
-      .setCustomId('cancel-purge')
-      .setLabel('Cancel')
+      .setCustomId("cancel-purge")
+      .setLabel("Cancel")
       .setStyle(ButtonStyle.Secondary);
 
-    const actionRow = new ActionRowBuilder()
-      .addComponents(confirmButton, cancelButton);
+    const actionRow = new ActionRowBuilder().addComponents(
+      confirmButton,
+      cancelButton,
+    );
 
     const guildLogger = new GuildLogger(interaction.guild.id);
 
@@ -43,17 +50,29 @@ module.exports = {
         ephemeral: true,
       });
 
-      const filter = i => i.user.id === interaction.user.id && ['confirm-purge', 'cancel-purge'].includes(i.customId);
-      const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000, max: 1 });
+      const filter = (i) =>
+        i.user.id === interaction.user.id &&
+        ["confirm-purge", "cancel-purge"].includes(i.customId);
+      const collector = interaction.channel.createMessageComponentCollector({
+        filter,
+        time: 15000,
+        max: 1,
+      });
 
-      collector.on('collect', async i => {
-        if (i.customId === 'confirm-purge') {
+      collector.on("collect", async (i) => {
+        if (i.customId === "confirm-purge") {
           let totalDeleted = 0;
 
           try {
             while (messagesToDelete > 0) {
-              const currentBatchSize = Math.min(messagesToDelete, maxMessagesPerBatch);
-              const deletedMessages = await interaction.channel.bulkDelete(currentBatchSize, true);
+              const currentBatchSize = Math.min(
+                messagesToDelete,
+                maxMessagesPerBatch,
+              );
+              const deletedMessages = await interaction.channel.bulkDelete(
+                currentBatchSize,
+                true,
+              );
               totalDeleted += deletedMessages.size;
               messagesToDelete -= deletedMessages.size;
 
@@ -71,7 +90,6 @@ module.exports = {
               user: interaction.user.tag,
               additionalInfo: `Deleted **${totalDeleted}** messages`,
             });
-
           } catch (error) {
             console.error(error);
             await interaction.followUp({
@@ -86,9 +104,9 @@ module.exports = {
               additionalInfo: error.message,
             });
           }
-        } else if (i.customId === 'cancel-purge') {
+        } else if (i.customId === "cancel-purge") {
           await interaction.followUp({
-            content: 'Purge action has been canceled.',
+            content: "Purge action has been canceled.",
             components: [],
             ephemeral: true,
           });
@@ -100,12 +118,11 @@ module.exports = {
         }
       });
 
-      collector.on('end', () => {
+      collector.on("end", () => {
         if (interaction.replied) {
           interaction.editReply({ components: [] });
         }
       });
-
     } catch (error) {
       console.error(error);
       await interaction.editReply({

@@ -38,7 +38,7 @@ module.exports = {
         : client.guilds.cache.values();
 
       for (const guild of guilds) {
-        if (!guild) continue;
+        if (!guild) {continue;}
 
         const owner = await guild.fetchOwner().catch((err) => {
           console.error(`Failed to fetch owner for guild ${guild.id}:`, err);
@@ -157,7 +157,7 @@ module.exports = {
           )
           .setTimestamp();
 
-        if (guild.iconURL()) embed.setThumbnail(guild.iconURL());
+        if (guild.iconURL()) {embed.setThumbnail(guild.iconURL());}
 
         embeds.push(embed);
       }

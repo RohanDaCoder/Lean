@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { emojis } = require("../../config");
-const EconomyManager = require("../../Util/EconomyManager");
 
 // Define transaction types and action choices
 const transactionTypes = [
@@ -16,9 +15,9 @@ const actionChoices = [
 // Function to format money
 function formatMoney(amount) {
   if (amount >= 1000 && amount < 1000000)
-    return `${(amount / 1000).toFixed(1)}k`;
-  else if (amount >= 1000000) return `${(amount / 1000000).toFixed(1)}m`;
-  else return amount.toLocaleString();
+    {return `${(amount / 1000).toFixed(1)}k`;}
+  else if (amount >= 1000000) {return `${(amount / 1000000).toFixed(1)}m`;}
+  else {return amount.toLocaleString();}
 }
 
 module.exports = {
@@ -57,26 +56,26 @@ module.exports = {
         .setDescription("The User ID You Want to Modify Balance"),
     ),
   async run({ client, interaction }) {
-    let userId =
+    const userId =
       interaction.options.getUser("user")?.id ??
       interaction.options.getString("user_id");
     if (!userId)
-      return await interaction.reply({
+      {return await interaction.reply({
         content: "Please provide either a user or a user ID.",
-      });
+      });}
 
     const action = interaction.options.getString("action").toLowerCase();
     const amount = interaction.options.getNumber("amount");
     const balanceType = interaction.options.getString("transaction_type");
 
     if (!amount || amount <= 0)
-      return await interaction.reply({
+      {return await interaction.reply({
         content: `${client.config.emojis.no} Please provide a valid amount.`,
-      });
+      });}
     if (!["add", "reduce", "set"].includes(action))
-      return await interaction.reply({
+      {return await interaction.reply({
         content: `${client.config.emojis.no} Please provide a valid action (add, reduce, or set).`,
-      });
+      });}
 
     await interaction.deferReply();
     try {
@@ -86,9 +85,9 @@ module.exports = {
         balance: balanceType,
       });
 
-      if (action === "reduce") currentBalance -= amount;
-      else if (action === "set") currentBalance = amount;
-      else if (action === "add") currentBalance += amount;
+      if (action === "reduce") {currentBalance -= amount;}
+      else if (action === "set") {currentBalance = amount;}
+      else if (action === "add") {currentBalance += amount;}
 
       await eco.SetMoney({
         userID: userId,

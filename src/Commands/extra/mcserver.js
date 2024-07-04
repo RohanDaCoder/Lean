@@ -36,7 +36,7 @@ module.exports = {
         .setRequired(false),
     ),
 
-  run: async ({ interaction }) => {
+  run: async ({ interaction, client }) => {
     const version = interaction.options.getString("version");
     const address = interaction.options.getString("address");
     let port = interaction.options.getInteger("port");

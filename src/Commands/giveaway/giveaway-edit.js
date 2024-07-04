@@ -70,7 +70,7 @@ module.exports = {
         newPrize: prize,
         addTime: time,
       });
-    } catch (e) {
+    } catch {
       return interaction.editReply({
         content: `${client.config.emojis.no} No giveaway found with the given message ID: \`${gid}\``,
         ephemeral: true,

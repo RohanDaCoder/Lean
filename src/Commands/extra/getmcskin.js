@@ -60,18 +60,18 @@ async function getBedrockSkinUrl(username, client, interaction) {
   );
   const xuid = xuidResponse.data.xuid;
   if (!xuid)
-    return interaction.editReply(
+    {return interaction.editReply(
       `${client.config.emojis.no} Could not fetch the XUID for ${username}`,
-    );
+    );}
 
   const skinResponse = await axios.get(
     `https://api.geysermc.org/v2/skin/${xuid}`,
   );
   const skinTextureID = skinResponse.data.texture_id;
   if (!skinTextureID)
-    return interaction.editReply(
+    {return interaction.editReply(
       `${client.config.emojis.no} Skin Texture ID not found for ${username}`,
-    );
+    );}
 
   return `http://textures.minecraft.net/texture/${skinTextureID}`;
 }
@@ -82,9 +82,9 @@ async function getJavaSkinUrl(username, client, interaction) {
   );
   const uuid = uuidResponse.data.id;
   if (!uuid)
-    return interaction.editReply(
+    {return interaction.editReply(
       `${client.config.emojis.no} Could not fetch the UUID for ${username}`,
-    );
+    );}
 
   const profileResponse = await axios.get(
     `https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`,
@@ -92,9 +92,9 @@ async function getJavaSkinUrl(username, client, interaction) {
   const properties = profileResponse.data.properties;
   const texturesProperty = properties.find((prop) => prop.name === "textures");
   if (!texturesProperty)
-    return interaction.editReply(
+    {return interaction.editReply(
       `${client.config.emojis.no} Could not fetch textures for UUID ${uuid}`,
-    );
+    );}
 
   const textureData = JSON.parse(
     Buffer.from(texturesProperty.value, "base64").toString(),

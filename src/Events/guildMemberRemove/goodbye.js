@@ -2,13 +2,13 @@ const path = require("path");
 const Database = require("calm.db");
 const { EmbedBuilder } = require("discord.js");
 
-module.exports = async (member, client, handler) => {
+module.exports = async (member, client) => {
   await goodbyeUser(member, client);
 };
 
 async function goodbyeUser(member, client) {
-  if (!member) return console.error("No User Provided When goodbyeing User");
-  if (!client) return console.error("No Client Provided When goodbyeing User");
+  if (!member) {throw TypeError("No User Provided When goodbyeing User");}
+  if (!client) {throw TypeError("No Client Provided When goodbyeing User");}
   const guildId = member.guild.id;
   const logger = await client.loggers.get(guildId);
   const filePath = path.join(
@@ -19,7 +19,7 @@ async function goodbyeUser(member, client) {
   const config = new Database(filePath);
 
   const welcomeChannelID = await config.get("welcomeChannel");
-  if (!welcomeChannelID) return console.error("No Welcome Channel ID");
+  if (!welcomeChannelID) {return;}
 
   try {
     const welcomeChannel = await client.channels.fetch(welcomeChannelID);
@@ -53,13 +53,12 @@ async function goodbyeUser(member, client) {
   } catch (err) {
     if (err.code === 50013) {
       if (logger) {
-        await loggers.warn({
-          message: `I Don't Have Enough Permissions On ${welcomeChannel} (Welcome Channel)`,
+        await logger.warn({
+          message: `I Don't Have Enough Permission On The Welcome Channel Setuped.`,
           user: `Welcome Module`,
         });
       }
     }
-    console.error(`Error In Welcome Event: ${err}`);
   }
 }
 

@@ -22,7 +22,7 @@ module.exports = {
         .setRequired(true),
     ),
 
-  async run({ interaction, client }) {
+  async run({ interaction }) {
     try {
       await interaction.deferReply();
 

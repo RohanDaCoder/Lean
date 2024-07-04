@@ -1,17 +1,23 @@
-const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const {
+  EmbedBuilder,
+  SlashCommandBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+} = require("discord.js");
 const GuildLogger = require("../../Util/GuildLogger");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("kick")
     .setDescription("Kicks a user from the server.")
-    .addUserOption(option =>
+    .addUserOption((option) =>
       option
         .setName("user")
         .setDescription("The user to kick")
         .setRequired(true),
     )
-    .addStringOption(option =>
+    .addStringOption((option) =>
       option
         .setName("reason")
         .setDescription("Reason for kicking the user")
@@ -20,7 +26,8 @@ module.exports = {
 
   run: async ({ interaction, client }) => {
     const target = interaction.options.getMember("user");
-    const reason = interaction.options.getString("reason") || "No reason provided";
+    const reason =
+      interaction.options.getString("reason") || "No reason provided";
 
     if (!target) {
       return interaction.reply({
@@ -49,7 +56,10 @@ module.exports = {
         .setLabel("Cancel")
         .setStyle(ButtonStyle.Secondary);
 
-      const buttonRow = new ActionRowBuilder().addComponents(cancelButton, confirmButton);
+      const buttonRow = new ActionRowBuilder().addComponents(
+        cancelButton,
+        confirmButton,
+      );
 
       await interaction.followUp({
         content: `Are you sure you want to kick ${target.user.tag}?`,
@@ -57,11 +67,17 @@ module.exports = {
         ephemeral: true,
       });
 
-      const buttonFilter = btn => ['confirm-kick', 'cancel-kick'].includes(btn.customId) && btn.user.id === interaction.user.id;
-      const buttonCollector = interaction.channel.createMessageComponentCollector({ buttonFilter, time: 60000 });
+      const buttonFilter = (btn) =>
+        ["confirm-kick", "cancel-kick"].includes(btn.customId) &&
+        btn.user.id === interaction.user.id;
+      const buttonCollector =
+        interaction.channel.createMessageComponentCollector({
+          buttonFilter,
+          time: 60000,
+        });
 
-      buttonCollector.on('collect', async btn => {
-        if (btn.customId === 'confirm-kick') {
+      buttonCollector.on("collect", async (btn) => {
+        if (btn.customId === "confirm-kick") {
           try {
             await target.kick(reason);
 
@@ -70,7 +86,11 @@ module.exports = {
               .setTitle("User Kicked")
               .addFields(
                 { name: "Kicked User", value: target.user.tag, inline: true },
-                { name: "Kicked By", value: interaction.user.tag, inline: true },
+                {
+                  name: "Kicked By",
+                  value: interaction.user.tag,
+                  inline: true,
+                },
                 { name: "Reason", value: reason },
               )
               .setTimestamp()
@@ -86,16 +106,20 @@ module.exports = {
               additionalInfo: `User ID: ${target.id}`,
             });
 
-            await btn.update({ content: `${client.config.emojis.yes} User successfully kicked.`, embeds: [kickEmbed], components: [] });
+            await btn.update({
+              content: `${client.config.emojis.yes} User successfully kicked.`,
+              embeds: [kickEmbed],
+              components: [],
+            });
           } catch (error) {
-            console.error('Error kicking user:', error);
+            console.error("Error kicking user:", error);
             await btn.update({
               content: `${client.config.emojis.no} An error occurred while kicking the user: ${error.message}`,
               components: [],
               ephemeral: true,
             });
           }
-        } else if (btn.customId === 'cancel-kick') {
+        } else if (btn.customId === "cancel-kick") {
           await btn.update({
             content: `${client.config.emojis.no} Kick action has been canceled.`,
             components: [],
@@ -104,14 +128,16 @@ module.exports = {
         }
       });
 
-      buttonCollector.on('end', collected => {
+      buttonCollector.on("end", (collected) => {
         if (collected.size === 0) {
-          interaction.followUp({ content: 'No action was taken.', components: [] });
+          interaction.followUp({
+            content: "No action was taken.",
+            components: [],
+          });
         }
       });
-
     } catch (error) {
-      console.error('Error initiating kick process:', error);
+      console.error("Error initiating kick process:", error);
       await interaction.reply({
         content: `${client.config.emojis.no} An error occurred while processing the kick command: ${error.message}`,
         ephemeral: true,
@@ -124,4 +150,4 @@ module.exports = {
     userPermissions: ["KickMembers"],
     botPermissions: ["KickMembers"],
   },
-}; 
+};

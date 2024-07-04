@@ -45,7 +45,7 @@ module.exports = {
     ),
 
   async run({ client, interaction }) {
-    let userId =
+    const userId =
       interaction.options.getUser("user_mention")?.id ||
       interaction.options.getString("user_id") ||
       interaction.user.id;
@@ -55,15 +55,13 @@ module.exports = {
 
     await interaction.deferReply();
     try {
-      let userInventory = await inv.GetInventory(userId);
-
       if (action === "add") {
         await inv.AddItem(userId, itemId, amount);
       } else if (action === "remove") {
         await inv.RemoveItem(userId, itemId, amount);
       }
 
-      userInventory = await inv.GetInventory(userId);
+      const userInventory = await inv.GetInventory(userId);
 
       const user = await client.users.fetch(userId);
       const title = `${action === "add" ? "Added" : "Removed"} ${amount} ${amount === 1 ? "item" : "items"}`;

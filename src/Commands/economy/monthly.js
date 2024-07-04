@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("discord.js");
-const EconomyManager = require("../../Util/EconomyManager");
 
 const eco = require("../../Util/EconomyManager.js");
 

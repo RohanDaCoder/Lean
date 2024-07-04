@@ -1,16 +1,22 @@
-const { EmbedBuilder, SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
+const {
+  EmbedBuilder,
+  SlashCommandBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ActionRowBuilder,
+} = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ban")
     .setDescription("Bans a user from the server.")
-    .addUserOption(option =>
+    .addUserOption((option) =>
       option
         .setName("user")
         .setDescription("The user to ban")
         .setRequired(true),
     )
-    .addStringOption(option =>
+    .addStringOption((option) =>
       option
         .setName("reason")
         .setDescription("Reason for banning the user")
@@ -19,7 +25,8 @@ module.exports = {
 
   async run({ interaction, client }) {
     const target = interaction.options.getMember("user");
-    const reason = interaction.options.getString("reason") || "No reason provided";
+    const reason =
+      interaction.options.getString("reason") || "No reason provided";
     if (!target) {
       return interaction.reply({
         content: `${client.config.emojis.no} User not found or invalid.`,
@@ -35,16 +42,19 @@ module.exports = {
 
     // Confirmation buttons
     const confirmButton = new ButtonBuilder()
-      .setCustomId('confirm-ban')
-      .setLabel('Confirm Ban')
+      .setCustomId("confirm-ban")
+      .setLabel("Confirm Ban")
       .setStyle(ButtonStyle.Danger);
 
     const cancelButton = new ButtonBuilder()
-      .setCustomId('cancel-ban')
-      .setLabel('Cancel')
+      .setCustomId("cancel-ban")
+      .setLabel("Cancel")
       .setStyle(ButtonStyle.Secondary);
 
-    const row = new ActionRowBuilder().addComponents(cancelButton, confirmButton);
+    const row = new ActionRowBuilder().addComponents(
+      cancelButton,
+      confirmButton,
+    );
 
     await interaction.reply({
       content: `Are you sure you want to ban ${target.user.tag}?`,
@@ -52,11 +62,15 @@ module.exports = {
       ephemeral: true,
     });
 
-    const filter = i => i.customId === 'confirm-ban' || i.customId === 'cancel-ban';
-    const collector = interaction.channel.createMessageComponentCollector({ filter, time: 60000 });
+    const filter = (i) =>
+      i.customId === "confirm-ban" || i.customId === "cancel-ban";
+    const collector = interaction.channel.createMessageComponentCollector({
+      filter,
+      time: 60000,
+    });
 
-    collector.on('collect', async i => {
-      if (i.customId === 'confirm-ban') {
+    collector.on("collect", async (i) => {
+      if (i.customId === "confirm-ban") {
         try {
           await target.ban({ reason: reason });
 
@@ -74,16 +88,20 @@ module.exports = {
               iconURL: interaction.guild.iconURL(),
             });
 
-          await i.update({ content: `${client.config.emojis.yes} User successfully banned.`, embeds: [banEmbed], components: [] });
+          await i.update({
+            content: `${client.config.emojis.yes} User successfully banned.`,
+            embeds: [banEmbed],
+            components: [],
+          });
         } catch (error) {
-          console.error('Error banning user:', error);
+          console.error("Error banning user:", error);
           await i.update({
             content: `${client.config.emojis.no} An error occurred while banning the user.`,
             components: [],
             ephemeral: true,
           });
         }
-      } else if (i.customId === 'cancel-ban') {
+      } else if (i.customId === "cancel-ban") {
         await i.update({
           content: `${client.config.emojis.no} Ban action has been canceled.`,
           components: [],
@@ -92,9 +110,12 @@ module.exports = {
       }
     });
 
-    collector.on('end', collected => {
+    collector.on("end", (collected) => {
       if (collected.size === 0) {
-        interaction.editReply({ content: 'No action was taken.', components: [] });
+        interaction.editReply({
+          content: "No action was taken.",
+          components: [],
+        });
       }
     });
   },

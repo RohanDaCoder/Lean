@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const Database = require("calm.db"); 
+const Database = require("calm.db");
 const { emojis } = require("../config.js");
 
 // Default profile template
@@ -20,12 +20,12 @@ const getProfilePath = (userID) =>
 
 const EconomyManager = {
   formatMoney(amount) {
-    if (amount >= 1e9) return `${(amount / 1e9).toFixed(1)}b ${emojis.money}`;
+    if (amount >= 1e9) {return `${(amount / 1e9).toFixed(1)}b ${emojis.money}`;}
     else if (amount >= 1e6)
-      return `${(amount / 1e6).toFixed(1)}m ${emojis.money}`;
+      {return `${(amount / 1e6).toFixed(1)}m ${emojis.money}`;}
     else if (amount >= 1e3)
-      return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;
-    else return `${amount} ${emojis.money}`;
+      {return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;}
+    else {return `${amount} ${emojis.money}`;}
   },
 
   async GetProfile(userID) {
@@ -34,7 +34,7 @@ const EconomyManager = {
       fs.writeFileSync(profilePath, JSON.stringify(defaultProfile(userID)));
     }
     const profileDb = new Database(profilePath);
-    let profile = profileDb.toJSON();
+    const profile = profileDb.toJSON();
     if (profile.id !== userID) {
       profile.id = userID;
       profileDb.set("id", userID);

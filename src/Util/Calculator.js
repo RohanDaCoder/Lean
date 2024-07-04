@@ -62,9 +62,9 @@ class Calculator {
       "\u200b",
     ];
 
-    let buttons = [];
+    const buttons = [];
     for (let i = 0; i < buttonLabels.length; i += 5) {
-      let row = new ActionRowBuilder();
+      const row = new ActionRowBuilder();
       for (let j = i; j < i + 5; j++) {
         if (buttonLabels[j] !== "\u200b") {
           row.addComponents(this.createButton(buttonLabels[j]));
@@ -103,7 +103,7 @@ class Calculator {
       })
       .setFooter({ text: this.options.embed.footer || "Lean" });
 
-    if (this.options.embed.timestamp) embed.setTimestamp();
+    if (this.options.embed.timestamp) {embed.setTimestamp();}
 
     const initialMessage = await interaction.reply({
       embeds: [embed],
@@ -177,7 +177,7 @@ class Calculator {
       })
       .setFooter({ text: this.options.embed.footer || "Lean" });
 
-    if (this.options.embed.timestamp) embed.setTimestamp();
+    if (this.options.embed.timestamp) {embed.setTimestamp();}
 
     if (this.disabled) {
       this.buttons.forEach((row) => {

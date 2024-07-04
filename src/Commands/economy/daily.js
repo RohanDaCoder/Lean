@@ -1,6 +1,4 @@
 const { SlashCommandBuilder } = require("discord.js");
-const EconomyManager = require("../../Util/EconomyManager");
-
 const eco = require("../../Util/EconomyManager.js");
 
 module.exports = {
@@ -8,12 +6,11 @@ module.exports = {
     .setName("daily")
     .setDescription("Claim Your Daily Coins"),
   options: {
-    cooldown: "1d", // 1 day cooldown
+    cooldown: "1d",
   },
   run: async ({ interaction, client }) => {
     try {
       const userID = interaction.user.id;
-      const { default: prettyMS } = await import("pretty-ms");
       const { db } = await eco.GetProfile(userID);
       const lastClaimTime = db.get("daily");
       if (lastClaimTime) {

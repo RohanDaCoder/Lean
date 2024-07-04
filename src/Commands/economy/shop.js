@@ -60,7 +60,7 @@ module.exports = {
         style: ButtonStyle.Secondary,
       });
 
-      const row = buttonManager.createActionRow();
+      const row = buttonManager.createActionRow(confirmButton, cancelButton);
 
       await interaction.deferReply();
 
@@ -91,7 +91,7 @@ module.exports = {
 
                 if (balance.raw < item.value * amount) {
                   return await i.reply({
-                    content: `${client.config.emojis.no} You do not have enough coins to buy this item. \n${error.message}`,
+                    content: `${client.config.emojis.no} You do not have enough coins to buy this item.`,
                     ephemeral: false,
                   });
                 }
@@ -111,7 +111,7 @@ module.exports = {
                 });
               } else if (action === "sell") {
                 const inventory = await InventoryManager.GetInventory(userID);
-                const inventoryItem = inventory.find((i) => i.id === item.id);
+                const inventoryItem = inventory.find((e) => e.id === item.id);
 
                 if (!inventoryItem || inventoryItem.quantity < amount) {
                   return await i.reply({
@@ -151,13 +151,6 @@ module.exports = {
               content: `${client.config.emojis.no} An error occurred while processing your request. \n${error.message}`,
               ephemeral: false,
             });
-          }
-        },
-        onEnd: async (collected) => {
-          try {
-            console.log(`Collected ${collected.size} interactions`);
-          } catch (error) {
-            console.error("Error during collector end:", error);
           }
         },
       });

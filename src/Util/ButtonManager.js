@@ -29,11 +29,11 @@ class ButtonManager {
 
   createActionRow() {
     const row = new ActionRowBuilder().addComponents(this.buttons);
-    this.buttons = []; // Clear buttons after creating a row
+    this.buttons = [];
     return row;
   }
 
-  setupCollector({ interaction, message, time = 30000, onCollect, onEnd }) {
+  setupCollector({ message, time = 30000, onCollect, onEnd }) {
     const collector = message.createMessageComponentCollector({
       componentType: ComponentType.Button,
       time,
@@ -42,8 +42,7 @@ class ButtonManager {
     collector.on("collect", async (i) => {
       try {
         await onCollect(i);
-      } catch (error) {
-        console.error("Error handling button click:", error);
+      } catch {
         await i.reply({
           content: "An error occurred while processing your request.",
           ephemeral: true,
