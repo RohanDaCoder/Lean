@@ -3,8 +3,8 @@ const { Client, IntentsBitField } = require("discord.js");
 
 const { CommandKit } = require("commandkit");
 
-const config = require("./src/config.js");
-const BotLogger = require("./src/Util/BotLogger");
+const config = require("./config.js");
+const BotLogger = require("./Util/BotLogger");
 
 const client = new Client({
   intents: [
@@ -21,9 +21,9 @@ new CommandKit({
   ...config.CommandKit,
 });
 
-const { GiveawaysManager } = require("./src/Util/GiveawayManager");
+const { GiveawaysManager } = require("./Util/GiveawayManager");
 client.giveawaysManager = new GiveawaysManager(client, {
-  storage: "./src/Database/giveaways.json",
+  storage: "./Database/giveaways.json",
   default: {
     botsCanWin: false,
     embedColor: "#2F3136",

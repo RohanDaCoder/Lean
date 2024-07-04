@@ -103,7 +103,9 @@ class Calculator {
       })
       .setFooter({ text: this.options.embed.footer || "Lean" });
 
-    if (this.options.embed.timestamp) {embed.setTimestamp();}
+    if (this.options.embed.timestamp) {
+      embed.setTimestamp();
+    }
 
     const initialMessage = await interaction.reply({
       embeds: [embed],
@@ -177,7 +179,9 @@ class Calculator {
       })
       .setFooter({ text: this.options.embed.footer || "Lean" });
 
-    if (this.options.embed.timestamp) {embed.setTimestamp();}
+    if (this.options.embed.timestamp) {
+      embed.setTimestamp();
+    }
 
     if (this.disabled) {
       this.buttons.forEach((row) => {

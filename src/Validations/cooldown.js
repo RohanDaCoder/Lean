@@ -7,7 +7,9 @@ const cooldowns = new Database(cooldownsDBPath);
 function parseCooldown(cooldownString) {
   const regex = /(\d+)([smhdw])/;
   const match = cooldownString.match(regex);
-  if (!match) {return null;}
+  if (!match) {
+    return null;
+  }
   const value = parseInt(match[1]);
   const unit = match[2];
   switch (unit) {

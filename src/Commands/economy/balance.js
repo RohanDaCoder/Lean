@@ -27,8 +27,9 @@ module.exports = {
         interaction.user.id;
 
       const user = await client.users.fetch(userId);
-      if (!user)
-        {return await interaction.editReply(":x: Could not find that user.");}
+      if (!user) {
+        return await interaction.editReply(":x: Could not find that user.");
+      }
 
       const walletInfo = await eco.GetMoney({
         userID: userId,

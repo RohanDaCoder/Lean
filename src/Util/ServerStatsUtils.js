@@ -243,7 +243,9 @@ async function updateChannelName(guild, channelId, name) {
       await channel.edit({ name });
     }
   } catch (error) {
-    if (error.code === 50001) {return;}
+    if (error.code === 50001) {
+      return;
+    }
     process.logger.error({
       user: "Server Stats",
       message: `Error updating channel name: \n${error.message}`,

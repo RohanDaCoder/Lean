@@ -7,8 +7,12 @@ module.exports = async (member, client) => {
 };
 
 async function welcomeUser(member, client) {
-  if (!member) {throw TypeError("No User Provided When Welcoming User");}
-  if (!client) {throw TypeError("No Client Provided When Welcoming User");}
+  if (!member) {
+    throw TypeError("No User Provided When Welcoming User");
+  }
+  if (!client) {
+    throw TypeError("No Client Provided When Welcoming User");
+  }
   const guildId = member.guild.id;
   const logger = await client.loggers.get(guildId);
   const filePath = path.join(
@@ -19,7 +23,9 @@ async function welcomeUser(member, client) {
   const config = new Database(filePath);
 
   const welcomeChannelID = await config.get("welcomeChannel");
-  if (!welcomeChannelID) {return;}
+  if (!welcomeChannelID) {
+    return;
+  }
 
   try {
     const welcomeChannel = await client.channels.fetch(welcomeChannelID);

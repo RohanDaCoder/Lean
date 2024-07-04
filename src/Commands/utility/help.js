@@ -35,7 +35,9 @@ module.exports = {
         if (categories[category]) {
           categories[category].push(commands[command]);
         } else {
-          if (!categories["Uncategorized"]) {categories["Uncategorized"] = [];}
+          if (!categories["Uncategorized"]) {
+            categories["Uncategorized"] = [];
+          }
           categories["Uncategorized"].push(commands[command]);
         }
       }

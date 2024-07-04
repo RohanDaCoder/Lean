@@ -20,12 +20,15 @@ const getProfilePath = (userID) =>
 
 const EconomyManager = {
   formatMoney(amount) {
-    if (amount >= 1e9) {return `${(amount / 1e9).toFixed(1)}b ${emojis.money}`;}
-    else if (amount >= 1e6)
-      {return `${(amount / 1e6).toFixed(1)}m ${emojis.money}`;}
-    else if (amount >= 1e3)
-      {return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;}
-    else {return `${amount} ${emojis.money}`;}
+    if (amount >= 1e9) {
+      return `${(amount / 1e9).toFixed(1)}b ${emojis.money}`;
+    } else if (amount >= 1e6) {
+      return `${(amount / 1e6).toFixed(1)}m ${emojis.money}`;
+    } else if (amount >= 1e3) {
+      return `${(amount / 1e3).toFixed(1)}k ${emojis.money}`;
+    } else {
+      return `${amount} ${emojis.money}`;
+    }
   },
 
   async GetProfile(userID) {

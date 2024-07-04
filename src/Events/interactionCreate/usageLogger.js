@@ -3,7 +3,9 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = async (interaction) => {
   try {
     const user = interaction.user;
-    if (!interaction.commandName) {return;}
+    if (!interaction.commandName) {
+      return;
+    }
 
     const usageEmbed = new EmbedBuilder()
       .setTitle("Usage Logger")

@@ -18,7 +18,9 @@ class GuildLogger {
 
   async log({ message, user, additionalInfo }) {
     const webhookUrl = await this.getWebhook();
-    if (!webhookUrl) {return;}
+    if (!webhookUrl) {
+      return;
+    }
 
     const embed = new EmbedBuilder()
       .setTitle("Log")
@@ -46,7 +48,9 @@ class GuildLogger {
 
   async warn({ message, user, additionalInfo }) {
     const webhookUrl = await this.getWebhook();
-    if (!webhookUrl) {return;}
+    if (!webhookUrl) {
+      return;
+    }
 
     const embed = new EmbedBuilder()
       .setTitle("Warning")
@@ -74,7 +78,9 @@ class GuildLogger {
 
   async error({ message, user, additionalInfo }) {
     const webhookUrl = await this.getWebhook();
-    if (!webhookUrl) {return;}
+    if (!webhookUrl) {
+      return;
+    }
 
     const embed = new EmbedBuilder()
       .setTitle("Error")

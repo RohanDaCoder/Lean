@@ -37,7 +37,9 @@ module.exports = {
 
     function ms(duration) {
       const matches = duration.match(/(\d+)([smhd])/);
-      if (!matches) {return null;}
+      if (!matches) {
+        return null;
+      }
 
       const [time, unit] = matches;
       const durations = { s: 1000, m: 60000, h: 3600000, d: 86400000 };

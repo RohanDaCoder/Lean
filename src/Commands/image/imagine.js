@@ -46,10 +46,11 @@ module.exports = {
         .setRequired(false),
     ),
   run: async ({ interaction, client }) => {
-    if (!process.env.REPLICATE_API_KEY)
-      {return interaction.reply(
+    if (!process.env.REPLICATE_API_KEY) {
+      return interaction.reply(
         `${client.config.emojis.no} **This Command Is Currently Disabled.**`,
-      );}
+      );
+    }
     try {
       const prompt = interaction.options.getString("prompt");
       const model = interaction.options.getString("model") || models[0].value;
