@@ -28,7 +28,7 @@ module.exports = {
 
       const user = await client.users.fetch(userId);
       if (!user) {
-        return await interaction.editReply(":x: Could not find that user.");
+        return await interaction.editReply(`${client.config.emojis.no} Could not find that user.`);
       }
 
       const walletInfo = await eco.GetMoney({

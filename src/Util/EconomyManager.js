@@ -1,24 +1,45 @@
-const fs = require("fs");
-const path = require("path");
-const Database = require("calm.db");
-const { emojis } = require("../config.js");
-
-// Default profile template
-const defaultProfile = (id) => ({
-  id,
-  wallet: 0,
-  bank: 0,
-  inventory: [],
-  daily: null,
-  weekly: null,
-  monthly: null,
-});
-
-// Utility function to get the profile path
-const getProfilePath = (userID) =>
-  path.join(__dirname, `../Database/Profiles/${userID}.json`);
+const EconomyUser = require('../Models/EconomyUser');
+const { items } = require('./Items');
+const emojis = require("../config.js");
 
 const EconomyManager = {
+  async GetProfile(userID) {
+    let profile = await EconomyUser.findOne({ userID });
+
+    if (!profile) {
+      profile = await EconomyUser.create({ userID });
+    }
+
+    return profile;
+  },
+
+  async SetMoney({ userID, balance, amount }) {
+    const profile = await this.GetProfile(userID);
+    profile[balance] = Math.min(amount, 1e9);
+    await profile.save();
+    return Math.min(amount, 1e9);
+  },
+
+  async GetMoney({ userID, balance }) {
+    const profile = await this.GetProfile(userID);
+    const formattedAmount = profile[balance] ? this.formatMoney(profile[balance]) : this.formatMoney(0);
+    return {
+      raw: profile[balance] || 0,
+      formatted: formattedAmount,
+    };
+  },
+
+  async set({ userID, key, value }) {
+    const profile = await this.GetProfile(userID);
+    profile[key] = value;
+    await profile.save();
+  },
+
+  async get({ userID, key }) {
+    const profile = await this.GetProfile(userID);
+    return profile[key];
+  },
+
   formatMoney(amount) {
     if (amount >= 1e9) {
       return `${(amount / 1e9).toFixed(1)}b ${emojis.money}`;
@@ -29,51 +50,6 @@ const EconomyManager = {
     } else {
       return `${amount} ${emojis.money}`;
     }
-  },
-
-  async GetProfile(userID) {
-    const profilePath = getProfilePath(userID);
-    if (!fs.existsSync(profilePath)) {
-      fs.writeFileSync(profilePath, JSON.stringify(defaultProfile(userID)));
-    }
-    const profileDb = new Database(profilePath);
-    const profile = profileDb.toJSON();
-    if (profile.id !== userID) {
-      profile.id = userID;
-      profileDb.set("id", userID);
-    }
-    return { db: profileDb, profile };
-  },
-
-  async SetMoney(o) {
-    const { db } = await this.GetProfile(o.userID);
-    if (o.amount !== undefined && o.userID !== undefined && db) {
-      await db.set(o.balance, Math.min(o.amount, 1e9));
-      return Math.min(o.amount, 1e9);
-    }
-    return 0;
-  },
-
-  async GetMoney(i) {
-    const { db } = await this.GetProfile(i.userID);
-    const amount = await db.get(i.balance);
-    const formattedAmount =
-      amount !== undefined ? this.formatMoney(amount) : this.formatMoney(0);
-    return {
-      raw: amount !== undefined ? amount : 0,
-      formatted: formattedAmount,
-    };
-  },
-
-  async set(o) {
-    const { db } = await this.GetProfile(o.userID);
-    await db.set(o.key, o.value);
-  },
-
-  async get(o) {
-    const { db } = await this.GetProfile(o.userID);
-    const value = await db.get(o.key);
-    return value;
   },
 };
 
