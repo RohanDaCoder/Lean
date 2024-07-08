@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 
-module.exports = async (interaction) => {
+module.exports = async (client, interaction) => {
   try {
     const user = interaction.user;
     if (!interaction.commandName) {

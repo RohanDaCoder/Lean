@@ -37,7 +37,6 @@ module.exports = [
       "no-redeclare": "error",
       "default-case-last": "warn",
       eqeqeq: ["warn", "always"],
-      curly: "error",
       "no-useless-assignment": "error",
       "no-use-before-define": ["error", { functions: false }],
       "no-template-curly-in-string": "error",

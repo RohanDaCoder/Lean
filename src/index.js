@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
 require("dotenv").config();
 const mongoose = require("mongoose");
-const { Client, IntentsBitField } = require("discord.js");
-const { CommandKit } = require("commandkit");
+const { Client, IntentsBitField, Collection } = require("discord.js");
 const config = require("./config.js");
 const BotLogger = require("./Util/BotLogger");
-const { green } = require("colors");
+const color = require("colors");
 const path = require("path");
+const fs = require("fs");
 
 const client = new Client({
   intents: [
@@ -15,11 +16,6 @@ const client = new Client({
     IntentsBitField.Flags.GuildMembers,
     IntentsBitField.Flags.GuildMessageReactions,
   ],
-});
-
-new CommandKit({
-  client,
-  ...config.CommandKit,
 });
 
 const { GiveawaysManager } = require("./Util/GiveawayManager");
@@ -63,8 +59,25 @@ process.on("unhandledRejection", (reason, promise) => {
 mongoose
   .connect(process.env.mongoDB)
   .then(() => {
-    /* eslint-disable-next-line no-console */
-    console.log(green(`[Database] Connected To MongoDB`));
+    console.log(color.green(`[Database] Connected To MongoDB`));
     client.login(process.env.TOKEN);
   })
   .catch((err) => console.error("Could not connect to MongoDB", err));
+
+//Load Events
+try {
+  const eventNames = fs.readdirSync(path.resolve(__dirname, "./Events"));
+
+  eventNames.forEach(async (name) => {
+    const eventFiles = fs.readdirSync(
+      path.resolve(__dirname, `./Events/${name}`),
+    );
+
+    eventFiles.forEach(async (eventFile) => {
+      const runEvent = require(`./Events/${name}/${eventFile}`);
+      client.on(name, (...props) => runEvent(client, ...props));
+    });
+  });
+} catch (error) {
+  console.error("Error loading events:", error);
+}

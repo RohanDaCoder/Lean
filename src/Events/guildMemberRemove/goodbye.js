@@ -2,7 +2,7 @@ const path = require("path");
 const Database = require("calm.db");
 const { EmbedBuilder } = require("discord.js");
 
-module.exports = async (member, client) => {
+module.exports = async (client, member) => {
   await goodbyeUser(member, client);
 };
 

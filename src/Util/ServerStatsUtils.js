@@ -1,4 +1,8 @@
-const { setupServerStats, updateServerStats, updateAllGuildStats } = require("./ServerStats/serverStatsSetup");
+const {
+  setupServerStats,
+  updateServerStats,
+  updateAllGuildStats,
+} = require("./ServerStats/serverStatsSetup");
 
 module.exports = {
   setupServerStats,
