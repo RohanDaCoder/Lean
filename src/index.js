@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 require("dotenv").config();
 const mongoose = require("mongoose");
-const { Client, IntentsBitField, Collection } = require("discord.js");
+const { Client, IntentsBitField } = require("discord.js");
 const config = require("./config.js");
 const BotLogger = require("./Util/BotLogger");
 const color = require("colors");
