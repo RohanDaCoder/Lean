@@ -52,7 +52,8 @@ process.on("uncaughtException", (err) => {
 });
 
 process.on("unhandledRejection", (reason, promise) => {
-  console.log(reason.code);
+  console.error(reason.code);
+  console.error(reason);
   BotLogger.error({
     message: `Unhandled Rejection: \n\`\`\`${reason}\n\`\`\``,
     additionalInfo: `Promise: \n\`\`\`${promise}\n\`\`\``,

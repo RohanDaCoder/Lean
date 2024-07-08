@@ -23,6 +23,8 @@ function parseCooldown(cooldownString) {
       return value * 86400000;
     case "w":
       return value * 604800000;
+    case "M":
+      return value * 2.592e9
     default:
       return null;
   }

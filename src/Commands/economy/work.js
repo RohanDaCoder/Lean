@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const economyManager = require("../../Util/EconomyManager.js");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("work")

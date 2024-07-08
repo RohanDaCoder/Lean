@@ -1,6 +1,5 @@
-const EconomyUser = require('../Models/EconomyUser');
-const { items } = require('./Items');
-const emojis = require("../config.js");
+const EconomyUser = require("../Models/EconomyUser");
+const { emojis } = require("../config.js");
 
 const EconomyManager = {
   async GetProfile(userID) {
@@ -22,7 +21,9 @@ const EconomyManager = {
 
   async GetMoney({ userID, balance }) {
     const profile = await this.GetProfile(userID);
-    const formattedAmount = profile[balance] ? this.formatMoney(profile[balance]) : this.formatMoney(0);
+    const formattedAmount = profile[balance]
+      ? this.formatMoney(profile[balance])
+      : this.formatMoney(0);
     return {
       raw: profile[balance] || 0,
       formatted: formattedAmount,

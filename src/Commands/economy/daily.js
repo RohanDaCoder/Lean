@@ -8,29 +8,21 @@ module.exports = {
   options: {
     cooldown: "1d",
   },
-  run: async ({ interaction, client }) => {
+  run: async ({ client, interaction }) => {
     try {
       const userID = interaction.user.id;
-      const { db } = await eco.GetProfile(userID);
-      const lastClaimTime = db.get("daily");
-      if (lastClaimTime) {
-        await interaction.reply({
-          content: `${client.config.emojis.no} You have already claimed your daily prize.`,
-          ephemeral: true,
-        });
-        return;
-      } else {
-        const reward = client.config.rewards.daily;
-        const currentBalance = await eco.GetMoney({
-          userID,
-          balance: "wallet",
-        });
-        await interaction.reply({
-          content: `${client.config.emojis.yes} Congratulations! You claimed ${eco.formatMoney(reward)} as your daily reward.`,
-        });
-        db.set("wallet", currentBalance.raw + reward);
-        db.set("daily", Date.now());
-      }
+      const reward = client.config.rewards.daily;
+      const currentBalance = await eco.GetMoney({ userID, balance: "wallet" });
+
+      await interaction.reply({
+        content: `${client.config.emojis.yes} Congratulations! You claimed ${eco.formatMoney(reward)} as your daily reward.`,
+      });
+
+      await eco.SetMoney({
+        userID,
+        balance: "wallet",
+        amount: currentBalance.raw + reward,
+      });
     } catch (error) {
       console.error("Error claiming daily reward:", error);
       await interaction.reply({
