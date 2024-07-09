@@ -136,9 +136,9 @@ class BotLogger {
         inline: true,
       });
     }
-    if (additionalInfo) {
-      embed.addFields({ name: "Additional Info", value: additionalInfo });
-    }
+    // if (additionalInfo) {
+      // embed.addFields({ name: "Additional Info", value: `Info: \n${additionalInfo}` });
+    // }
 
     this.webhookClient.send({ embeds: [embed] });
   }

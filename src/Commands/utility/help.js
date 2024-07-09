@@ -5,18 +5,16 @@ const {
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
 } = require("discord.js");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("help")
-    .setDescription(
-      "Displays a list of commands categorized by their function.",
-    ),
-  async run({ interaction, client, handler }) {
+    .setDescription("Displays a list of commands categorized by their function."),
+  async run({ interaction, client }) {
     try {
-      const commands = handler.commands;
-
-      // Categorize commands
+      const commandDir = path.resolve(__dirname, "../../Commands");
       const categories = {
         fun: [],
         utility: [],
@@ -28,21 +26,31 @@ module.exports = {
         image: [],
         extra: [],
         games: [],
+        Uncategorized: [],
       };
 
-      for (const command in commands) {
-        const category = commands[command].category || "Uncategorized";
-        if (categories[category]) {
-          categories[category].push(commands[command]);
-        } else {
-          if (!categories["Uncategorized"]) {
-            categories["Uncategorized"] = [];
+      const getCommands = (dir) => {
+        const files = fs.readdirSync(dir);
+        files.forEach((file) => {
+          const filePath = path.join(dir, file);
+          if (fs.lstatSync(filePath).isDirectory()) {
+            getCommands(filePath);
+          } else if (file.endsWith(".js")) {
+            const command = require(filePath);
+            if (command.data && command.data.name && command.data.description) {
+              const category = path.basename(dir);
+              if (categories[category]) {
+                categories[category].push(command);
+              } else {
+                categories["Uncategorized"].push(command);
+              }
+            }
           }
-          categories["Uncategorized"].push(commands[command]);
-        }
-      }
+        });
+      };
 
-      // Custom button labels
+      getCommands(commandDir);
+
       const buttonNames = {
         fun: "🎉 Fun",
         utility: "🛠️ Utility",
@@ -74,7 +82,6 @@ module.exports = {
         .setPlaceholder("Select a category")
         .addOptions(selectOptions);
 
-      // Initial Embed
       const initialEmbed = new EmbedBuilder()
         .setTitle("Help Menu")
         .setDescription("Select a category to see the commands")
@@ -88,12 +95,10 @@ module.exports = {
         ephemeral: false,
       });
 
-      // Interaction collector for the select menu
       const collector = interaction.channel.createMessageComponentCollector({
         filter: (i) =>
           i.customId === "help_select_menu" &&
           i.user.id === interaction.user.id,
-        // time: 120000,
       });
 
       collector.on("collect", async (i) => {

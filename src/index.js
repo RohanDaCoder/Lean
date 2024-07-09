@@ -81,3 +81,4 @@ try {
 } catch (error) {
   console.error("Error loading events:", error);
 }
+
