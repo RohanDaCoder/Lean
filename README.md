@@ -1,6 +1,5 @@
 [![forthebadge made-with-javascript](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://nodejs.org/)
 
-[![GitHub release](https://img.shields.io/github/release/RohanDaCoder/Lean?include_prereleases=&sort=semver&color=blue)](https://github.com/RohanDaCoder/Lean/releases/)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
 ## Overview
@@ -39,7 +38,9 @@ We welcome contributions from the community! As a solo developer, any assistance
 
 ## Connect with Us
 
-- Join our [Discord Server](https://discord.com/invite/vCpBebaP8w) for updates and support
+![](https://dcbadge.limes.pink/api/shield/922419431508938773?theme=default-inverted)
+
+[![](https://dcbadge.limes.pink/api/server/vCpBebaP8w)](https://discord.com/invite/vCpBebaP8w)
 - Subscribe my [YouTube Channel](https://youtube.com/@RohanPlayz_YT)
 
 ## Invite Lean
