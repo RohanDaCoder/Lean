@@ -1,17 +1,7 @@
-# Ignore node_modules folder
 node_modules/
-
-# Ignore config folder
 .config
-
-# Ignore package-lock.json
 package-lock.json
-
-# Ignore .env file
 .env
-
-# Ignore config.js
 config.js
-
-# Ignore specific folders in src/Database
 src/Database/
+pnpm-lock.yaml

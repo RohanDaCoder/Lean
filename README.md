@@ -5,40 +5,47 @@
 
 ## Overview
 
-This is an discord bot currently under development, it plans to serve moderation, fun, economy commands for discord servers.
+Lean is a versatile Discord bot currently under active development. It aims to provide a comprehensive suite of moderation, fun, and economy commands to enhance the Discord server experience.
 
 ## Project Details
 
 - **Name:** Lean
 - **Language:** JavaScript
-- **Framework:** [CommandKit](https://github.com/underctrl-io/commandkit) by UnderCtrl
-- **Version:** Discord.js V14
-- **Purpose:** To explore bot development, learn JavaScript, and experiment with Discord APIs
+- **Version:** Discord.js v14
+- **Purpose:** To delve into bot development, advance JavaScript skills, and explore Discord APIs
 
 ## Features
 
-- Slash commands for easy interaction
-- Event handling with CommandKit
-- Easy setup
+- Slash commands for seamless interaction
+- Robust moderation tools
+- Simple setup and configuration
 
-## Planned Features
+## Current Status
 
-- Economy system for managing virtual currency
-- Moderation tools for managing server activities
+- Utilizing calm.db and MongoDB for database management
+- The economy system is semi-stable, with ongoing migration to MongoDB, which may cause temporary downtime for economy commands
+- The bot's core architecture is undergoing a complete rewrite
+- Use `/help` to view all available commands
+- Adopting ESLint, Prettier, and PNPM for code quality and dependency management
+
+## Planned Enhancements
+
+- Fully functional and scalable economy system post-migration to MongoDB
+- Expanded moderation capabilities and additional command features
 
 ## Contribution
 
-Feel free to contribute to this project! As a solo developer, any help, suggestions, or bug fixes are greatly appreciated. Together, we can make Lean even better.
+We welcome contributions from the community! As a solo developer, any assistance, suggestions, or bug fixes are highly appreciated. Let's collaborate to make Lean even better.
 
-## Socials
+## Connect with Us
 
-- Discord Server: [Join now](https://discord.com/invite/vCpBebaP8w)
-- YouTube: [RohanPlayz_YT](https://youtube.com/@RohanPlayz_YT)
+- Join our [Discord Server](https://discord.com/invite/vCpBebaP8w) for updates and support
+- Subscribe my [YouTube Channel](https://youtube.com/@RohanPlayz_YT)
 
-## Invite Link
+## Invite Lean
 
-The bot is hosted, if you want to use the already built bot, you can invite it to your server using [this invite link](https://discord.com/oauth2/authorize?client_id=983626513159163904&scope=bot&permissions=1099511627775).
+Invite Lean to your server using [this link](https://discord.com/oauth2/authorize?client_id=983626513159163904&scope=bot&permissions=1099511627775) and start enhancing your Discord Server experience today.
 
 ## License
 
-Released under [MIT](https://raw.githubusercontent.com/RohanDaCoder/Lean/main/LICENSE) by [@RohanDaCoder](https://github.com/RohanDaCoder).
+Lean is released under the [MIT License](https://raw.githubusercontent.com/RohanDaCoder/Lean/main/LICENSE) by [@RohanDaCoder](https://github.com/RohanDaCoder).
