@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 const { Collection } = require("discord.js");
 const colors = require("colors");
-
 const config = require("../../config");
 
 async function deployCommands(client, commandDataArray) {
@@ -25,7 +24,9 @@ async function handleLoading(client, commandDataArray) {
     (cmd) => !cmd.options?.deleted && cmd.name && cmd.description,
   );
 
-  const devOnlyCommands = validCommands.filter((cmd) => cmd.options?.devOnly);
+  const devOnlyCommands = validCommands.filter(
+    (cmd) => cmd.options?.devOnly === true,
+  );
   const globalCommands = validCommands.filter((cmd) => !cmd.options?.devOnly);
 
   await Promise.all([
@@ -37,8 +38,9 @@ async function handleLoading(client, commandDataArray) {
 async function loadGlobalCommands(client, commands) {
   try {
     await client.application.commands.set(commands);
-    console.log(colors.green(`Loaded ${commands.length} global commands.`));
-    console.log(colors.green(`Total Commands: ${client.totalCommands}`));
+    console.log(
+      colors.magenta(`[Commands] Loaded ${commands.length} commands.`),
+    );
   } catch (error) {
     console.error(
       colors.red("Error loading global application commands.\n"),
@@ -60,11 +62,6 @@ async function loadDevCommands(client, commands) {
       }
 
       await targetGuild.commands.set(commands);
-      console.log(
-        colors.green(
-          `Loaded ${commands.length} developer commands in guild "${targetGuild.name}".`,
-        ),
-      );
     } catch (error) {
       console.error(
         colors.red(

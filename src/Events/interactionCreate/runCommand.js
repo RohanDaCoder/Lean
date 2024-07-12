@@ -14,7 +14,8 @@ module.exports = async (client, interaction) => {
     (await isDevCommand({ client, interaction })) ||
     (await isBlacklisted({ client, interaction })) ||
     (await isCooldownValid({ client, interaction }))
-  ) return;
+  )
+    return;
 
   const command = await client.commands.get(interaction.commandName);
   if (!command) {

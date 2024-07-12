@@ -41,6 +41,7 @@ We welcome contributions from the community! As a solo developer, any assistance
 ![](https://dcbadge.limes.pink/api/shield/922419431508938773?theme=default-inverted)
 
 [![](https://dcbadge.limes.pink/api/server/vCpBebaP8w)](https://discord.com/invite/vCpBebaP8w)
+
 - Subscribe my [YouTube Channel](https://youtube.com/@RohanPlayz_YT)
 
 ## Invite Lean

@@ -1,7 +1,6 @@
 const path = require("path");
 const Database = require("calm.db");
 const config = require("../config");
-const client = require("../index");
 const cooldownsDBPath = path.join(__dirname, "../Database/cooldowns.json");
 const cooldowns = new Database(cooldownsDBPath);
 

@@ -51,7 +51,7 @@ module.exports = {
         .setTitle(`User Information`)
         .setThumbnail(user.displayAvatarURL())
         .addFields(
-                  { name: "Tag", value: user.tag || "Unknown", inline: true },
+          { name: "Tag", value: user.tag || "Unknown", inline: true },
           { name: "Username", value: user.username || "Unknown", inline: true },
           {
             name: "Discriminator",
@@ -78,11 +78,14 @@ module.exports = {
           },
           {
             name: "Avatar URL",
-            value: `[Link](${user.avatarURL()})` || "Unknown",
+            value: `[Link](${user.avatarURL()})`,
             inline: true,
           },
         )
-        .setFooter({ text: `Requested By ${interaction.user.username}`, iconURL: interaction.user.avatarURL()})
+        .setFooter({
+          text: `Requested By ${interaction.user.username}`,
+          iconURL: interaction.user.avatarURL(),
+        })
         .setTimestamp();
 
       await interaction.editReply({ embeds: [userEmbed] });

@@ -20,6 +20,9 @@ importers:
       commandkit:
         specifier: ^0.1.10
         version: 0.1.10(discord.js@14.15.3)
+      deepmerge-ts:
+        specifier: ^7.0.3
+        version: 7.0.3
       discord-gamecord:
         specifier: ^4.4.2
         version: 4.4.2
@@ -41,6 +44,9 @@ importers:
       mongoose:
         specifier: ^8.5.0
         version: 8.5.0
+      ms:
+        specifier: ^2.1.3
+        version: 2.1.3
       path:
         specifier: ^0.12.7
         version: 0.12.7
@@ -50,6 +56,9 @@ importers:
       replicate:
         specifier: ^0.29.4
         version: 0.29.4
+      serialize-javascript:
+        specifier: ^6.0.2
+        version: 6.0.2
     devDependencies:
       '@stylistic/eslint-plugin-js':
         specifier: ^2.3.0
@@ -522,6 +531,10 @@ packages:
   deepmerge-ts@4.3.0:
     resolution: {integrity: sha512-if3ZYdkD2dClhnXR5reKtG98cwyaRT1NeugQoAPTTfsOpV9kqyeiBF9Qa5RHjemb3KzD5ulqygv6ED3t5j9eJw==}
     engines: {node: '>=12.4.0'}
+
+  deepmerge-ts@7.0.3:
+    resolution: {integrity: sha512-dxFbFO2RSIhPNBPL/j8Nvdt6/vrkW9+uGf1NLah/QxBGAVbK9fj2fGTO+HwdHpPAyFAsyT9iEn/1SI9SUvespw==}
+    engines: {node: '>=16.0.0'}
 
   delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
@@ -1798,6 +1811,8 @@ snapshots:
   deep-is@0.1.4: {}
 
   deepmerge-ts@4.3.0: {}
+
+  deepmerge-ts@7.0.3: {}
 
   delayed-stream@1.0.0: {}
 
