@@ -6,7 +6,7 @@ module.exports = async (client, interaction) => {
   if (!interaction.isChatInputCommand()) return;
   if (interaction.inGuild() === false)
     return interaction.reply({
-      content: `${emojis.no} Please Use My Commands In A Server And Not In a DM!`,
+      content: `${config.emojis.no} Please Use My Commands In A Server And Not In a DM!`,
     });
   if (config.blacklistedUsers?.includes(interaction.user.id))
     return interaction.reply({
