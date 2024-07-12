@@ -1,13 +1,15 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('hack')
-    .setDescription('Hacks a user')
-    .addUserOption(option => option.setName('target').setDescription('User to hack').setRequired(true)),
-  
-  async run({interaction}) {
-    const target = interaction.options.getUser('target');
+    .setName("hack")
+    .setDescription("Hacks a user")
+    .addUserOption((option) =>
+      option.setName("target").setDescription("User to hack").setRequired(true),
+    ),
+
+  async run({ interaction, client }) {
+    const target = interaction.options.getUser("target");
 
     const fakeHacks = [
       `Accessing ${target.username}'s email...`,
@@ -19,7 +21,7 @@ module.exports = {
       `Transferring funds from ${target.username}'s bank account...`,
       `Leaking ${target.username}'s private photos...`,
       `Wiping ${target.username}'s hard drive...`,
-      `Planting ransomware in ${target.username}'s system...`
+      `Planting ransomware in ${target.username}'s system...`,
     ];
 
     await interaction.reply(`🔍 Starting hack on ${target.username}...`);
@@ -31,7 +33,9 @@ module.exports = {
     }
 
     setTimeout(async () => {
-      await interaction.followUp(`${client.config.emojis.yes } Successfully hacked ${target.username}!!`);
+      await interaction.followUp(
+        `${client.config.emojis.yes} Successfully hacked ${target.username}!!`,
+      );
     }, fakeHacks.length * 3000);
-  }
+  },
 };

@@ -6,7 +6,6 @@ module.exports = async (client, interaction) => {
     if (!interaction.commandName) {
       return;
     }
-
     const usageEmbed = new EmbedBuilder()
       .setTitle("Usage Logger")
       .setAuthor({
@@ -33,8 +32,7 @@ module.exports = async (client, interaction) => {
     if (process.usageChannel && process.usageChannel.send) {
       await process.usageChannel.send({ embeds: [usageEmbed] });
     } else {
-      // eslint-disable-next-line no-console
-      console.warn(
+      console.error(
         "Usage channel is not defined or send method is not available.",
       );
     }

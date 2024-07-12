@@ -11,7 +11,9 @@ const path = require("path");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("help")
-    .setDescription("Displays a list of commands categorized by their function."),
+    .setDescription(
+      "Displays a list of commands categorized by their function.",
+    ),
   async run({ interaction, client }) {
     try {
       const commandDir = path.resolve(__dirname, "../../Commands");

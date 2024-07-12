@@ -1,11 +1,12 @@
 const path = require("path");
 const Database = require("calm.db");
-
+const config = require("../config");
+const client = require("../index");
 const cooldownsDBPath = path.join(__dirname, "../Database/cooldowns.json");
 const cooldowns = new Database(cooldownsDBPath);
 
 function parseCooldown(cooldownString) {
-  const regex = /(\d+)([smhdw])/;
+  const regex = /(\d+)([smhdwM])/;
   const match = cooldownString.match(regex);
   if (!match) {
     return null;
@@ -30,14 +31,16 @@ function parseCooldown(cooldownString) {
   }
 }
 
-module.exports = async ({ interaction, commandObj }) => {
+module.exports = async ({ interaction }) => {
+  const commandObj = await client.commands.get(interaction.commandName);
+
   const userID = interaction.user.id;
   const cooldownKey = `${userID}-${commandObj.data.name}`;
   const cooldownString = commandObj.options?.cooldown || "3s";
   const cooldownTime = parseCooldown(cooldownString);
 
   if (!cooldownTime) {
-    return true;
+    return false;
   }
 
   const now = Date.now();
@@ -47,8 +50,8 @@ module.exports = async ({ interaction, commandObj }) => {
     const remainingTime = cooldownExpiration - now;
     const { default: prettyMS } = await import("pretty-ms");
     const prettyRemainingTime = prettyMS(remainingTime, { verbose: true });
-    interaction.reply({
-      content: `You're on cooldown. Please wait ${prettyRemainingTime} before running ${commandObj.data.name} command again.`,
+    await interaction.channel.send({
+      content: `${config.emojis.no} You're on cooldown. Please wait ${prettyRemainingTime} before running ${commandObj.data.name} command again.`,
       ephemeral: true,
     });
     return true;
@@ -59,4 +62,6 @@ module.exports = async ({ interaction, commandObj }) => {
   if (cooldownExpiration && cooldownExpiration <= now) {
     await cooldowns.delete(cooldownKey);
   }
+
+  return false;
 };

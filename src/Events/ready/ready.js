@@ -6,7 +6,10 @@ module.exports = async (c, client) => {
   process.usageChannel = await client.channels.fetch(
     client.config.channels.usage,
   );
-  client.user.setActivity(client.config.activity, {
-    type: ActivityType.Watching,
+  client.user.setPresence({
+    activities: [
+      { name: client.config.activity ?? `You`, type: ActivityType.Watching },
+    ],
+    status: "online",
   });
 };

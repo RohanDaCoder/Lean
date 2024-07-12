@@ -76,9 +76,11 @@ try {
     eventFiles.forEach(async (eventFile) => {
       const runEvent = require(`./Events/${name}/${eventFile}`);
       client.on(name, (...props) => runEvent(client, ...props));
+      delete require.cache[require.resolve(`./Events/${name}/${eventFile}`)];
     });
   });
 } catch (error) {
   console.error("Error loading events:", error);
 }
 
+module.exports = client;
