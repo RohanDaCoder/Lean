@@ -31,7 +31,7 @@ function parseCooldown(cooldownString) {
   }
 }
 
-module.exports = async ({ interaction }) => {
+module.exports = async ({ interaction, client }) => {
   const commandObj = await client.commands.get(interaction.commandName);
 
   const userID = interaction.user.id;
@@ -47,11 +47,11 @@ module.exports = async ({ interaction }) => {
   const cooldownExpiration = await cooldowns.get(cooldownKey);
 
   if (cooldownExpiration && cooldownExpiration > now) {
-    const remainingTime = cooldownExpiration - now;
     const { default: prettyMS } = await import("pretty-ms");
+    const remainingTime = cooldownExpiration - now;
     const prettyRemainingTime = prettyMS(remainingTime, { verbose: true });
     await interaction.channel.send({
-      content: `${config.emojis.no} You're on cooldown. Please wait ${prettyRemainingTime} before running ${commandObj.data.name} command again.`,
+      content: `${config.emojis.no} You are currently on cooldown. Please wait **${prettyRemainingTime}** before using the \`/${commandObj.data.name}\` command again.`,
       ephemeral: true,
     });
     return true;

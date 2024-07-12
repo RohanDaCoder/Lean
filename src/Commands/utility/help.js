@@ -28,7 +28,6 @@ module.exports = {
         image: [],
         extra: [],
         games: [],
-        Uncategorized: [],
       };
 
       const getCommands = (dir) => {
@@ -43,8 +42,6 @@ module.exports = {
               const category = path.basename(dir);
               if (categories[category]) {
                 categories[category].push(command);
-              } else {
-                categories["Uncategorized"].push(command);
               }
             }
           }
@@ -59,7 +56,6 @@ module.exports = {
         moderation: "🛡️ Moderation",
         economy: "💰 Economy",
         admin: "⚠️ Admin",
-        Uncategorized: "Miscellaneous",
         dev: "🗿 Developer",
         giveaway: "🎁 Giveaway",
         image: "📷 Image Manipulation",

@@ -4,7 +4,7 @@ const path = require("path");
 const { Collection } = require("discord.js");
 const colors = require("colors");
 
-const devGuildIds = ["1244254187014066226"];
+const config = require("../../config");
 
 async function deployCommands(client, commandDataArray) {
   if (!Array.isArray(commandDataArray)) {
@@ -48,7 +48,7 @@ async function loadGlobalCommands(client, commands) {
 }
 
 async function loadDevCommands(client, commands) {
-  for (const guildId of devGuildIds) {
+  for (const guildId of config.commandHandler.devGuildIds) {
     try {
       const targetGuild = await client.guilds.fetch(guildId);
 
