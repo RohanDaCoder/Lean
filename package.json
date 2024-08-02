@@ -5,6 +5,7 @@
   "main": "index.js",
   "devDependencies": {
     "@stylistic/eslint-plugin-js": "^2.6.1",
+    "eslint": "^9.8.0",
     "nodemon": "^3.1.4",
     "prettier": "^3.3.3"
   },
