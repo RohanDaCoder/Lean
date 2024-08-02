@@ -58,7 +58,10 @@ module.exports = {
             { name: "Item ID", value: item.itemID || "None" },
             { name: "Icon", value: item.icon || "None" },
             { name: "Description", value: item.description || "None" },
-            { name: "Additional Description", value: item.description2 || "None" },
+            {
+              name: "Additional Description",
+              value: item.description2 || "None",
+            },
             { name: "Index", value: `${index}` },
           )
           .setImage(iconURL)
