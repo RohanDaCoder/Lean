@@ -28,7 +28,7 @@ module.exports = {
 
       let index = 0;
       const response = await axios.get(
-        "https://raw.githubusercontent.com/jinix6/Icon/main/OB44.json",
+        "https://cdn.jsdelivr.net/gh/jinix6/ItemID@main/ob45.json",
       );
       const items = response.data;
       let results = [];
@@ -37,7 +37,7 @@ module.exports = {
 
       if (nameOption) {
         results = items.filter((item) =>
-          item.description.toLowerCase().includes(nameOption.toLowerCase()),
+          item.description?.toLowerCase().includes(nameOption.toLowerCase()),
         );
         if (results.length === 0) {
           return interaction.editReply(
@@ -58,6 +58,7 @@ module.exports = {
             { name: "Item ID", value: item.itemID || "None" },
             { name: "Icon", value: item.icon || "None" },
             { name: "Description", value: item.description || "None" },
+            { name: "Additional Description", value: item.description2 || "None" },
             { name: "Index", value: `${index}` },
           )
           .setImage(iconURL)
