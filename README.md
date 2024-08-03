@@ -1,3 +1,13 @@
+## Discontinued
+
+Not everything lasts forever. Despite my efforts, Lean hasn't gained any users, not even among my friends. Without motivation and usage, I've decided to discontinue Lean. 
+
+I'll be starting fresh with a new bot, aiming to create something that people will actually use.
+
+Lean is officially discontinued.
+
+---
+
 [![forthebadge made-with-javascript](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://nodejs.org/)
 
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
